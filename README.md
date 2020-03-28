@@ -1,4 +1,6 @@
- ######## Crypto Currency Ticker for M5Stack. Getting data over WiFi from Binance API/Websocket v3 ########
+![](IMG_1.jpg)
+
+ Crypto Currency Ticker for M5Stack. Getting data over WiFi from Binance API/Websocket_v3 
 
  The original code was from: https://github/goleh/bitcoin-ticker  for SPI TFT display ILI9341 and NodeMCU Board, 18.dec.2019
  Meanwhile i cannot find his project site and user on github but credits go to him and his code which builds the core of my project.
@@ -35,3 +37,5 @@ Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-card ho
 
 -> the impoovements are based on quick and dirty solutions - no complains please ;) your changings are welcome !!! :)
  known bugs: ButtonC needs better debouncing, slow response if wifi signal receiption is not stable, maybe more bugs but in general it is working fine
+
+![](IMG_2.jpg)
