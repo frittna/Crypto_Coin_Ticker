@@ -1,4 +1,4 @@
-![](IMG_0.jpg)
+![](preview/IMG_0.jpg)
 
  Crypto Currency Ticker for M5Stack. Getting data over WiFi from Binance API/Websocket_v3 
  
