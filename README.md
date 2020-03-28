@@ -6,7 +6,7 @@
  
  This code is forked from the original code: https://github/goleh/bitcoin-ticker  for ILI9341 TFT diplay and NodeMCU Board, 18.dec.2019 BUT Meanwhile i cannot find his project site and user on github but credits go to him and his code which builds the core of my project.
 
-This ticker shows a 24 candle chart, LO/HI values, volume as line, date and time (time.nist.gov timeserver)
+This ticker shows a 24 candle chart, prince reloades every 2 seconds, LO/HI values, volume as line, date and time (time.nist.gov timeserver)
 
 
 ADDED FEATURES:
