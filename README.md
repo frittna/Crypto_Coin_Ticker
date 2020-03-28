@@ -14,11 +14,11 @@ buttonA: switches through 8 (as many you want) preconfigured pairs e.g: BTC to U
 
 buttonB: changes the LCD-Brightness in 4 levels
 
-buttonC: 9 changeable Timeframes from 1 Minute to 1 Month
- press buttonC, then, within 2 sec press buttonA to switch down or buttonB to switch up through the timeframes
+buttonC: 9 changeable Timeframes from 1 Minute to 1 Month,
+press buttonC, then, within 2 sec press buttonA to switch down or buttonB to switch up through the timeframes
  available timeframes are 1m, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1M
  
-added use of free fonts, changed format for small currencies, added the use of SPIFFS*) for jpg+png pics
+now using free fonts, changed output format for small and very small currencies, added the use of SPIFFS for some icons
  
 settings will remain stored after a reset
  
