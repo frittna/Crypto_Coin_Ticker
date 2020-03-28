@@ -15,7 +15,7 @@ ADDED FEATURES:
 
 -buttonB: changes the LCD-brightness in 4 levels
 
--buttonC: 9 changeable Timeframes from 1 minute to 1month,
+-buttonC: 9 changeable Timeframes from 1 minute to 1month per candle,
 press buttonC, then within 2 sec press buttonA to switch down or buttonB to switch up through the timeframes,
  available timeframes at the moment: 1m, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1M
 
