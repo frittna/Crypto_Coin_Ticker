@@ -10,7 +10,9 @@ FEATURES:
 shows 24 candles, min/max prize and volume as line, date and time (time.nist.gov timeserver)
 
 buttonA: switches through 8 (as many you want) preconfigured pairs e.g: BTC to USDT etc. which are available on Binance.com
+
 buttonB: changes the LCD-Brightness in 4 levels
+
 buttonC: 9 changeable Timeframes from 1 Minute to 1 Month
  press buttonC, then, within 2 sec press buttonA to switch down or buttonB to switch up through the timeframes
  available timeframes are 1m, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1M
