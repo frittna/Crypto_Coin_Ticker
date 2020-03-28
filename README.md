@@ -2,8 +2,7 @@
 
  Crypto Currency Ticker for M5Stack. Getting data over WiFi from Binance API/Websocket_v3 
 
- The original code was from: https://github/goleh/bitcoin-ticker  for SPI TFT display ILI9341 and NodeMCU Board, 18.dec.2019
- Meanwhile i cannot find his project site and user on github but credits go to him and his code which builds the core of my project.
+ This code is forked from the original code: https://github/goleh/bitcoin-ticker  for SPI TFT display ILI9341 and NodeMCU Board, 18.dec.2019 BUT Meanwhile i cannot find his project site and user on github but credits go to him and his code which builds the core of my project.
 
  this version is MODIFIED by frittna to use on M5-Stack with ArduinoIDE - created 22.Mar.2020 22:07 CET
  
