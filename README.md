@@ -44,3 +44,4 @@ press buttonC, then, within 2 sec press buttonA to switch down or buttonB to swi
 ![](IMG_5.jpg)
 ![](IMG_6.jpg)
 ![](IMG_7.jpg)
+![](IMG_8.jpg)
