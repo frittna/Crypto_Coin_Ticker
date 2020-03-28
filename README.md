@@ -39,3 +39,8 @@ press buttonC, then, within 2 sec press buttonA to switch down or buttonB to swi
  known bugs: ButtonC needs better debouncing, slow response if wifi signal receiption is not stable, maybe there are more minor bugs but in general it is working very good atm.
 
 ![](IMG_2.jpg)
+![](IMG_3.jpg)
+![](IMG_4.jpg)
+![](IMG_5.jpg)
+![](IMG_6.jpg)
+![](IMG_7.jpg)
