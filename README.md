@@ -17,11 +17,13 @@ buttonC: 9 changeable Timeframes from 1 Minute to 1 Month
  press buttonC, then, within 2 sec press buttonA to switch down or buttonB to switch up through the timeframes
  available timeframes are 1m, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1M
  
- added use of free fonts, changed format for small currencies, added the use of SPIFFS*) for jpg+png pics, settings will remain stored after a reset
- added "busy" light, changings over time in %
+added use of free fonts, changed format for small currencies, added the use of SPIFFS*) for jpg+png pics
+ 
+settings will remain stored after a reset
  
 hold ButtonC at Startup: will start with alternative SSID/WiFi-password instead (e.g your mobile phone's hotspot)
- the new infoPanel shows: batterylevel and indicates charging (can have delay up to 30s), a colored "busy" light, sleeptimer-
+ 
+the new infoPanel shows: batterylevel and indicates charging (can have delay up to 30s), a colored "busy" light, sleeptimer-
  
 SleepTimer: when holding ButtonB longer than 2 seconds it will start a 20 minutes timer to powerOFF the device
 
