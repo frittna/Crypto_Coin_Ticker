@@ -35,7 +35,7 @@ press buttonC, then, within 2 sec press buttonA to switch down or buttonB to swi
 
 -sd-card Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-card hold buttonA while booting up to start MenuLoader to load your apps
 
--> the impoovements are made with quick and primitive solutions - no complains please ;) your changings are welcome !!! :)
+-> the impovements are made with quick and primitive solutions - no complains please ;) your changings are welcome !!! :)
  known bugs: ButtonC needs better debouncing, slow response if wifi signal receiption is not stable, maybe there are more minor bugs but in general it is working very good atm.
 
 ![](IMG_2.jpg)
