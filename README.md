@@ -4,7 +4,8 @@
  Meanwhile i cannot find his project site and user on github but credits go to him and his code which builds the core of my project.
 
  this version is MODIFIED by frittna to use on M5-Stack with ArduinoIDE - created 22.Mar.2020 22:07 CET
- FEATURES:
+ 
+FEATURES:
 
 shows 24 candles, min/max prize and volume as line, date and time (time.nist.gov timeserver)
  buttonA: switches through 8 (as many you want) preconfigured pairs e.g: BTC to USDT etc. which are available on Binance.com
