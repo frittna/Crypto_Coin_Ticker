@@ -21,13 +21,16 @@
 //
 // Install and set up you Arduino like instructed in the M5-Stack manual:
 // install the M5-Stack board in Arduino IDE: Tools -> Board -> Boards Manager -> search for M5-Stack
-// install librarys in Arduino IDE: Sketch -> Include Library -> Manage Libraries -> seach for the correct ones (look carefully).
-// if the esp32fs/Spiffs library was not found in the library manager you have to search it with google or use the github link bewlow.
-//
-// *) about SPIFFS Filesystem and ESP32 Sketch Data Uploader: to use the ESP32 Sketch Data Uploader in Arduino to upload png files
-// into the SPIFFS filesystem instead using an SD-Card I hat do use older standalone Verion of Arduino 1.8.10 (just for uploading SPIFFS).
+// open new sketch and paste all of this here
+// install all included librarys in Arduino: Sketch -> Include Library -> Manage Libraries -> seach for the correct ones (look carefully).
+// if the esp32fs library was not found in the library manager you have to search it with google or use the github link bewlow.
+// if esp32fs is loaded correctly* you can see a tool called ESP32 Sketch Data Uploader in you tools menu in Arduino. You have to download
+// all pictures from the data folder on github into your sketch data folder. Then click ESP32 Sketch Data Uploader to flash them into
+// the M5Stack embedded memory (thats because i don't want to use a sd-card instead)
+// *) about ESP32 Sketch Data Uploader: to correctly load the tool I hat do use older standalone Verion of Arduino 1.8.10 (just for uploading SPIFFS).
 // The Arduino App ver 1.8.12 (Windows 10 Store Store 1.8.33.0) didn't recognizes the tool and shows no tool menu entry to upload.
-// If you don't want to use SPIFFS at all you can change "drawPngFile(SPIFFS," to "drawPngFile(SD," and put the pics to your SDcard
+// If you don't want to use SPIFFS at all you can change "drawPngFile(SPIFFS," to "drawPngFile(SD," and put the pics to your root 
+// of your SDcard.
 //
 // ##BEGIN##
 //
