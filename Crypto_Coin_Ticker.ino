@@ -1,7 +1,7 @@
 // Crypto Currency Ticker with 24 candlesticks chart for M5Stack - receiving WiFi data from Binance API/Websocket_v3
 //
 // it shows 24 candles, min/max prize and volume as line, the date and time are from time.nist.gov timeserver.
-// original code was for SPI TFT display ILI9341 and NodeMCU Board from: https://github/goleh/bitcoin-ticker from 18.dec.2019
+// original code was for SPI TFT display ILI9341 and NodeMCU Board from: https://github.com/olbed/bitcoin-ticker from 18.dec.2019
 //
 // this version is MODIFIED by frittna to use on M5-Stack with ArduinoIDE - created 29.Mar.2020 19:47 CET - Version 1.0.0
 // added the use of free fonts, changed format for small currencies, added the use of SPIFFS*) for jpg+png pics, settings will remain stored after a reset
