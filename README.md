@@ -2,7 +2,7 @@
  
 Crypto Currency Ticker with 24 candlesticks chart for M5Stack - receiving WiFi data from Binance API/Websocket_v3
 
-the Ticker shows a 24 candles chart, LO/HI values, volume as line and date and time (time.nist.gov timeserver), price reloades every 2 seconds
+the Ticker shows a 24 candles chart, LO/HI values, volume as line and date and time (time.nist.gov timeserver), price is reloading every 2 seconds
 
 This version is MODIFIED by me to use on M5-Stack with ArduinoIDE and i added some additional featues - 29.3.2020 19:47 CET - Version 1.0.0
  
