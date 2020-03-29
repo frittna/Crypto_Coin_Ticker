@@ -269,6 +269,7 @@ void setup() {
       delay(500);
     }
   }
+  showWifiStrength();
   err_count = 0;
   M5.lcd.setBrightness(Brightness_value);
   M5.Lcd.println("\nWiFi connected");
