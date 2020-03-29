@@ -1,16 +1,4 @@
 ![](preview/IMG_0.jpg)
-
- 
- 
- 
- 
- !!!!!!!!!!!!!!!!! i broke something, compile error !!!!!!!!!!!!!!!!!! needs to be fixed asap
- 
- 
- 
- 
- 
- 
  
  Crypto Currency Ticker for M5Stack. Getting data over WiFi from Binance API/Websocket_v3 
  
