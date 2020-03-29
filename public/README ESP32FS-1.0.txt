@@ -1,4 +1,4 @@
-# Arduino ESP32 filesystem uploader 
+# Arduino ESP32 filesystem uploader  
 
 Arduino plugin which packs sketch data folder into SPIFFS filesystem image,
 and uploads the image to ESP32 flash memory.
