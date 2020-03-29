@@ -19,7 +19,7 @@ ADDED FEATURES:
 press buttonC, then within 2 sec press buttonA to switch down or buttonB to switch up through the timeframes,
  available timeframes at the moment: 1m, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1M
 
--the new infoPanel shows: batterylevel and indicates charging (can have delay up to 30s), a colored "busy" light, sleeptimer indicator
+-the new infoPanel shows: WiFi-strenght, batterylevel and indicates charging (can have delay up to 30s), a colored "busy" light, sleeptimer indicator
 
 -now using free fonts, changed output format for small and very small currencies, added the use of SPIFFS for some icons
  
