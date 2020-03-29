@@ -31,6 +31,8 @@
 //   The Arduino App ver 1.8.12 (Windows 10 Store Store 1.8.33.0) didn't recognizes the tool and shows no tool menu entry to upload.
 //   If you don't want to use SPIFFS at all you can change "drawPngFile(SPIFFS," to "drawPngFile(SD," and put the pics to your root 
 //   of your SDcard.
+// - modify WiFi settings, timezone and your favorite currency pairs and the total number in the code 
+// --> Upload Code to M5Stack
 //
 // ##BEGIN##
 //
