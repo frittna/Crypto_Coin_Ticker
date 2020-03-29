@@ -1,5 +1,17 @@
 ![](preview/IMG_0.jpg)
 
+ 
+ 
+ 
+ 
+ !!!!!!!!!!!!!!!!! i broke something, compile error !!!!!!!!!!!!!!!!!! needs to be fixed asap
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  Crypto Currency Ticker for M5Stack. Getting data over WiFi from Binance API/Websocket_v3 
  
  This version is MODIFIED by me to use on M5-Stack with ArduinoIDE and i added some additional featues - 22.Mar.2020 22:07 CET
