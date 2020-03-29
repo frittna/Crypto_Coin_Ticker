@@ -86,7 +86,7 @@ uint32_t pair_color[] = {TFT_YELLOW,   TFT_DARKCYAN,  TFT_ORANGE,    TFT_LIGHTGR
 const char* weekDay[] = {"", "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"};
 const char* monthName[] = {"", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 //const char* weekDay[] = {"", "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"};                                             // translated to german
-co//nst char* monthName[] = {"", "Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"}; //translated to german
+//const char* monthName[] = {"", "Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"}; //translated to german
 // REST API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
 const char* restApiHost = "api.binance.com";
 const byte candlesLimit = 24;
