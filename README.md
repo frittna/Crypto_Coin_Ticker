@@ -1,13 +1,12 @@
 ![](preview/IMG_0.jpg)
  
- Crypto Currency Ticker for M5Stack. Getting data over WiFi from Binance API/Websocket_v3 
- 
- This version is MODIFIED by me to use on M5-Stack with ArduinoIDE and i added some additional featues - 22.Mar.2020 22:07 CET
- 
- This code is forked from the original code: https://github/goleh/bitcoin-ticker  for ILI9341 TFT diplay and NodeMCU Board, 18.dec.2019 BUT Meanwhile i cannot find his project site and user on github but credits go to him and his code which builds the core of my project.
+Crypto Currency Ticker with 24 candlesticks chart for M5Stack ver1.0.0 - receiving WiFi data from Binance API/Websocket_v3
 
-This ticker shows a 24 candle chart, LO/HI values, volume as line, date and time (time.nist.gov timeserver), price reloades every 2 seconds
+it ticker shows a 24 candle chart, LO/HI values, volume as line, date and time (time.nist.gov timeserver), price reloades every 2 seconds
 
+This version is MODIFIED by me to use on M5-Stack with ArduinoIDE and i added some additional featues - 22.Mar.2020 22:07 CET
+ 
+This code is forked from the original code: https://github/goleh/bitcoin-ticker  for ILI9341 TFT diplay and NodeMCU Board, 18.dec.2019 BUT Meanwhile i cannot find his project site and user on github but credits go to him and his code which builds the core of my project.
 
 ADDED FEATURES:
 
