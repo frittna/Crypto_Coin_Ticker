@@ -285,6 +285,7 @@ void setup() {
   delay(400);
   M5.Lcd.fillScreen(TFT_BLACK);
   yield();
+  showWifiStrength();
   printTime();
 
   // load battery meter and draw all candles
