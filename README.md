@@ -6,7 +6,7 @@ the Ticker shows a 24 candles chart, LO/HI values, volume as line and date and t
 
 This version is MODIFIED by me to use on M5-Stack with ArduinoIDE and i added some additional featues - 29.3.2020 19:47 CET - Version 1.0.0
  
-This code is forked from the original code: https://github/goleh/bitcoin-ticker  for ILI9341 TFT diplay and NodeMCU Board, 18.dec.2019 BUT Meanwhile i cannot find his project site and user on github but credits go to him and his code which builds the core of my project.
+This code is forked from the original code: https://github/goleh/bitcoin-ticker  for ILI9341 TFT diplay and NodeMCU Board, 18.dec.2019 BUT meanwhile i cannot find his project site and user on github but credits go to him and his code which builds the core of my project.
 
 ADDED FEATURES:
 
