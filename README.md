@@ -1,6 +1,6 @@
 ![](preview/IMG_0.jpg)
  
-Crypto Currency Ticker with 24 candlesticks chart for M5Stack ver1.0.0 - receiving WiFi data from Binance API/Websocket_v3
+Crypto Currency Ticker with 24 candlesticks chart for M5Stack - receiving WiFi data from Binance API/Websocket_v3
 
 it ticker shows a 24 candle chart, LO/HI values, volume as line, date and time (time.nist.gov timeserver), price reloades every 2 seconds
 
