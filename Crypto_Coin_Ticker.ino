@@ -1,4 +1,4 @@
-// Crypto Currency Ticker with 24 candlesticks chart for M5Stack ver1.0.0 - receiving WiFi data from Binance API/Websocket_v3
+// Crypto Currency Ticker with 24 candlesticks chart for M5Stack - receiving WiFi data from Binance API/Websocket_v3
 //
 // it shows 24 candles, min/max prize and volume as line, the date and time are from time.nist.gov timeserver.
 // original code was for SPI TFT display ILI9341 and NodeMCU Board from: https://github/goleh/bitcoin-ticker from 18.dec.2019
@@ -34,7 +34,7 @@
 // - modify WiFi settings, timezone and your favorite currency pairs and the total number in the code 
 // --> Upload Code to M5Stack
 //
-// ##BEGIN##
+//  ver1.0.0##BEGIN##
 //
 //       name:                                     from:                                               search library manager for:
 // --------------------------------------+------------------------------------------+------ + --------------------------------------------------------------|
