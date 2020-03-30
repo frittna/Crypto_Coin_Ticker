@@ -92,7 +92,8 @@ const char* weekDay[] = {"", "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"};
 const char* monthName[] = {"", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 //const char* weekDay[] = {"", "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"};                                             // translated to german
 //const char* monthName[] = {"", "Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"}; //translated to german
-// REST API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
+// using Binance REST API for drawing charts and Binance Web Sockets API to update candles and price.
+//  REST API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
 const char* restApiHost = "api.binance.com";
 const byte candlesLimit = 24;
 const byte timeframes = 9;
@@ -100,7 +101,7 @@ const char* candlesTimeframes[timeframes] = {"1m", "3m", "5m", "15m", "1h", "4h"
 int current_Currency;
 byte current_Timeframe;
 const uint32_t volColor = 0x22222a;
-// WS API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/web-socket-streams.md
+//   WS API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/web-socket-streams.md
 const char* wsApiHost = "stream.binance.com";
 const int wsApiPort = 9443;
 // Layout: The space between the info and the bottom panel is for candlechart => 240px minus top+info+bottom
