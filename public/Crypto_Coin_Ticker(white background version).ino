@@ -27,7 +27,7 @@
 //   afterwards select the right board at the tools menu called M5-Stack-Core-ESP32, then select your actual COM port (restart Arduino 
 //   with USB connected to your M5-Stack if no COM-port is shown, also be shure to try the USB connector the other way round if you can't get it done)
 // - open new sketch, save it to create a sketch folder and paste all of this code into the code window
-// - install all included librarys in your Arduino: Sketch -> Include Library -> Manage Libraries -> seach for the correct ones (look very carefully)
+// - install all included librarys in your Arduino: Sketch -> Include Library -> Manage Libraries -> search for the correct ones (look very carefully)
 //
 // - for the esp32fs tool you have to search with google or use the github link bewlow, i have also put all needed files into a folder called public on my github site.
 // - to install the esp32fs tool correctly you have to copy the folder called ESP32FS inside the ESP32FS-1.0.zip archive into your Arduino's sketchbook folder
