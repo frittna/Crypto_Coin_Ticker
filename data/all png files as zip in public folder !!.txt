@@ -1,1 +1,2 @@
-all png files available as zip archive in public folder - extract the png files into your sketchbook data folder of you current project
+All png files are available as a zip archive inside the public folder.
+Extract files into your sketchbook's data folder of your current project.
