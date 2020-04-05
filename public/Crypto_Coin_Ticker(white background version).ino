@@ -20,7 +20,7 @@
 // known bugs: buttonC sometimes has the bug that it reacts like if it was pressed twice..
 //
 // INSTALLATION INSTRUCTIONS:
-// - download and unpack Arduino standalone version Arduino 1.8.12. from their homepage https://www.arduino.cc/en/Main/Software
+// - download Arduino IDE from their homepage https://www.arduino.cc/en/Main/Software
 // - like instructed in the M5-Stack mini-manual be sure to add the additional boards manager url at Arduino preferencies:
 //   file -> preferencies: https://dl.espressif.com/dl/package_esp32_index.json  -  then restart Arduino
 // - install the M5-Stack board in Arduino: Tools -> Board -> Boards Manager -> search for esp32 and install it
@@ -30,16 +30,15 @@
 // - install all included librarys in your Arduino: Sketch -> Include Library -> Manage Libraries -> seach for the correct ones (look very carefully)
 //
 // - for the esp32fs tool you have to search with google or use the github link bewlow, i have also put all needed files into a folder called public on my github site.
-// - to install the esp32fs tool correctly *) you have to copy the folder called ESP32FS inside the ESP32FS-1.0.zip file into you Arduino's tools folder 
-//   (it should look like: ../arduino-1.8.12/tools/ESP32FS/tool/esp32fs.jar)
-// - if esp32fs is loaded correctly you can see after a restart a tool called ESP32 Sketch Data Uploader in you tools menu in Arduino. 
-// - you have to download all my png picture files from my data folder on github and put it into your sketch subfolder called data. (you can open your sketch folder quickly with CTRL+K) 
-//   click verify, afterwards you can click ESP32 Sketch Data Uploader from the tools menu to flash them into the M5Stack embedded memory
+// - to install the esp32fs tool correctly you have to copy the folder called ESP32FS inside the ESP32FS-1.0.zip archive into your Arduino's sketchbook folder
+//   so first create a tools folder if there is no and paste the ESP32FS folder in it (it should look like C:\Users\yourName\Documents\Arduino\tools\ESP32FS\tool\esp32fs.jar )
+//   (for the standalone verion of Arduino put the esp32fs tool into your current arduino program folder like C:\arduino-1.8.12\tools\ESP32FS\tool\esp32fs.jar )
+// - if esp32fs is loaded correctly you can see after a restart of Arduino a tool called ESP32 Sketch Data Uploader in you tools menu 
+// - you have to download all my png picture files from my data folder on github and put it into your sketch subfolder called data. (open your sketch folder quickly with CTRL+K) 
+//   click verify, afterwards you can click ESP32 Sketch Data Uploader from the tools menu to flash the data into the M5Stack embedded memory
 //   
-// *) about ESP32 Sketch Data Uploader: to correctly load the tool I hat do use the standalone Verion of Arduino 1.8.12.
-//   The Arduino App ver 1.8.12 (Windows 10 Store Store 1.8.33.0) didn't recognizes the tool and shows no tool menu entry to upload.
-//   If you don't want to use SPIFFS at all you can change "drawPngFile(SPIFFS," to "drawPngFile(SD," in my code and put the pics to your root 
-//   of your SDcard. btw: all this effort is only because i don't want to use a sd-card at all for my graphics
+//   If you don't want to use the SPIFFS filesystem at all you can change "drawPngFile(SPIFFS," to "drawPngFile(SD," in my code and put the pics to your root 
+//   of your SDcard. All this effort is only because i don't want to use a sd-card at all for my graphics data.
 // 
 // - finally modify the code at WiFi host/password, timezone and maybe your favorite currency pair or other individual things in the code 
 // --> compile and upload to M5Stack - enjoy
