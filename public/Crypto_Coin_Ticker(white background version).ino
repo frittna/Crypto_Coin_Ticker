@@ -217,7 +217,7 @@ void setup() {
   M5.update();
 
   // startup with splashscreen on LCD Display and start up RGB LCD-pixel-bar (Neopixel)
-  M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0, 0);
+  M5.Lcd.drawPngFile(SPIFFS, "/m5_logo.png", 0, 0);
   for (int i = 0; i < 22 ; i++) {
     Brightness_value += 1;
     M5.lcd.setBrightness(Brightness_value);
@@ -258,7 +258,7 @@ void setup() {
     M5.Lcd.print(".");
     err_count ++;
     if (err_count > 288) {                                // if 10 minutes no wifi -> power off device !
-      M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
+      M5.Lcd.drawPngFile(SPIFFS, "/m5_logo.png", 0 , 0);
       delay(1000);
       M5.Lcd.fillScreen(TFT_WHITE);
       delay(1000);
@@ -1049,7 +1049,7 @@ void error(String text) {
       M5.Lcd.print(".");
       err_count ++;
       if (err_count > 288) {                        // if 10 minutes no wifi -> power off device !
-        M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
+        M5.Lcd.drawPngFile(SPIFFS, "/m5_logo.png", 0 , 0);
         delay(1000);
         M5.Lcd.fillScreen(TFT_WHITE);
         delay(1000);
@@ -1311,7 +1311,7 @@ void buttonActions() {
   if (sleeptimer_bool == true && (now() > (sleeptimer_counter + sleeptime))) {
     sleeptimer_bool = false;
     M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2), 5, TFT_WHITE); // reset status light when sleeptimer was finished
-    M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
+    M5.Lcd.drawPngFile(SPIFFS, "/m5_logo.png", 0 , 0);
     delay(1000);
     for (int i = Brightness_value; i > 0 ; i--) {                  // dimm LCD slowly before shutdown
       Brightness_value -= 1;
