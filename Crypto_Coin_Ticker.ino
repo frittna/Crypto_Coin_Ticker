@@ -3,7 +3,7 @@
 // it shows 24 candles, min/max prize and volume as line, the date and time are from time.nist.gov timeserver.
 // original code was for SPI TFT display ILI9341 and NodeMCU Board from: https://github.com/olbed/bitcoin-ticker from 18.dec.2019
 //
-// this version is MODIFIED by frittna to use on M5-Stack with ArduinoIDE - created 5.Apr.2020 17:12 CET - Version 1.0.0
+// this version is MODIFIED by frittna to use on M5-Stack with ArduinoIDE - created 29.Mar.2020 19:47 CET - Version 1.0.0
 // added the use of free fonts, changed format for small currencies, added the use of SPIFFS*) for jpg+png pics, settings will remain stored after a reset
 // buttonA: switches through 8 (as many you want) preconfigured pairs e.g: BTC to USDT etc. which are available on Binance.com
 // buttonB: changes the LCD-Brightness in 4 levels
@@ -94,6 +94,8 @@ uint32_t pair_color[] = {TFT_YELLOW,   TFT_DARKCYAN,  TFT_ORANGE,    TFT_LIGHTGR
 // TFT_BLACK, TFT_NAVY, TFT_DARKGREEN, TFT_DARKCYAN, TFT_MAROON, TFT_PURPLE, TFT_OLIVE, TFT_LIGHTGREY, TFT_DARKGREY,
 // TFT_BLUE, TFT_GREEN, TFT_CYAN, TFT_RED, TFT_MAGENTA, TFT_YELLOW, TFT_WHITE, TFT_ORANGE, TFT_GREENYELLOW, TFT_PINK
 // Or you can define your own colors in RGB values: with #define my_col M5.Lcd.color565(80,50,125) /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
+#define my_col_darker_green M5.Lcd.color565(146,217,0) /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
+#define my_col_darker_magenta M5.Lcd.color565(234,0,72) /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // day and month names for topPanel:
@@ -582,7 +584,7 @@ void drawCandle(int i) {
   }
   center = w / 2.0;
   center += ((i + empty_candles) * w);
-  uint32_t color = cy < oy ? TFT_GREEN : TFT_RED;
+  uint32_t color = cy < oy ? my_col_darker_green : my_col_darker_magenta;
 
   // Background:
   M5.Lcd.fillRect((center - w) + 5, topPanel + infoPanel, ceil(w), 240 - (topPanel + infoPanel + bottomPanel), TFT_BLACK);
@@ -636,7 +638,7 @@ void drawPrice() {
   if (lastPrice != price) {
     M5.Lcd.fillRect(0, 240 - bottomPanel, 202, bottomPanel, TFT_BLACK); M5.Lcd.setTextSize(1);
     M5.Lcd.setFreeFont(FSSB24); M5.Lcd.setCursor(0, 273 - bottomPanel);
-    M5.Lcd.setTextColor(price > oy_var2 ? TFT_GREEN : TFT_RED);
+    M5.Lcd.setTextColor(price > oy_var2 ? my_col_darker_green : my_col_darker_magenta);
     lastPrice = price;
     if (multi_level == 1) {
       M5.Lcd.printf("%.4f", price);
@@ -651,7 +653,7 @@ void drawPrice() {
     }
   }
   if (ph != lastHigh) {
-    M5.Lcd.fillRect(202, 240 - bottomPanel, 99, bottomPanel / 2, TFT_BLACK); M5.Lcd.setTextColor(TFT_GREEN);
+    M5.Lcd.fillRect(202, 240 - bottomPanel, 99, bottomPanel / 2, TFT_BLACK); M5.Lcd.setTextColor(my_col_darker_green);
     M5.Lcd.setFreeFont(FSSB9); M5.Lcd.setCursor(202, 254 - bottomPanel); M5.Lcd.setTextSize(1);
     lastHigh = ph;
     if (multi == 100) {
@@ -667,7 +669,7 @@ void drawPrice() {
     }
   }
   if (pl != lastLow) {
-    M5.Lcd.fillRect(202, 240 - bottomPanel / 2, 99, bottomPanel / 2, TFT_BLACK); M5.Lcd.setTextColor(TFT_RED);
+    M5.Lcd.fillRect(202, 240 - bottomPanel / 2, 99, bottomPanel / 2, TFT_BLACK); M5.Lcd.setTextColor(my_col_darker_magenta);
     M5.Lcd.setFreeFont(FSSB9); M5.Lcd.setCursor(202, 256 - floor(bottomPanel / 2)); M5.Lcd.setTextSize(1);
     lastLow = pl;
     if (multi == 100) {
@@ -703,7 +705,7 @@ void PriceChangings() {
     M5.Lcd.setFreeFont(FM9); M5.Lcd.setCursor(108, topPanel + infoPanel - 2); M5.Lcd.setTextSize(1);
     if (current_Timeframe == 0) { //1m
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 21].c) {
-        M5.Lcd.setTextColor(TFT_GREEN);
+        M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
           M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c); //+%.1f shows prefix even if positive with 1 digit after comma
         } else if (multi_level == 2) {
@@ -718,7 +720,7 @@ void PriceChangings() {
         M5.Lcd.setTextColor(TFT_WHITE);
         M5.Lcd.print(":20m");
       } else {
-        M5.Lcd.setTextColor(TFT_RED);
+        M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
           M5.Lcd.printf("-%.3f ", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
@@ -736,7 +738,7 @@ void PriceChangings() {
     }
     else if (current_Timeframe == 1) { //3m
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 21].c) {
-        M5.Lcd.setTextColor(TFT_GREEN);
+        M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
           M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
         } else if (multi_level == 2) {
@@ -751,7 +753,7 @@ void PriceChangings() {
         M5.Lcd.setTextColor(TFT_WHITE);
         M5.Lcd.print(":60m");
       } else {
-        M5.Lcd.setTextColor(TFT_RED);
+        M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
           M5.Lcd.printf("-%.3f ", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
@@ -769,7 +771,7 @@ void PriceChangings() {
     }
     else if (current_Timeframe == 2) { //5m
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 24].c) {
-        M5.Lcd.setTextColor(TFT_GREEN);
+        M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
           M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 2) {
@@ -784,7 +786,7 @@ void PriceChangings() {
         M5.Lcd.setTextColor(TFT_WHITE);
         M5.Lcd.print(":2h");
       } else {
-        M5.Lcd.setTextColor(TFT_RED);
+        M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
           M5.Lcd.printf("-%.3f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
@@ -802,7 +804,7 @@ void PriceChangings() {
     }
     else if (current_Timeframe == 3) { //15m
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 24].c) {
-        M5.Lcd.setTextColor(TFT_GREEN);
+        M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
           M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 2) {
@@ -817,7 +819,7 @@ void PriceChangings() {
         M5.Lcd.setTextColor(TFT_WHITE);
         M5.Lcd.print(":6h");
       } else {
-        M5.Lcd.setTextColor(TFT_RED);
+        M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
           M5.Lcd.printf("-%.3f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
@@ -835,7 +837,7 @@ void PriceChangings() {
     }
     else if (current_Timeframe == 4) { //1h
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 24].c) {
-        M5.Lcd.setTextColor(TFT_GREEN);
+        M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
           M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 2) {
@@ -850,7 +852,7 @@ void PriceChangings() {
         M5.Lcd.setTextColor(TFT_WHITE);
         M5.Lcd.print(":24h");
       } else {
-        M5.Lcd.setTextColor(TFT_RED);
+        M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
           M5.Lcd.printf("-%.3f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
@@ -868,7 +870,7 @@ void PriceChangings() {
     }
     else if (current_Timeframe == 5) { //4h
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 24].c) {
-        M5.Lcd.setTextColor(TFT_GREEN);
+        M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
           M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 2) {
@@ -883,7 +885,7 @@ void PriceChangings() {
         M5.Lcd.setTextColor(TFT_WHITE);
         M5.Lcd.print(":4d");
       } else {
-        M5.Lcd.setTextColor(TFT_RED);
+        M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
           M5.Lcd.printf("-%.3f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
@@ -901,7 +903,7 @@ void PriceChangings() {
     }
     else if (current_Timeframe == 6) { //1d
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 22].c) {
-        M5.Lcd.setTextColor(TFT_GREEN);
+        M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
           M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 22].c);
         } else if (multi_level == 2) {
@@ -916,7 +918,7 @@ void PriceChangings() {
         M5.Lcd.setTextColor(TFT_WHITE);
         M5.Lcd.print(":3w");
       } else {
-        M5.Lcd.setTextColor(TFT_RED);
+        M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
           M5.Lcd.printf("-%.3f ", candles[candlesLimit - 22].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
@@ -934,7 +936,7 @@ void PriceChangings() {
     }
     else if (current_Timeframe == 7) { //1w
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 24].c) {
-        M5.Lcd.setTextColor(TFT_GREEN);
+        M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
           M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 2) {
@@ -949,7 +951,7 @@ void PriceChangings() {
         M5.Lcd.setTextColor(TFT_WHITE);
         M5.Lcd.print(":5M");
       } else {
-        M5.Lcd.setTextColor(TFT_RED);
+        M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
           M5.Lcd.printf("-%.3f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
@@ -967,7 +969,7 @@ void PriceChangings() {
     }
     else if (current_Timeframe == 8) { //1M
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 24].c) {
-        M5.Lcd.setTextColor(TFT_GREEN);
+        M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
           M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 2) {
@@ -982,7 +984,7 @@ void PriceChangings() {
         M5.Lcd.setTextColor(TFT_WHITE);
         M5.Lcd.print(":2y");
       } else {
-        M5.Lcd.setTextColor(TFT_RED);
+        M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
           M5.Lcd.printf("-%.3f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
