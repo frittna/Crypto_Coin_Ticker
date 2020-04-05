@@ -1,4 +1,4 @@
-![](preview/IMG_0.jpg)
+![](preview/IMG_1.jpg)
  
 Crypto Currency Ticker with 24 candlesticks chart for M5Stack - receiving WiFi data from Binance API/Websocket_v3
 
@@ -38,8 +38,7 @@ press buttonC, then within 2 sec press buttonA to switch down or buttonB to swit
  known bugs: ButtonC needs better debouncing, slow response if wifi signal receiption is not stable, maybe there are a few more minor unknown bugs but in general it is working very good atm.
 
 ! SEE CODE FOR FURTHER INSTRUCTIONS !
-
-![](preview/IMG_1.jpg)
+![](preview/IMG_0.jpg)
 ![](preview/IMG_2.jpg)
 ![](preview/IMG_3.jpg)
 ![](preview/IMG_4.jpg)
@@ -47,5 +46,6 @@ press buttonC, then within 2 sec press buttonA to switch down or buttonB to swit
 ![](preview/IMG_6.jpg)
 ![](preview/IMG_7.jpg)
 ![](preview/IMG_8.jpg)
+
 if you like white background?
 ![](preview/IMG_9.jpg)
