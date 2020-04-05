@@ -47,4 +47,5 @@ press buttonC, then within 2 sec press buttonA to switch down or buttonB to swit
 ![](preview/IMG_6.jpg)
 ![](preview/IMG_7.jpg)
 ![](preview/IMG_8.jpg)
+if you like white background?
 ![](preview/IMG_9.jpg)
