@@ -19,12 +19,13 @@
 // the impoovements are based quick and dirty solutions - no complains please ;) - changings welcome :)
 // known bugs: buttonC sometimes has the bug that it reacts like if it was pressed twice..
 //
+// INSTALLATION INSTRUCTIONS:
 // - download and unpack Arduino standalone version Arduino 1.8.12. from their homepage https://www.arduino.cc/en/Main/Software
-//   like instructed in the M5-Stack mini-manual be sure to add the additional boards manager url at Arduino preferencies:
+// - like instructed in the M5-Stack mini-manual be sure to add the additional boards manager url at Arduino preferencies:
 //   file -> preferencies: https://dl.espressif.com/dl/package_esp32_index.json  -  then restart Arduino
 // - install the M5-Stack board in Arduino: Tools -> Board -> Boards Manager -> search for esp32 and install it
-//   afterwards select the right board at the tools menu called M5-Stack-Core-ESP32, then and select your actual COM port (restart Arduino with USB connected to your M5-Stack if 
-//   no COM-port is shown, also be shure to try the USB connector the other way round if you can't get a serial connection)
+//   afterwards select the right board at the tools menu called M5-Stack-Core-ESP32, then select your actual COM port (restart Arduino 
+//   with USB connected to your M5-Stack if no COM-port is shown, also be shure to try the USB connector the other way round if you can't get it done)
 // - open new sketch, save it to create a sketch folder and paste all of this code into the code window
 // - install all included librarys in your Arduino: Sketch -> Include Library -> Manage Libraries -> seach for the correct ones (look very carefully)
 //
