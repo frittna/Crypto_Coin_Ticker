@@ -236,8 +236,10 @@ void setup() {
   M5.Lcd.setFreeFont(FSS12);
   M5.Lcd.setTextWrap(false);
   unsigned int last_stored_Brightness_value = preferences.getUInt("bright", 22);
+  unsigned int last_stored_Brightness_level = preferences.getUInt("briglv", 2);
   Brightness_value = last_stored_Brightness_value;
-  M5.lcd.setBrightness(Brightness_value);                // set last stored brightness value from memory
+  Brightness_level = last_stored_Brightness_level;
+  M5.lcd.setBrightness(Brightness_value);                // use last stored brightness value from memory
   yield();
 
   // Setting Power:
@@ -1211,6 +1213,7 @@ void buttonActions() {
   if (current_bright_changed && bright_btn_timeout_counter < currentMs) {      // clear png icon with drawCandles()
     current_bright_changed = false;
     preferences.putUInt("bright", Brightness_value);                           // store setting to memory
+    preferences.putUInt("briglv", Brightness_level);                           // store setting to memory
     bright_btn_timeout_counter = 4294966295;
     drawCandles();
   }
@@ -1260,6 +1263,7 @@ void buttonActions() {
       }
       M5.lcd.setBrightness(Brightness_value);
       preferences.putUInt("bright", Brightness_value);            // store setting to memory
+      preferences.putUInt("briglv", Brightness_level);            // store setting to memory
       M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2), 5, TFT_BLUE); // set blue status light when sleeptimer was activated
       drawCandles();
       M5.Lcd.drawPngFile(SPIFFS, "/sleep20m.png", (320 / 2) - (100 / 2), (240 / 2) - ((100 / 2))); // sleep.png is 100x100px
