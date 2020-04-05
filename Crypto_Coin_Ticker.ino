@@ -333,7 +333,7 @@ void printTime() {
   M5.Lcd.fillRect(0, 0, 320, topPanel, TFT_BLACK); M5.Lcd.setFreeFont(FSSB12);
   M5.Lcd.setCursor(1, 19); M5.Lcd.setTextSize(1); M5.Lcd.setTextColor(strname_color);
   M5.Lcd.print(strname_currency);
-  M5.Lcd.setFreeFont(FMB12); M5.Lcd.setCursor(111, 18); M5.Lcd.setTextColor(TFT_LIGHTGREY);
+  M5.Lcd.setFreeFont(FMB12); M5.Lcd.setCursor(111, 15); M5.Lcd.setTextColor(TFT_LIGHTGREY);
   M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay[weekday(now)], day(now), monthName[month(now)], hour(now), minute(now));
 }
 
