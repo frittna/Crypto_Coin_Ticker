@@ -61,10 +61,10 @@
 // --------------------------------------+------------------------------------------+-------+----------------------------------------------------------------
 //
 // Wi-Fi connection settings:
-const char* ssid      = "**"; // regular wi-fi host
-const char* password  = "**"; // regular wi-fi password
-const char* ssid2     = "**"; // alternative wi-fi host (when ButtonC is held at startup)
-const char* password2 = "**"; // alternative wi-fi password (when ButtonC is held at startup)
+const char* ssid      = "yourhost";   // regular wi-fi host
+const char* password  = "yourpassw";  // regular wi-fi password
+const char* ssid2     = "otherhost";  // alternative wi-fi host (when ButtonC is held at startup)
+const char* password2 = "otherpassw"; // alternative wi-fi password (when ButtonC is held at startup)
 //
 // Time Zone: modify for your local timezone here
 //TimeChangeRule summer = {"AEDT", First, Sun, Oct, 2, 660};        // Australia Eastern Time Zone (Sydney, Melbourne)
@@ -95,7 +95,7 @@ uint32_t pair_color[] = {TFT_YELLOW,   TFT_DARKCYAN,  TFT_ORANGE,    TFT_LIGHTGR
 // TFT_BLUE, TFT_GREEN, TFT_CYAN, TFT_RED, TFT_MAGENTA, TFT_YELLOW, TFT_WHITE, TFT_ORANGE, TFT_GREENYELLOW, TFT_PINK
 // Or you can define your own colors in RGB values: with #define my_col M5.Lcd.color565(80,50,125) /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
 #define my_col_darker_green M5.Lcd.color565(146,217,0)  /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */ 
-#define my_col_darker_magenta M5.Lcd.color565(255,0,36) /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
+#define my_col_darker_magenta M5.Lcd.color565(255,0,28) /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // day and month names for topPanel:
@@ -707,13 +707,13 @@ void PriceChangings() {
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 21].c) {
         M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
-          M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c); //+%.1f shows prefix even if positive with 1 digit after comma
+          M5.Lcd.printf("+%.3f", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c); //+%.1f shows prefix even if positive with 1 digit after comma
         } else if (multi_level == 2) {
-          M5.Lcd.printf("+%.5f ", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
+          M5.Lcd.printf("+%.5f", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("+%.1e ", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
+          M5.Lcd.printf("+%.1e", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
         } else {
-          M5.Lcd.printf("+%4.1f ", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
+          M5.Lcd.printf("+%4.1f", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 21].c / (candles[candlesLimit - 1].c - candles[candlesLimit - 21].c)) * 100));
         M5.Lcd.print("%)");
@@ -722,13 +722,13 @@ void PriceChangings() {
       } else {
         M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
-          M5.Lcd.printf("-%.3f ", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.3f", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("-%.5f ", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.5f", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("-%.1e ", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.1e", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
         } else {
-          M5.Lcd.printf("-%4.1f ", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%4.1f", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 21].c / (candles[candlesLimit - 21].c - candles[candlesLimit - 1].c)) * 100));
         M5.Lcd.print("%)");
@@ -740,13 +740,13 @@ void PriceChangings() {
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 21].c) {
         M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
-          M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
+          M5.Lcd.printf("+%.3f", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("+%.5f ", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
+          M5.Lcd.printf("+%.5f", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("+%.1e ", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
+          M5.Lcd.printf("+%.1e", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
         } else {
-          M5.Lcd.printf("+%4.1f ", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
+          M5.Lcd.printf("+%4.1f", candles[candlesLimit - 1].c - candles[candlesLimit - 21].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 21].c / (candles[candlesLimit - 1].c - candles[candlesLimit - 21].c)) * 100));
         M5.Lcd.print("%)");
@@ -755,13 +755,13 @@ void PriceChangings() {
       } else {
         M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
-          M5.Lcd.printf("-%.3f ", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.3f", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("-%.5f ", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.5f", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("-%.1e ", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.1e", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
         } else {
-          M5.Lcd.printf("-%4.1f ", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%4.1f", candles[candlesLimit - 21].c - candles[candlesLimit - 1].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 21].c / (candles[candlesLimit - 21].c - candles[candlesLimit - 1].c)) * 100));
         M5.Lcd.print("%)");
@@ -773,13 +773,13 @@ void PriceChangings() {
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 24].c) {
         M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
-          M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.3f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("+%.5f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.5f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("+%.1e ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.1e", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else {
-          M5.Lcd.printf("+%4.1f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%4.1f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 24].c / (candles[candlesLimit - 1].c - candles[candlesLimit - 24].c)) * 100));
         M5.Lcd.print("%)");
@@ -788,13 +788,13 @@ void PriceChangings() {
       } else {
         M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
-          M5.Lcd.printf("-%.3f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.3f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("-%.5f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.5f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("-%.1e ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.1e", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else {
-          M5.Lcd.printf("-%4.1f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%4.1f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 24].c / (candles[candlesLimit - 24].c - candles[candlesLimit - 1].c)) * 100));
         M5.Lcd.print("%)");
@@ -806,13 +806,13 @@ void PriceChangings() {
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 24].c) {
         M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
-          M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.3f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("+%.5f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.5f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("+%.1e ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.1e", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else {
-          M5.Lcd.printf("+%4.1f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%4.1f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 24].c / (candles[candlesLimit - 1].c - candles[candlesLimit - 24].c)) * 100));
         M5.Lcd.print("%)");
@@ -821,13 +821,13 @@ void PriceChangings() {
       } else {
         M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
-          M5.Lcd.printf("-%.3f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.3f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("-%.5f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.5f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("-%.1e ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.1e", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else {
-          M5.Lcd.printf("-%4.1f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%4.1f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 24].c / (candles[candlesLimit - 24].c - candles[candlesLimit - 1].c)) * 100));
         M5.Lcd.print("%)");
@@ -839,13 +839,13 @@ void PriceChangings() {
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 24].c) {
         M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
-          M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.3f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("+%.5f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.5f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("+%.1e ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.1e", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else {
-          M5.Lcd.printf("+%4.1f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%4.1f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 24].c / (candles[candlesLimit - 1].c - candles[candlesLimit - 24].c)) * 100));
         M5.Lcd.print("%)");
@@ -854,13 +854,13 @@ void PriceChangings() {
       } else {
         M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
-          M5.Lcd.printf("-%.3f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.3f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("-%.5f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.5f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("-%.1e ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.1e", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else {
-          M5.Lcd.printf("-%4.1f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%4.1f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 24].c / (candles[candlesLimit - 24].c - candles[candlesLimit - 1].c)) * 100));
         M5.Lcd.print("%)");
@@ -872,13 +872,13 @@ void PriceChangings() {
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 24].c) {
         M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
-          M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.3f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("+%.5f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.5f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("+%.1e ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.1e", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else {
-          M5.Lcd.printf("+%4.1f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%4.1f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 24].c / (candles[candlesLimit - 1].c - candles[candlesLimit - 24].c)) * 100));
         M5.Lcd.print("%)");
@@ -887,13 +887,13 @@ void PriceChangings() {
       } else {
         M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
-          M5.Lcd.printf("-%.3f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.3f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("-%.5f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.5f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("-%.1e ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.1e", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else {
-          M5.Lcd.printf("-%4.1f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%4.1f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 24].c / (candles[candlesLimit - 24].c - candles[candlesLimit - 1].c)) * 100));
         M5.Lcd.print("%)");
@@ -905,13 +905,13 @@ void PriceChangings() {
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 22].c) {
         M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
-          M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 22].c);
+          M5.Lcd.printf("+%.3f", candles[candlesLimit - 1].c - candles[candlesLimit - 22].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("+%.5f ", candles[candlesLimit - 1].c - candles[candlesLimit - 22].c);
+          M5.Lcd.printf("+%.5f", candles[candlesLimit - 1].c - candles[candlesLimit - 22].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("+%.1e ", candles[candlesLimit - 1].c - candles[candlesLimit - 22].c);
+          M5.Lcd.printf("+%.1e", candles[candlesLimit - 1].c - candles[candlesLimit - 22].c);
         } else {
-          M5.Lcd.printf("+%4.1f ", candles[candlesLimit - 1].c - candles[candlesLimit - 22].c);
+          M5.Lcd.printf("+%4.1f", candles[candlesLimit - 1].c - candles[candlesLimit - 22].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 22].c / (candles[candlesLimit - 1].c - candles[candlesLimit - 22].c)) * 100));
         M5.Lcd.print("%)");
@@ -920,13 +920,13 @@ void PriceChangings() {
       } else {
         M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
-          M5.Lcd.printf("-%.3f ", candles[candlesLimit - 22].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.3f", candles[candlesLimit - 22].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("-%.5f ", candles[candlesLimit - 22].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.5f", candles[candlesLimit - 22].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("-%.1e ", candles[candlesLimit - 22].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.1e", candles[candlesLimit - 22].c - candles[candlesLimit - 1].c);
         } else {
-          M5.Lcd.printf("-%4.1f ", candles[candlesLimit - 22].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%4.1f", candles[candlesLimit - 22].c - candles[candlesLimit - 1].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 22].c / (candles[candlesLimit - 22].c - candles[candlesLimit - 1].c)) * 100));
         M5.Lcd.print("%)");
@@ -938,13 +938,13 @@ void PriceChangings() {
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 24].c) {
         M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
-          M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.3f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("+%.5f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.5f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("+%.1e ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.1e", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else {
-          M5.Lcd.printf("+%4.1f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%4.1f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 24].c / (candles[candlesLimit - 1].c - candles[candlesLimit - 24].c)) * 100));
         M5.Lcd.print("%)");
@@ -953,13 +953,13 @@ void PriceChangings() {
       } else {
         M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
-          M5.Lcd.printf("-%.3f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.3f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("-%.5f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.5f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("-%.1e ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.1e", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else {
-          M5.Lcd.printf("-%4.1f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%4.1f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 24].c / (candles[candlesLimit - 24].c - candles[candlesLimit - 1].c)) * 100));
         M5.Lcd.print("%)");
@@ -971,13 +971,13 @@ void PriceChangings() {
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 24].c) {
         M5.Lcd.setTextColor(my_col_darker_green);
         if (multi_level == 1) {
-          M5.Lcd.printf("+%.3f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.3f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("+%.5f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.5f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("+%.1e ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%.1e", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         } else {
-          M5.Lcd.printf("+%4.1f ", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
+          M5.Lcd.printf("+%4.1f", candles[candlesLimit - 1].c - candles[candlesLimit - 24].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 24].c / (candles[candlesLimit - 1].c - candles[candlesLimit - 24].c)) * 100));
         M5.Lcd.print("%)");
@@ -986,13 +986,13 @@ void PriceChangings() {
       } else {
         M5.Lcd.setTextColor(my_col_darker_magenta);
         if (multi_level == 1) {
-          M5.Lcd.printf("-%.3f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.3f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 2) {
-          M5.Lcd.printf("-%.5f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.5f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else if (multi_level == 3) {
-          M5.Lcd.printf("-%.1e ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%.1e", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         } else {
-          M5.Lcd.printf("-%4.1f ", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
+          M5.Lcd.printf("-%4.1f", candles[candlesLimit - 24].c - candles[candlesLimit - 1].c);
         }
         M5.Lcd.printf("(%4.1f", (1 / (candles[candlesLimit - 24].c / (candles[candlesLimit - 24].c - candles[candlesLimit - 1].c)) * 100));
         M5.Lcd.print("%)");
