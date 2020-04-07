@@ -95,7 +95,7 @@ uint32_t pair_color[] = {TFT_YELLOW,   TFT_DARKCYAN,  TFT_ORANGE,    TFT_LIGHTGR
 // TFT_BLUE, TFT_GREEN, TFT_CYAN, TFT_RED, TFT_MAGENTA, TFT_YELLOW, TFT_WHITE, TFT_ORANGE, TFT_GREENYELLOW, TFT_PINK
 // Or you can define your own colors in RGB values: with #define my_col M5.Lcd.color565(80,50,125) /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
 #define my_col_darker_green M5.Lcd.color565(146,217,0)  /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */ 
-#define my_col_darker_magenta M5.Lcd.color565(255,0,78) /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
+#define my_col_darker_magenta M5.Lcd.color565(255,0,36) /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // day and month names for topPanel:
