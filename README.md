@@ -4,9 +4,9 @@ Crypto Currency Ticker with 24 candlesticks chart for M5Stack - receiving WiFi d
 
 the Ticker shows a 24 candles chart, LO/HI values, volume as line and date and time (time.nist.gov timeserver), price is reloading every 2 seconds
 
-This version is MODIFIED by me to use on M5-Stack with ArduinoIDE and i added some additional featues - 5.Apr.2020 17:12 CET - Version 1.0.0
- 
-This code is forked from the original code: https://github.com/olbed/bitcoin-ticker for ILI9341 TFT diplay and NodeMCU Board, 18.dec.2019, credits go to him and his code which builds the core of my project.
+This app is a for the M5-Stack with ArduinoIDE. last modified 11.Apr.2020 22:12 CET - Version 1.0.0
+
+The code is forked from a project which draws candles, min and max, price and date on an ILI9341 TFT diplay with NodeMCU Board, from 18.dec.2019, credits go to him and his code which builds the core of my project. https://github.com/olbed/bitcoin-ticker 
 
 ADDED FEATURES:
 
