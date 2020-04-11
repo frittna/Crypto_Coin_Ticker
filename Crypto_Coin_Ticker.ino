@@ -332,6 +332,7 @@ void loop()
     webSocket.beginSSL(wsApiHost, wsApiPort, getWsApiUrl());
     while (!requestRestApi()) {}
     drawCandles();
+    showBatteryLevel();
   }
   webSocket.loop();
   M5.update();                                                             // update button checks
