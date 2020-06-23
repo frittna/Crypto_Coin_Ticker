@@ -86,7 +86,7 @@ TimeChangeRule standard = {"EST", First, Sun, Nov, 2, -300};
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 byte pairs = 8;       // default: 8, total numbers of currency pairs, max 255
-String pair_name[]    = {"BITCOIN",    "Etherium",    "BNB",        "RIPPLE",      "LiteCoin",      "Tron",      "WAVES",        "Elrond"         }; //name for TopPanel (6-8 letters)
+String pair_name[]    = {"BITCOIN",    "Ethereum",    "BNB",        "RIPPLE",      "Litecoin",      "Tron",      "WAVES",        "Elrond"         }; //name for TopPanel (6-8 letters)
 String pair_STRING[]  = {"BTCUSDT",    "ETHUSDT",     "BNBUSDT",    "XRPUSDT",     "LTCUSDT",       "TRXUSDT",   "WAVESUSDT",    "ERDUSDT"        }; //name for url in BIG LETTERS
 String pair_string[]  = {"btcusdt",    "ethusdt",     "bnbusdt",    "xrpusdt",     "ltcusdt",       "trxusdt",   "wavesusdt",    "erdusdt"        }; //name for url in small letters
 uint32_t pair_color[] = {TFT_YELLOW,   TFT_DARKCYAN,  TFT_ORANGE,    TFT_LIGHTGREY, TFT_GREENYELLOW, TFT_BLUE,   TFT_RED,        TFT_GREENYELLOW  }; //color in uint32_t format
