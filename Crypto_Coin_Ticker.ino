@@ -3,7 +3,7 @@
 // it shows 24 candles, min/max prize and volume as line, the date and time are from time.nist.gov timeserver.
 // original code was for SPI TFT display ILI9341 and NodeMCU Board from: https://github.com/olbed/bitcoin-ticker from 18.dec.2019
 //
-// this version is MODIFIED by frittna to use on M5-Stack with ArduinoIDE - last modified 11.Apr.2020 22:19 CET - Version 1.0.0
+// this version is MODIFIED by frittna to use on M5-Stack with ArduinoIDE - last modified 04.Aug.2020 21:25 CET - Version 1.0.1
 // added the use of free fonts, changed format for small currencies, added the use of SPIFFS*) for jpg+png pics, settings will remain stored after a reset
 // buttonA: switches through 8 (as many you want) preconfigured pairs e.g: BTC to USDT etc. which are available on Binance.com
 // buttonB: changes the LCD-Brightness in 4 levels
@@ -12,12 +12,13 @@
 // available timeframes are 1m, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1M
 // hold ButtonC at Startup: will start with alternative SSID/WiFi-password instead (e.g your mobile phone's hotspot)
 // the new infoPanel shows: WiFi-strength, batterylevel and indicates charging (can have delay up to 30s), a colored "busy" light, sleeptimer-active light, changings in %
-// SleepTimer: when holding ButtonB longer than 2 seconds it will start a 20 minutes timer to powerOFF the device
+// SleepTimer: when holding ButtonB longer than 2 seconds it will start a 45 minutes timer to powerOFF the device
+// ButtonC long pressed turns OFF the device (when on usb power there is no option to turn off the unit except by a PowerOFF command)
 // if WiFi is failing more than 2 minutes it reduces the reconnect interval and brightness level, after 10 minutes -> shutdown device
 // prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in the Battery-Bottom Module for M5Stack/Fire with rgb 10 LEDs)
 // Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-card hold buttonA while booting up to start MenuLoader to load your apps
 // the impoovements are based quick and dirty solutions - no complains please ;) - changings welcome :)
-// known bugs: buttonC sometimes has the bug that it reacts like if it was pressed twice..
+// known bugs: buttonC sometimes has the bug that it reacts like if it was pressed twice.. The battery symbol could be more precise
 //
 // INSTALLATION INSTRUCTIONS:
 // - download Arduino IDE from their homepage https://www.arduino.cc/en/Main/Software
@@ -61,10 +62,10 @@
 // --------------------------------------+------------------------------------------+-------+----------------------------------------------------------------
 //
 // Wi-Fi connection settings:
-const char* ssid      = "yourhost";   // regular wi-fi host
-const char* password  = "yourpassw";  // regular wi-fi password
-const char* ssid2     = "otherhost";  // alternative wi-fi host (when ButtonC is held at startup)
-const char* password2 = "otherpassw"; // alternative wi-fi password (when ButtonC is held at startup)
+const char* ssid      = "***"; // regular wi-fi host
+const char* password  = "***"; // regular wi-fi password
+const char* ssid2     = "***"; // alternative wi-fi host (when ButtonC is held at startup)
+const char* password2 = "***"; // alternative wi-fi password (when ButtonC is held at startup)
 //
 // Time Zone: modify for your local timezone here
 //TimeChangeRule summer = {"AEDT", First, Sun, Oct, 2, 660};        // Australia Eastern Time Zone (Sydney, Melbourne)
@@ -86,15 +87,15 @@ TimeChangeRule standard = {"EST", First, Sun, Nov, 2, -300};
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 byte pairs = 8;       // default: 8, total numbers of currency pairs, max 255
-String pair_name[]    = {"BITCOIN",    "Ethereum",    "BNB",        "RIPPLE",      "Litecoin",      "Tron",      "WAVES",        "Elrond"         }; //name for TopPanel (6-8 letters)
-String pair_STRING[]  = {"BTCUSDT",    "ETHUSDT",     "BNBUSDT",    "XRPUSDT",     "LTCUSDT",       "TRXUSDT",   "WAVESUSDT",    "ERDUSDT"        }; //name for url in BIG LETTERS
-String pair_string[]  = {"btcusdt",    "ethusdt",     "bnbusdt",    "xrpusdt",     "ltcusdt",       "trxusdt",   "wavesusdt",    "erdusdt"        }; //name for url in small letters
-uint32_t pair_color[] = {TFT_YELLOW,   TFT_DARKCYAN,  TFT_ORANGE,    TFT_LIGHTGREY, TFT_GREENYELLOW, TFT_BLUE,   TFT_RED,        TFT_GREENYELLOW  }; //color in uint32_t format
+String pair_name[]    = {"Bitcoin",    "Ethereum",    "BNB",        "IOTA",        "Link",         "Cosmos",         "Cardano",   "Elrond"         }; //name for TopPanel (6-8 letters)
+String pair_STRING[]  = {"BTCUSDT",    "ETHUSDT",     "BNBUSDT",    "IOTAUSDT",    "LINKUSDT",     "ATOMUSDT",       "ADAUSDT",   "ERDUSDT"        }; //name for url in BIG LETTERS
+String pair_string[]  = {"btcusdt",    "ethusdt",     "bnbusdt",    "iotausdt",    "linkusdt",     "atomusdt",       "adausdt",   "erdusdt"        }; //name for url in small letters
+uint32_t pair_color[] = {TFT_YELLOW,   TFT_DARKCYAN,  TFT_ORANGE,   TFT_LIGHTGREY, TFT_CYAN,       TFT_GREENYELLOW,  TFT_BLUE,    TFT_RED          }; //color in uint32_t format
 // predefined color names:
 // TFT_BLACK, TFT_NAVY, TFT_DARKGREEN, TFT_DARKCYAN, TFT_MAROON, TFT_PURPLE, TFT_OLIVE, TFT_LIGHTGREY, TFT_DARKGREY,
 // TFT_BLUE, TFT_GREEN, TFT_CYAN, TFT_RED, TFT_MAGENTA, TFT_YELLOW, TFT_WHITE, TFT_ORANGE, TFT_GREENYELLOW, TFT_PINK
 // Or you can define your own colors in RGB values: with #define my_col M5.Lcd.color565(80,50,125) /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
-#define my_col_darker_green M5.Lcd.color565(146,217,0)  /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */ 
+#define my_col_darker_green M5.Lcd.color565(146,217,0)  /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
 #define my_col_darker_magenta M5.Lcd.color565(255,0,28) /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -123,12 +124,12 @@ WebSocketsClient webSocket;
 StaticJsonDocument<8750> jsonDoc;
 Timezone myTZ(summer, standard);
 TimeChangeRule *tcr;
-Preferences preferences; // if you want to clear all stored data in memory of you device run this "preferences.clear();"
+Preferences preferences; // if you want to clear all stored settings in memory of your device run this "preferences.clear();"
 // LED-Pixel bar(see end of file for further details)
 #define PIN       15 // use the built-in LED bar in the M5-Stack/Fire Battery-Bottom-Module (10xLED on Pin15)
 #define NUMPIXELS 10 // 10 LEDs
 Adafruit_NeoPixel LEDbar(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
-unsigned long sleeptime = 20 * 60;        // SLEEPTIMER: 20m in seconds - hold ButtonB 2sek for sleeptimer to start or stop
+unsigned long sleeptime = 45 * 60;        // SLEEPTIMER: 45m in seconds - hold ButtonB long for sleeptimer to start or stop
 unsigned long currentMs;
 byte Brightness_level;
 int Brightness_value;
@@ -244,10 +245,11 @@ void setup() {
   M5.lcd.setBrightness(Brightness_value);                // use last stored brightness value from memory
   yield();
 
-  // Setting Power:
+  // Power Settings:
   if (!M5.Power.canControl()) M5.Lcd.printf("IP5306 is not i2c version\n");
-  M5.setWakeupButton(BUTTON_B_PIN);                      // because powerOFF is used in sleep timer, no wakeup Button is listened to
-  M5.Power.setPowerBoostKeepOn(false);
+  M5.setWakeupButton(BUTTON_B_PIN);   //the PowerOFF command is used for the sleep timer function, without this line the device will constantly wake up 30s after going into sleepmode (??bug?)
+  M5.Power.setPowerVin(false);        //When the power supply from USB etc. is cut off, Decide whether to turn on the power again.
+  M5.Power.setPowerBoostKeepOn(false);//Always output power. True= Always output power. False=not Always output power.
 
   // Connecting to WiFi:
   M5.Lcd.print("\n\nConnecting to ");
@@ -333,6 +335,7 @@ void loop()
     while (!requestRestApi()) {}
     drawCandles();
     showBatteryLevel();
+
   }
   webSocket.loop();
   M5.update();                                                             // update button checks
@@ -1088,6 +1091,20 @@ void error(String text) {
 
 // BUTTON ACTIONS
 void buttonActions() {
+  // Power Off Button (ButtonC long press) - needed because if on usb power there is no option to turn off the unit except by powerOFF command
+  if (M5.BtnC.pressedFor(1333)) {
+    M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
+    delay(1000);
+    for (int i = Brightness_value; i > 0 ; i--) {                  // dimm LCD slowly before shutdown
+      Brightness_value -= 1;
+      M5.lcd.setBrightness(Brightness_value);
+      delay(50);
+    }
+    M5.Lcd.fillScreen(TFT_BLACK);
+    delay(1000);
+    M5.Power.powerOFF();
+  }
+
   // change current currency button A
   if (M5.BtnA.wasPressed() && !current_timeframe_changed) {
     current_Currency_changed = true;
@@ -1130,6 +1147,7 @@ void buttonActions() {
     }
     M5.lcd.setBrightness(Brightness_value);
   }
+
 
   //  timeframe change buttons: after C was pressed press A or B for - and +
   if (M5.BtnC.wasPressed() && !current_timeframe_changed && !current_Currency_changed && !current_bright_changed) {
@@ -1244,7 +1262,7 @@ void buttonActions() {
   }
 
   // Button for Sleep Timer zzz zzZ..ZZ.Z.ZZ..Zzz zzz
-  if (M5.BtnB.pressedFor(2000)) {
+  if (M5.BtnB.pressedFor(1700)) {
     if (!sleeptimer_bool) {      // enables sleeptimer if buttonB is long pressed
       sleeptimer_bool = true;
       sleeptimer_counter = now();
@@ -1269,7 +1287,7 @@ void buttonActions() {
       preferences.putUInt("briglv", Brightness_level);            // store setting to memory
       M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2), 5, TFT_BLUE); // set blue status light when sleeptimer was activated
       drawCandles();
-      M5.Lcd.drawPngFile(SPIFFS, "/sleep20m.png", (320 / 2) - (100 / 2), (240 / 2) - ((100 / 2))); // sleep.png is 100x100px
+      M5.Lcd.drawPngFile(SPIFFS, "/sleep.png", (320 / 2) - (120 / 2), (240 / 2) - ((120 / 2))); // sleep.png is 120x120px
       LEDbar.clear();
       colorWipe(LEDbar.Color(0, 0, 255), 35); // Blue             // fill LEDbar in various colors...(delay in ms)
       LEDbar.clear();
@@ -1300,7 +1318,7 @@ void buttonActions() {
       preferences.putUInt("bright", Brightness_value);            // store setting to memory
       M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2), 5, TFT_BLACK); // reset blue status light when sleeptimer was deactivated
       drawCandles();
-      M5.Lcd.drawPngFile(SPIFFS, "/cancel_sleep20m.png", (320 / 2) - (130 / 2), (240 / 2) - ((130 / 2))); //sleep.png is 130x130px
+      M5.Lcd.drawPngFile(SPIFFS, "/cancel_sleep.png", (320 / 2) - (120 / 2), (240 / 2) - ((120 / 2))); //sleep.png is 120x120px
       LEDbar.clear();
       colorWipe(LEDbar.Color(255, 255, 255), 35); // White        // fill LEDbar in various colors...(delay in ms)
       LEDbar.clear();
