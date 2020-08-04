@@ -12,7 +12,7 @@
 // available timeframes are 1m, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1M
 // hold ButtonC at Startup: will start with alternative SSID/WiFi-password instead (e.g your mobile phone's hotspot)
 // the new infoPanel shows: WiFi-strength, batterylevel and indicates charging (can have delay up to 30s), a colored "busy" light, sleeptimer-active light, changings in %
-// SleepTimer: when holding ButtonB longer than 2 seconds it will start a 45 minutes timer to powerOFF the device
+// SleepTimer: when holding ButtonB longer than 1,5 seconds it will start a 45 minutes timer to powerOFF the device
 // ButtonC long pressed turns OFF the device (when on usb power there is no option to turn off the unit except by a PowerOFF command)
 // if WiFi is failing more than 2 minutes it reduces the reconnect interval and brightness level, after 10 minutes -> shutdown device
 // prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in the Battery-Bottom Module for M5Stack/Fire with rgb 10 LEDs)
@@ -1287,7 +1287,7 @@ void buttonActions() {
       preferences.putUInt("briglv", Brightness_level);            // store setting to memory
       M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2), 5, TFT_BLUE); // set blue status light when sleeptimer was activated
       drawCandles();
-      M5.Lcd.drawPngFile(SPIFFS, "/sleep.png", (320 / 2) - (120 / 2), (240 / 2) - ((120 / 2))); // sleep.png is 120x120px
+      M5.Lcd.drawPngFile(SPIFFS, "/sleep.png", (320 / 2) - (100 / 2), (240 / 2) - ((100 / 2))); // sleep.png is 100x100px
       LEDbar.clear();
       colorWipe(LEDbar.Color(0, 0, 255), 35); // Blue             // fill LEDbar in various colors...(delay in ms)
       LEDbar.clear();
