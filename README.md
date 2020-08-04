@@ -1,6 +1,7 @@
 ![](preview/IMG_1.jpg)
- 
+
 Crypto Currency Ticker with 24 candlesticks chart for M5Stack - receiving WiFi data from Binance API/Websocket_v3
+Bitcoin, Ethereum, Litecoin, etc... show the currency you want from Binanace
 
 the Ticker shows a 24 candles chart, LO/HI values, volume as line and date and time (time.nist.gov timeserver), price is reloading every 2 seconds
 
@@ -26,7 +27,9 @@ press buttonC, then within 2 sec press buttonA to switch down or buttonB to swit
  
 -hold ButtonC at startup: will start with alternative SSID/WiFi-password instead (e.g your mobile phone's hotspot)
  
--SleepTimer: when holding ButtonB longer than 2 seconds it will start a 20 minutes timer to powerOFF the device, same for disabling the timer
+-SleepTimer: holding ButtonB long will start a 45 minutes timer to powerOFF the device, same for disabling the timer.
+
+-ButtonC long pressed turns OFF the device (when on usb power there is no option to turn off the unit except by a PowerOFF command)
 
 -if WiFi is failing more than 2 minutes it reduces the reconnect interval and brightness level, after 10 minutes with no signal shutdown device
 
