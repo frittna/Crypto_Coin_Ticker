@@ -50,5 +50,5 @@ ADDED FEATURES:
 ![](preview/IMG_81.jpg)
 ![](preview/IMG_8.jpg)
 
-if you like white background?
 ![](preview/IMG_9.jpg)
+if you like white background? (just for fun, i will not update this version in future)
