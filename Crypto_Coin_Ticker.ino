@@ -260,6 +260,19 @@ void setup() {
     M5.Lcd.setTextWrap(true);
     M5.Lcd.print(".");
     err_count ++;
+    // Power Off Button (ButtonC long press) - needed because if on usb power there is no option to turn off the unit except by powerOFF command
+    if (M5.BtnC.pressedFor(1333)) {
+      M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
+      delay(500);
+      for (int i = Brightness_value; i > 0 ; i--) {                  // dimm LCD slowly before shutdown
+        Brightness_value -= 1;
+        M5.lcd.setBrightness(Brightness_value);
+        delay(50);
+      }
+      M5.Lcd.fillScreen(TFT_BLACK);
+      delay(500);
+      M5.Power.powerOFF();
+    }
     if (err_count > 288) {                                // if 10 minutes no wifi -> power off device !
       M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
       delay(1000);
