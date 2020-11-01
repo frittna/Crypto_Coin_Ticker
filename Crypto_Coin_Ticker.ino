@@ -56,7 +56,7 @@
 #include <time.h>             // Library | Arduino Librarymanager Michael Margolis  | 1.6   | "timekeeping"                                                 |
 #include <WebSocketsClient.h> // Library | Arduino Librarymanager Markus Sattler    | 2.3   | "Websockets"                                                  |
 #include <ArduinoJson.h>      // Library | Arduino Librarymanager Benoit Blanchon   | 6.17  | "ArduinoJson"                                                 |
-#include "M5StackUpdater.h"   // Library | Arduino Librarymanager SD-Menu Loader    | 1.0.2 | "M5Stack SD"                                                  |
+#include "M5StackUpdater.h"   // Library | Arduino Librarymanager SD-Menu Loader    | 0.5.2!| "M5Stack SD"  i use 0.5.2 not new 1.0.2 because of problems   |
 #include <Adafruit_NeoPixel.h>// Library | Arduino Librarymanager Adafruit NeoPixel | 1.6   | "Adafriut Neopixel"                                           |
 #include "FS.h"               // Tool    | github: esp32fs for SPIFFS filesystem    | 1.0   | https://github.com/me-no-dev/arduino-esp32fs-plugin           |
 // --------------------------------------+------------------------------------------+-------+----------------------------------------------------------------
