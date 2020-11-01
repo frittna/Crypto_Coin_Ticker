@@ -49,7 +49,7 @@
 //       name:                                     from:                                               search library manager exactly for:
 // --------------------------------------+------------------------------------------+------ + --------------------------------------------------------------|
 #include "Free_Fonts.h"       // Library | Arduino                                  |       |                                                               |
-#include <WiFi.h>             // Library | Arduino                                  | 1.2.7 |                                                               |
+#include <WiFi.h>             // Library | Arduino                                  |       |                                                               |
 #include <Preferences.h>      // Library | Arduino                                  |       |                                                               |
 #include <M5Stack.h>          // Library | Arduino Librarymanager M5Stack           | 0.3.1 | "M5Stack"                                                     |
 #include <Timezone.h>         // Library | Arduino Librarymanager Jack Christensen  | 1.2.4 | "Timezone"                                                    |
