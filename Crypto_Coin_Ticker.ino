@@ -18,8 +18,9 @@
 // prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in the Battery-Bottom Module for M5Stack/Fire with rgb 10 LEDs)
 // Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-card hold buttonA while booting up to start MenuLoader to load your apps
 // the impoovements are based quick and dirty solutions - no complains please ;) - changings welcome :)
-// known bugs: buttonC sometimes has the bug that it reacts like if it was pressed twice.. The battery symbol could be more precise
-//
+// known bugs: buttonC often has the bug that it reacts like if it was pressed twice.. The battery symbol could be more precise,
+//             if you have power-on/off issues because you use a different battery module see "//power settings" in the code
+
 // INSTALLATION INSTRUCTIONS:
 // - download Arduino IDE from their homepage https://www.arduino.cc/en/Main/Software
 // - like instructed in the M5-Stack mini-manual be sure to add the additional boards manager url at Arduino preferencies:
@@ -245,12 +246,15 @@ void setup() {
   M5.lcd.setBrightness(Brightness_value);                // use last stored brightness value from memory
   yield();
 
-  // Power Settings:
+  // 
+  Settings:
   if (!M5.Power.canControl()) M5.Lcd.printf("IP5306 is not i2c version\n");
-  M5.setWakeupButton(BUTTON_B_PIN);   //the PowerOFF command is used for the sleep timer function, without this line the device will constantly wake up 30s after going into sleepmode (??bug?)
-  M5.Power.setPowerVin(false);        //When the power supply from USB etc. is cut off, Decide whether to turn on the power again.
-  M5.Power.setPowerBoostKeepOn(false);//Always output power. True= Always output power. False=not Always output power.
-
+  
+  M5.setWakeupButton(BUTTON_B_PIN);    //because powerOFF is used in sleep timer no wakeup Button is listened to
+  M5.Power.setPowerBoostKeepOn(false); //Always output power. True= Always output power. False=not Always output power.
+  //!!!!!!!! remove following code line if you have problems with power and usb connection/disconnection -> depends on what M5-base module you use
+  M5.Power.setPowerVin(false);         //When the power supply from USB etc. is cut off, decide whether to turn on the power again.
+  
   // Connecting to WiFi:
   M5.Lcd.print("\n\nConnecting to ");
   M5.Lcd.println(ssid);
