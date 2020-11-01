@@ -88,10 +88,10 @@ TimeChangeRule standard = {"EST", First, Sun, Nov, 2, -300};
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 byte pairs = 8;       // default: 8, total numbers of currency pairs, max 255
-String pair_name[]    = {"Bitcoin",    "Ethereum",    "BNB",        "IOTA",        "Link",         "Cosmos",         "Cardano",   "Elrond"         }; //name for TopPanel (6-8 letters)
-String pair_STRING[]  = {"BTCUSDT",    "ETHUSDT",     "BNBUSDT",    "IOTAUSDT",    "LINKUSDT",     "ATOMUSDT",       "ADAUSDT",   "ERDUSDT"        }; //name for url in BIG LETTERS
-String pair_string[]  = {"btcusdt",    "ethusdt",     "bnbusdt",    "iotausdt",    "linkusdt",     "atomusdt",       "adausdt",   "erdusdt"        }; //name for url in small letters
-uint32_t pair_color[] = {TFT_YELLOW,   TFT_DARKCYAN,  TFT_ORANGE,   TFT_LIGHTGREY, TFT_CYAN,       TFT_GREENYELLOW,  TFT_BLUE,    TFT_RED          }; //color in uint32_t format
+String pair_name[]    = {"Bitcoin",    "ETH",         "BNB",        "IOTA",        "LINK",         "DOT",           "YearnFI",   "COMP"            }; //name for TopPanel (6-8 letters)
+String pair_STRING[]  = {"BTCUSDT",    "ETHUSDT",     "BNBUSDT",    "IOTAUSDT",    "LINKUSDT",     "DOTUSDT",       "YFIUSDT",   "COMPUSDT"        }; //name for url in BIG LETTERS
+String pair_string[]  = {"btcusdt",    "ethusdt",     "bnbusdt",    "iotausdt",    "linkusdt",     "dotusdt",       "yfiusdt",   "compusdt"        }; //name for url in small letters
+uint32_t pair_color[] = {TFT_YELLOW,   TFT_DARKCYAN,  TFT_ORANGE,   TFT_LIGHTGREY, TFT_CYAN,       TFT_PINK,        TFT_BLUE,    TFT_CYAN          }; //color in uint32_t format
 // predefined color names:
 // TFT_BLACK, TFT_NAVY, TFT_DARKGREEN, TFT_DARKCYAN, TFT_MAROON, TFT_PURPLE, TFT_OLIVE, TFT_LIGHTGREY, TFT_DARKGREY,
 // TFT_BLUE, TFT_GREEN, TFT_CYAN, TFT_RED, TFT_MAGENTA, TFT_YELLOW, TFT_WHITE, TFT_ORANGE, TFT_GREENYELLOW, TFT_PINK
