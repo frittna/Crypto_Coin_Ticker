@@ -33,7 +33,7 @@
 // - for the esp32fs tool you have to search with google or use the github link bewlow, i have also put all needed files into a folder called public on my github site.
 // - to install the esp32fs tool correctly you have to copy the folder called ESP32FS inside the ESP32FS-1.0.zip archive into your Arduino's sketchbook folder
 //   so first create a tools folder if there is no and paste the ESP32FS folder in it (it should look like C:\Users\yourName\Documents\Arduino\tools\ESP32FS\tool\esp32fs.jar )
-//   (for the standalone verion of Arduino put the esp32fs tool into your current arduino program folder like C:\arduino-1.8.12\tools\ESP32FS\tool\esp32fs.jar )
+//   (for the standalone verion of Arduino put the esp32fs tool into your current arduino program folder like C:\arduino-1.8.13\tools\ESP32FS\tool\esp32fs.jar )
 // - if esp32fs is loaded correctly you can see after a restart of Arduino a tool called ESP32 Sketch Data Uploader in you tools menu
 // - you have to download all my png picture files from my data folder on github and put it into your sketch subfolder called data. (open your sketch folder quickly with CTRL+K)
 //   click verify, afterwards you can click ESP32 Sketch Data Uploader from the tools menu to flash the data into the M5Stack embedded memory
