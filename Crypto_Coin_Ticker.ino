@@ -19,7 +19,7 @@
 // Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-card hold buttonA while booting up to start MenuLoader to load your apps
 // the impoovements are based quick and dirty solutions - no complains please ;) - changings welcome :)
 // known bugs: buttonC often has the bug that it reacts like if it was pressed twice.. The battery symbol could be more precise,
-//             if you have power-on/off issues because you use a different battery module see "//power settings" in the code
+//             if you have power-on/off issues because you use a different battery module see "//  Setting Power:" in the code
 
 // INSTALLATION INSTRUCTIONS:
 // - download Arduino IDE from their homepage https://www.arduino.cc/en/Main/Software
@@ -246,14 +246,12 @@ void setup() {
   M5.lcd.setBrightness(Brightness_value);                // use last stored brightness value from memory
   yield();
 
-  // 
-  Settings:
+  // Setting Power:
   if (!M5.Power.canControl()) M5.Lcd.printf("IP5306 is not i2c version\n");
-  
   M5.setWakeupButton(BUTTON_B_PIN);    //because powerOFF is used in sleep timer no wakeup Button is listened to
   M5.Power.setPowerBoostKeepOn(false); //Always output power. True= Always output power. False=not Always output power.
   //!!!!!!!! remove following code line if you have problems with power and usb connection/disconnection -> depends on what M5-base module you use
-  M5.Power.setPowerVin(false);         //When the power supply from USB etc. is cut off, decide whether to turn on the power again.
+  M5.Power.setPowerVin(false);         //good with original battery bottom, remove line for M5GO/FIRE Battery Bottom Charging Base with embedded LED-strip
   
   // Connecting to WiFi:
   M5.Lcd.print("\n\nConnecting to ");
