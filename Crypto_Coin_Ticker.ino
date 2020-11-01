@@ -250,7 +250,7 @@ void setup() {
   if (!M5.Power.canControl()) M5.Lcd.printf("IP5306 is not i2c version\n");
   M5.setWakeupButton(BUTTON_B_PIN);    //because powerOFF is used in sleep timer no wakeup Button is listened to
   M5.Power.setPowerBoostKeepOn(false); //Always output power. True= Always output power. False=not Always output power.
-  //!!!!!!!! remove following code line if you have problems with power and usb connection/disconnection -> depends on what M5-base module you use
+  //!!!!!!!! remove following code line if you have problems with power-on/off and usb connection/disconnection -> depends on what M5-base module you use
   M5.Power.setPowerVin(false);         //good with original battery bottom, remove line for M5GO/FIRE Battery Bottom Charging Base with embedded LED-strip
   
   // Connecting to WiFi:
