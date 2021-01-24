@@ -53,3 +53,6 @@ ADDED FEATURES:
 
 ![](preview/IMG_9.jpg)
 if you like white background? (just for fun, i will not update this version in future)
+
+
+keywords: Bitcoin Price Display Ticker Preisanzeige
