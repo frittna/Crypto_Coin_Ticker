@@ -61,6 +61,4 @@ if you like white background? (just for fun, i will not update this version in f
 
 address: D6vLi8k7WNC98Pt8VQMJPLYftR4BVcUJjQ (DOGE)
 
-![](preview/IMG_qrd.jpg)
-
-![](preview/dog.png)
+![](preview/IMG_qrd.jpg)                         ![](preview/doge.png)
