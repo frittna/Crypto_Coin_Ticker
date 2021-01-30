@@ -50,13 +50,11 @@ ADDED FEATURES:
 ![](preview/IMG_7.jpg)
 ![](preview/IMG_81.jpg)
 ![](preview/IMG_8.jpg)
-
 ![](preview/IMG_9.jpg)
+
 if you like white background? (just for fun, i will not update this version in future)
 
 
 
 
-
-keywords: Bitcoin Price Display Ticker Preisanzeige
-And if someone wants to spend some DOGE Coins to say -> "i love crypto ticker" <- i will appreciate that a lot: D6vLi8k7WNC98Pt8VQMJPLYftR4BVcUJjQ (DOGE)![](preview/IMG_qr.jpg)
+>>>  If someone wants to spend some DOGE to say -> "i love crypto ticker" <- i will appreciate that a lot <<<  D6vLi8k7WNC98Pt8VQMJPLYftR4BVcUJjQ (DOGE)![](preview/IMG_qr.jpg)
