@@ -57,4 +57,5 @@ if you like white background? (just for fun, i will not update this version in f
 
 
 
--- If someone wants to spend some DOGE to say -> "i love crypto ticker" <- i will appreciate that a lot -- adress: D6vLi8k7WNC98Pt8VQMJPLYftR4BVcUJjQ (DOGE)![](preview/IMG_qr.jpg)
+-- If someone wants to spend some DOGE to say -> "i love crypto ticker" <- i will appreciate that a lot -- adress: D6vLi8k7WNC98Pt8VQMJPLYftR4BVcUJjQ (DOGE)
+![](preview/IMG_qrd.jpg)
