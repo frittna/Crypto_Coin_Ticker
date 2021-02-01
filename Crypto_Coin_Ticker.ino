@@ -3,7 +3,7 @@
 // it shows 24 candles, min/max prize and volume as line, the date and time are from time.nist.gov timeserver.
 // original code was for SPI TFT display ILI9341 and NodeMCU Board from: https://github.com/olbed/bitcoin-ticker from 18.dec.2019
 //
-// this version is MODIFIED by frittna to use on M5-Stack with ArduinoIDE - last modified 01.Nov.2020 13:50 CET - Version 1.0.1
+// this version is MODIFIED by frittna to use on M5-Stack with ArduinoIDE - last modified Feb.01.2021 23:30 CET - Version 1.0.1
 // added the use of free fonts, changed format for small currencies, added the use of SPIFFS*) for jpg+png pics, settings will remain stored after a reset
 // buttonA: switches through 8 (as many you want) preconfigured pairs e.g: BTC to USDT etc. which are available on Binance.com
 // buttonB: changes the LCD-Brightness in 4 levels
@@ -90,7 +90,7 @@ byte pairs = 8;       // default: 8, total numbers of currency pairs, max 255
 String pair_name[]    = {" Bitcoin",  "   ETH",      "   DOT",     "  LINK",      "   UNI",     "  IOTA",       " YearnFi",    "  DOGE"          }; //name for TopPanel (6-8 letters)
 String pair_STRING[]  = {"BTCUSDT",   "ETHUSDT",     "DOTUSDT",    "LINKUSDT",    "UNIUSDT",    "IOTAUSDT",     "YFIUSDT",     "DOGEUSDT"        }; //name for url in BIG LETTERS
 String pair_string[]  = {"btcusdt",   "ethusdt",     "dotusdt",    "linkusdt",    "uniusdt",    "iotausdt",     "yfiusdt",     "dogeusdt"        }; //name for url in small letters
-uint32_t pair_color[] = {TFT_ORANGE,  TFT_DARKCYAN,  0xD29D39,     TFT_CYAN,      TFT_MAGENTA,  TFT_LIGHTGREY,  TFT_BLUE,      0xAABBCC          }; //color in uint32_t format
+uint32_t pair_color[] = {TFT_ORANGE,  TFT_DARKCYAN,  0xD29D39,     TFT_CYAN,      TFT_PINK,     TFT_LIGHTGREY,  TFT_BLUE,      0xAABBCC          }; //color in uint32_t format
 // predefined color names:
 // TFT_BLACK, TFT_NAVY, TFT_DARKGREEN, TFT_DARKCYAN, TFT_MAROON, TFT_PURPLE, TFT_OLIVE, TFT_LIGHTGREY, TFT_DARKGREY,
 // TFT_BLUE, TFT_GREEN, TFT_CYAN, TFT_RED, TFT_MAGENTA, TFT_YELLOW, TFT_WHITE, TFT_ORANGE, TFT_GREENYELLOW, TFT_PINK
