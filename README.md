@@ -64,6 +64,6 @@ if you like white background? (just for fun, i will not update this version in f
 
 -- If someone wants to spend some DOGE to say -> "i love crypto tickers" <- i will appreciate that a lot -- 
 
-address: D6vLi8k7WNC98Pt8VQMJPLYftR4BVcUJjQ (DOGE)
+address: DRUxU8yWKnWuWmhDCJKmn8eBveXANk85Mw (DOGE)
 
 ![](preview/IMG_qrd.jpg)                     ![](preview/doge.png)
