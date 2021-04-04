@@ -3,7 +3,7 @@
 // it shows 24 candles, min/max prize and volume as line, the date and time are from time.nist.gov timeserver.
 // original code was for SPI TFT display ILI9341 and NodeMCU Board from: https://github.com/olbed/bitcoin-ticker from 18.dec.2019
 //
-// this version is MODIFIED by frittna to use on M5-Stack with ArduinoIDE - last modified Feb.01.2021 23:30 CET - Version 1.0.1
+// this version is MODIFIED by frittna to use on M5-Stack with ArduinoIDE - last modified Apr.04.2021 18:24 CET - Version 1.0.1
 // added the use of free fonts, changed format for small currencies, added the use of SPIFFS*) for jpg+png pics, settings will remain stored after a reset
 // buttonA: switches through 8 (as many you want) preconfigured pairs e.g: BTC to USDT etc. which are available on Binance.com
 // buttonB: changes the LCD-Brightness in 4 levels
@@ -18,7 +18,7 @@
 // prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in the Battery-Bottom Module for M5Stack/Fire with rgb 10 LEDs)
 // Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-card hold buttonA while booting up to start MenuLoader to load your apps
 // the impoovements are based quick and dirty solutions - no complains please ;) - changings welcome :)
-// known bugs: buttonC often has the bug that it reacts like if it was pressed twice.. The battery symbol could be more precise,
+// known bugs to fix: buttonC debouncing - it often reacts like if it was pressed twice. The battery symbol could be more precise.
 
 // INSTALLATION INSTRUCTIONS:
 // - download Arduino IDE from their homepage https://www.arduino.cc/en/Main/Software
@@ -39,27 +39,34 @@
 //   click verify, afterwards you can click ESP32 Sketch Data Uploader from the tools menu to flash the data into the M5Stack embedded memory
 //
 //   If you don't want to use the SPIFFS filesystem at all you can change "drawPngFile(SPIFFS," to "drawPngFile(SD," in my code and put the pics to your root
-//   of your SDcard. All this effort is only because i don't want to use a sd-card at all for my graphics data.
+//   of your SDcard. All this effort is only because i don't want to use a sd-card at all for my graphics data and i want to make the SD-Card optional only (for SD-Menu-Loader e.g.)
 //
-// - finally modify the code at WiFi host/password, timezone and maybe your favorite currency pair or other individual things in the code
-// --> compile and upload to M5Stack - enjoy
+// - finally modify the settings for your wifi ssid/password, your timezone and maybe your favorite currency pair or other individual things in the code
+//
+//--> compile and upload to M5Stack - enjoy
+//
+//
+//
 //
 // ##BEGIN##
 //
-//       name:                                     from:                                               search library manager exactly for:
-// --------------------------------------+------------------------------------------+------ + --------------------------------------------------------------|
-#include "Free_Fonts.h"       // Library | Arduino                                  |       |                                                               |
-#include <WiFi.h>             // Library | Arduino                                  |       |                                                               |
-#include <Preferences.h>      // Library | Arduino                                  |       |                                                               |
-#include <M5Stack.h>          // Library | Arduino Librarymanager M5Stack           | 0.3.1 | "M5Stack"                                                     |
-#include <Timezone.h>         // Library | Arduino Librarymanager Jack Christensen  | 1.2.4 | "Timezone"                                                    |
-#include <time.h>             // Library | Arduino Librarymanager Michael Margolis  | 1.6   | "timekeeping"                                                 |
-#include <WebSocketsClient.h> // Library | Arduino Librarymanager Markus Sattler    | 2.3   | "Websockets"                                                  |
-#include <ArduinoJson.h>      // Library | Arduino Librarymanager Benoit Blanchon   | 6.17  | "ArduinoJson"                                                 |
-#include "M5StackUpdater.h"   // Library | Arduino Librarymanager SD-Menu Loader    | 0.5.2!| "M5Stack SD"  i use 0.5.2 not new 1.0.2 because of problems   |
-#include <Adafruit_NeoPixel.h>// Library | Arduino Librarymanager Adafruit NeoPixel | 1.6   | "Adafriut Neopixel"                                           |
-#include "FS.h"               // Tool    | github: esp32fs for SPIFFS filesystem    | 1.0   | https://github.com/me-no-dev/arduino-esp32fs-plugin           |
-// --------------------------------------+------------------------------------------+-------+----------------------------------------------------------------
+//       name:                                     from:                             version                search library manager exactly for:
+// ---------------------------------------+------------------------------------------+------ + --------------------------------------------------------------|
+#include "Free_Fonts.h"       // Library  | Arduino                                  |       |                                                               |
+#include <WiFi.h>             // Board-pkg| -> Problems? look in the compiler log window what version of WiFi.h is used -> its the ESP32 version **see below |
+#include <Preferences.h>      // Library  | Arduino                                  |       |                                                               |
+#include <M5Stack.h>          // Library  | Arduino Librarymanager M5Stack           | 0.3.1 | "M5Stack"                                                     |
+#include <Timezone.h>         // Library  | Arduino Librarymanager Jack Christensen  | 1.2.4 | "Timezone"                                                    |
+#include <time.h>             // Library  | Arduino Librarymanager Michael Margolis  | 1.6   | "timekeeping"                                                 |
+#include <WebSocketsClient.h> // Library  | Arduino Librarymanager Markus Sattler    | 2.3.0 | "Websockets"  watch for the exact version!                    |
+#include <ArduinoJson.h>      // Library  | Arduino Librarymanager Benoit Blanchon   | 6.17.3| "ArduinoJson"                                                 |
+#include "M5StackUpdater.h"   // Library  | Arduino Librarymanager SD-Menu Loader    | 0.5.2!| "M5Stack SD"  i use 0.5.2 , not new 1.0.2 because of problems |
+#include <Adafruit_NeoPixel.h>// Library  | Arduino Librarymanager Adafruit NeoPixel | 1.7.0 | "Adafriut Neopixel"                                           |
+#include "FS.h"               // Tool     | github: esp32fs for SPIFFS filesystem    | 1.0   | https://github.com/me-no-dev/arduino-esp32fs-plugin           |
+// ---------------------------------------+------------------------------------------+-------+----------------------------------------------------------------
+//  **if you have wifi problems resulting a reset after a successful connection you need to check if the right WiFi.h was used while compiling. 
+//    Use the one which comes with the M5Stack-ESP32-package and do not use the same named WiFi library from the Arduino's embedded librarys!
+//    I had no problems myself because my compiler selected the right one automatically but if you have resets you could look for that.
 //
 // Wi-Fi connection settings:
 const char* ssid      = "***"; // regular wi-fi host
