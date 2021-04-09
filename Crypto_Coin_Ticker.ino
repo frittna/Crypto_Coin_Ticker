@@ -24,8 +24,8 @@
 // - download Arduino IDE from their homepage https://www.arduino.cc/en/Main/Software
 // - like instructed in the M5-Stack mini-manual be sure to add the additional boards manager url at Arduino preferencies:
 //   file -> preferencies: https://dl.espressif.com/dl/package_esp32_index.json  -  then restart Arduino
-// - install the M5-Stack board in Arduino: Tools -> Board -> Boards Manager -> search for esp32 and install it
-//   afterwards select the right board at the tools menu called M5-Stack-Core-ESP32, then select your actual COM port (restart Arduino
+// - install the M5-Stack board in Arduino: Tools -> Board -> Boards Manager -> search for esp32 and install !!! VERSION 1.0.4 !!! since this version is approved working.
+//   Afterwards select the right board at the tools menu called M5-Stack-Core-ESP32, then select your actual COM port (restart Arduino
 //   with USB connected to your M5-Stack if no COM-port is shown, also be shure to try the USB connector the other way round if you can't get it done)
 // - open new sketch, save it to create a sketch folder and paste all of this code into the code window
 // - install all included librarys in your Arduino: Sketch -> Include Library -> Manage Libraries -> search for the correct ones (look very carefully)
@@ -46,8 +46,6 @@
 //--> compile and upload to M5Stack - enjoy
 //
 //
-//
-//
 // ##BEGIN##
 //
 //       name:                                     from:                             version                search library manager exactly for:
@@ -64,9 +62,8 @@
 #include <Adafruit_NeoPixel.h>// Library  | Arduino Librarymanager Adafruit NeoPixel | 1.7.0 | "Adafriut Neopixel"                                           |
 #include "FS.h"               // Tool     | github: esp32fs for SPIFFS filesystem    | 1.0   | https://github.com/me-no-dev/arduino-esp32fs-plugin           |
 // ---------------------------------------+------------------------------------------+-------+----------------------------------------------------------------
-//  **if you have wifi problems resulting a reset after a successful connection you need to check if the right WiFi.h was used while compiling. 
-//    Use the one which comes with the M5Stack-ESP32-package and do not use the same named WiFi library from the Arduino's embedded librarys!
-//    I had no problems myself because my compiler selected the right one automatically but if you have resets you could look for that.
+//  **if you have problems resulting a reset after a successful wifi-connection you need to check all versions 
+//    if they are really identical to the ones from the instruction. !! Use the ESP32 Board Manager 1.0.4 since higher versions are reported to fail!
 //
 // Wi-Fi connection settings:
 const char* ssid      = "***"; // regular wi-fi host
