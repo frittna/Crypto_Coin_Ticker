@@ -1,4 +1,4 @@
-![](preview/IMG_1.jpg)
+![](preview/IMG_9.jpg)
  
 CRYPTO CURRENCY PRICE TICKER with 24 candlesticks chart for M5Stack
 ##SD-CARD Version with configuation file##
@@ -51,7 +51,7 @@ Some settings like current timeframe, brightness level, active coinpair and the 
 
 ! SEE CODE FOR FURTHER INSTRUCTIONS !
 
-![](preview/IMG_9.jpg)
+![](preview/IMG_1.jpg)
 ![](preview/IMG_0new.jpg)
 ![](preview/IMG_0.jpg)
 ![](preview/IMG_2.jpg)
