@@ -7,7 +7,6 @@ receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.c
 This will show a 24 candles chart window with min/max price and the volume as line, date and time are from time.nist.gov timeserver.
 For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.17.2021 22:20 CET - Version 1.0.4
 
-------------------------------------------------------------------------------------------------------------------------------
 
 #Using the App:
 This version needs a SD-Card whith the your WiFi credentials, favourite coinpairs, timezone and language(eng/ger/esp) in a textfile - see installation
