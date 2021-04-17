@@ -91,7 +91,7 @@ String ssid2     = "";  // alternative wi-fi network to connect when ButtonC is 
 String password2 = "";  //
 
 //       name:                                     from:                             version                search library manager exactly for:
-// ---------------------------------------+------------------------------------------+------ + --------------------------------------------------------------|
+//----------------------------------------+------------------------------------------+------ + --------------------------------------------------------------|
 #include "Free_Fonts.h"       // Library  | Arduino                                  |       |                                                               |
 #include <SDConfig.h>         // Library  | Arduino Librarymanager Claus Mancini     | 1.1.0 | "SDConfig"                                                    |
 #include <WiFi.h>             // Board-pkg| -> Problems on start? look below         |1.0.4**|                                                               |
