@@ -31,7 +31,7 @@ Some settings like current timeframe, brightness level, active coinpair and the 
 
 ! SEE CODE FOR FURTHER INSTRUCTIONS !
 
-
+![](preview/IMG_9.jpg)
 ![](preview/IMG_0new.jpg)
 ![](preview/IMG_0.jpg)
 ![](preview/IMG_2.jpg)
@@ -42,9 +42,7 @@ Some settings like current timeframe, brightness level, active coinpair and the 
 ![](preview/IMG_7.jpg)
 ![](preview/IMG_81.jpg)
 ![](preview/IMG_8.jpg)
-![](preview/IMG_9.jpg)
 
-if you like white background? (just for fun, i have not update this version for long time)
 
 
 
