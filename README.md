@@ -49,7 +49,8 @@ It is prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in 
 Some settings like current timeframe, brightness level, active coinpair and the last wifi credentials will remain stored in internal memory after a reset.
 
 
-! SEE CODE FOR FURTHER INSTRUCTIONS !
+--->   !!! SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE !!!   <---
+
 
 ![](preview/IMG_1.jpg)
 ![](preview/IMG_0new.jpg)
