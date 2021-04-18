@@ -5,8 +5,8 @@ CRYPTO CURRENCY PRICE TICKER with 24 candlesticks chart for M5Stack
 receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 
 
-This will show a 24 candles chart window with min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.17.2021 22:20 CET - Version 1.0.4
+This will show a 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
+For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.18.2021 12:10 CET - Version 1.0.4
 
 
 
@@ -38,7 +38,7 @@ The top infoPanel shows the WiFi-strength, batterylevel, colored indicators for 
 
 right now: english, german, spanish (day and month names)
 
-SleepTimer: when holding ButtonB longer than 1,5 seconds it will start a 45 minutes timer to powerOFF the device
+SleepTimer: when holding ButtonB longer than 1,5 seconds it will start a user defined timer to powerOFF the device
 
 If WiFi is failing more than 2 minutes it reduces the reconnect interval and brightness level, after 10 minutes -> shutdown device
 
