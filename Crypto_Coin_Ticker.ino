@@ -12,7 +12,7 @@
 // ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com
 // ButtonB: changes the LCD-Brightness in 4 levels
 // ButtonC: 9 changeable Timeframes from 1 Minute to 1 Month
-// turn OFF the device by holding ButtonC for over 1 second
+// turn ON/OFF the device pressing red button once OR by holding ButtonC for over 1 second if USB is connected
 // Press buttonC, then, within 2 sec press buttonA to switch down, or buttonB to switch up through the timeframes: 1min->15mins->1hour->..
 // available timeframes are 1minute, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1Month
 // if you hold ButtonC at Startup: it will start with alternative SSID/WiFi-password instead (e.g your mobile phone's hotspot)
@@ -53,7 +53,7 @@
 
 // The core for the candlestick view and binance api was from: https://github.com/olbed/bitcoin-ticker on SPI TFT display ILI9341 and NodeMCU Board, from 2019
 
-// Known bugs to fix: buttonC debouncing, battery symbol could be more precise, WakeUp behavoiur untested with different M5-bottoms, untested format if price will pass the 100k,
+// Known bugs to fix: buttonC debouncing, battery symbol could be more precise, untested format if price will pass the 100k ;)
 //                    maybe some inefficient code since this is my first public release
 
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -300,11 +300,11 @@ void setup() {
   M5.lcd.setBrightness(Brightness_value);                // use last stored brightness value from memory
   yield();
 
-  // Setting Power:
+  // Setting Power:   see for details: https://github.com/m5stack/m5-docs/blob/master/docs/en/api/power.md
   if (!M5.Power.canControl()) M5.Lcd.printf("IP5306 is not i2c version\n");
-  M5.setWakeupButton(BUTTON_B_PIN);
-  M5.Power.setPowerBoostKeepOn(false);
-  M5.Power.setPowerVin(false);
+  M5.Power.setPowerBtnEn(true);           //allow red power button
+  M5.Power.setPowerBoostSet(true);        //one press on red turns on/off device
+  M5.Power.setPowerVin(false);            //no reset when usb calbe is plugged in
 
   // routine to read configuration from SD card file
   int maxLineLength = 127; //Length of the longest line expected in the config file
