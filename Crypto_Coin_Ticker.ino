@@ -120,8 +120,8 @@ int pairs = 4;        //total numbers of coin pairs to load, default: 4, max. 36
 String pair_string[36];
 String pair_STRING[36]        = {"BTCUSDT",    "ETHUSDT",       "DOTUSDT",     "LINKUSDT"};   //default values if no external config file exists
 String pair_name[36]          = {" Bitcoin",   "   ETH",        "   DOT",      "  LINK"  };
-char* str_pair_color[36]      = {"0xFFA500",   "0x008B8B",      "0xD29D39",    "0x00FFFF"};
-uint16_t rgb565_pair_color[36] = {0xFD20,        0x03EF,          0xC618,        0x001F   };
+char* str_pair_color[36]      = {"0xFD20",     "0x03EF",        "0xC618",      "0x001F"  };
+uint16_t rgb565_pair_color[36]= {0xFD20,        0x03EF,          0xC618,        0x001F   };
 // Notes for color names: use hex in rgb565 format like: 0x07FF
 // or you can define your own colors in RGB values with #define my_col M5.Lcd.color565(80,50,125) /* uint16_t color565(0-255, 0-255, 0-255) for RGB, */
 #define DARKERGREEN M5.Lcd.color565(146,217,0)  /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
