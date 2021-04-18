@@ -2,8 +2,8 @@
 // ##SD-CARD Version with configuation file##
 // receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 
-// This will show a 24 candles chart window with min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.17.2021 22:20 CET - Version 1.0.4
+// This will show a 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.18.2021 12:10 CET - Version 1.0.4
 
 //------------------------------------------------------------------------------------------------------------------------------
 
@@ -20,20 +20,20 @@
 
 // #Further description:
 // The top infoPanel shows the WiFi-strength, batterylevel, colored indicators for "busy", SleepTimer, price moving and if charging from usb (can have delay up to 30s)
-// right now: english, german, spanish (day and month names)
-// SleepTimer: when holding ButtonB longer than 1,5 seconds it will start a 45 minutes timer to powerOFF the device
+// right now: english, german, spanish Language (day and month names)
+// SleepTimer: when holding ButtonB longer than 1,5 seconds it will start a user defined timer to powerOFF the device
 // If WiFi is failing more than 2 minutes it reduces the reconnect interval and brightness level, after 10 minutes -> shutdown device
 // Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-card hold buttonA while booting up to start MenuLoader to load your apps
 // It is prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in the Battery-Bottom Module for M5Stack/Fire with rgb 10 LEDs)
 // Some settings like current timeframe, brightness level, active coinpair and the last wifi credentials will remain stored in internal memory after a reset.
-
+// If no SD-Card is installed iw will load 4 default coinpairs, us-tinezone and englsish language. It will try to load the last set wifi-name/pw from flash memory.
 
 // INSTALLATION INSTRUCTIONS
 // - find a way to transfer the BIN file of this APP into your M5 Device (compile in Arduino, use SD-menu-loader, etc.)
-// - ! IMPORTANT ! - downlad the zip file "ccticker.zip" from github https://github.com/frittna/Crypto_Coin_Ticker)
-//   To run the App correctly you need co extrakt the "data" folder from my zip file into a folder called "ccticker" on the SD-Card
+// - ! IMPORTANT ! - downlad the zip file "ccticker - zipfile.zip" from github https://github.com/frittna/Crypto_Coin_Ticker)
+//   To run the App correctly you need to put the "data" folder from my zip file into a folder called "ccticker" on the root dir of SD-Card.
 //   Then you have to put the config file "ccticker.cfg" inside this "ccticker" folder.
-//   modify the settings file "ccticker.cfg" with your personal wifi ssid/password, timezone, favorite currency pair - use a simple text editor !
+//   Modify the settings file "ccticker.cfg" with your personal wifi ssid/password, timezone, favorite currency pair - use a simple text editor !
 //   So on the card you should have a folder like G:\ccticker\data\ with all graphic files and the configuration file like this: G:\ccticker\ccticker.cfg
 
 
@@ -77,12 +77,12 @@
 
 
 
-// ##BEGIN##  
+// ##BEGIN##
 
 
 // ---->> for this SD-Card Version nothing has to be edited here - use the ccticker.cfg textfile on the SD-Card in "ccticker" folder <<----
 
-// Wi-Fi connection settings:      
+// Wi-Fi connection settings:
 String ssid      = "";  // change here to "myName" or whatever you have as Wifi SSID name (127 characters max.)
 String password  = "";  // enter your password like "myPassword"
 
@@ -91,7 +91,7 @@ String ssid2     = "";  // alternative wi-fi network to connect when ButtonC is 
 String password2 = "";  //
 
 //       name:                                     from:                             version                search library manager exactly for:
-//----------------------------------------+------------------------------------------+------ + --------------------------------------------------------------|
+// ---------------------------------------+------------------------------------------+------ + --------------------------------------------------------------|
 #include "Free_Fonts.h"       // Library  | Arduino                                  |       |                                                               |
 #include <SDConfig.h>         // Library  | Arduino Librarymanager Claus Mancini     | 1.1.0 | "SDConfig"                                                    |
 #include <WiFi.h>             // Board-pkg| -> Problems on start? look below         |1.0.4**|                                                               |
@@ -329,7 +329,7 @@ void setup() {
     } else if (cfg.nameIs("pairs")) {
       pairs = cfg.getIntValue(); Serial.print("Read pairs: "); Serial.println(pairs);
     }
-    
+
     else if (cfg.nameIs("pair_name1")) {    // from here i did it one by one as don't get it to work with a for loop
       pair_name[0] = cfg.copyValue(); Serial.print("Read pair_name1: "); Serial.println(pair_name[0]);
     } else if (cfg.nameIs("pair_name2")) {
