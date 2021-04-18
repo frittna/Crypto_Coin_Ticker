@@ -2,7 +2,7 @@
 // ##SD-CARD Version with configuation file##
 // receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 
-// This will show a 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
+// This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
 // For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.18.2021 12:10 CET - Version 1.0.4
 
 //------------------------------------------------------------------------------------------------------------------------------
@@ -121,7 +121,7 @@ String pair_string[36];
 String pair_STRING[36]        = {"BTCUSDT",    "ETHUSDT",       "DOTUSDT",     "LINKUSDT"};   //default values if no external config file exists
 String pair_name[36]          = {" Bitcoin",   "   ETH",        "   DOT",      "  LINK"  };
 char* str_pair_color[36]      = {"0xFD20",     "0x03EF",        "0xC618",      "0x001F"  };
-uint16_t rgb565_pair_color[36]= {0xFD20,        0x03EF,          0xC618,        0x001F   };
+uint16_t rgb565_pair_color[36]= { 0xFD20,       0x03EF,          0xC618,        0x001F   };
 // Notes for color names: use hex in rgb565 format like: 0x07FF
 // or you can define your own colors in RGB values with #define my_col M5.Lcd.color565(80,50,125) /* uint16_t color565(0-255, 0-255, 0-255) for RGB, */
 #define DARKERGREEN M5.Lcd.color565(146,217,0)  /* uint16_t color565(uint8_t r, uint8_t g, uint8_t b), */
