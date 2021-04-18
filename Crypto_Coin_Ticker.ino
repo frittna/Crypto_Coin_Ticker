@@ -12,7 +12,7 @@
 // ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com
 // ButtonB: changes the LCD-Brightness in 4 levels
 // ButtonC: 9 changeable Timeframes from 1 Minute to 1 Month
-// turn ON/OFF the device pressing red button once OR by holding ButtonC for over 1 second if USB is connected
+// turn OFF the device pressing the red button once OR by holding ButtonC for over 1 second if USB is connected
 // Press buttonC, then, within 2 sec press buttonA to switch down, or buttonB to switch up through the timeframes: 1min->15mins->1hour->..
 // available timeframes are 1minute, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1Month
 // if you hold ButtonC at Startup: it will start with alternative SSID/WiFi-password instead (e.g your mobile phone's hotspot)
