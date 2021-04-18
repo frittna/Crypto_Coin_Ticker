@@ -713,6 +713,7 @@ void setup() {
   if (!SD.begin(pinSelectSD)) {
     M5.Lcd.println();
     M5.Lcd.println("SD-card NOT used");
+    delay(750);
   }
   else {
     M5.Lcd.println();
