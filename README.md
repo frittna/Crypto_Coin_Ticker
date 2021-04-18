@@ -20,7 +20,7 @@ For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.18.2021 12:10 
 
 - ButtonC: 9 changeable Timeframes from 1 Minute to 1 Month
 
-- turn OFF the device by holding ButtonC for over 1 second
+- turn ON/OFF the device pressing red button once OR by holding ButtonC for over 1 second if USB is connected
 
 - Press buttonC, then, within 2 sec press buttonA to switch down, or buttonB to switch up through the timeframes: 1min->15mins->1hour->..
 
