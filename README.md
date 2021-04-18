@@ -1,6 +1,6 @@
 ![](preview/IMG_9.jpg)
  
-CRYPTO CURRENCY PRICE TICKER with 24 candlesticks chart for M5Stack
+MULTI CRYPTO COIN PRICE TICKER with 24 candlesticks chart for M5Stack
 ##SD-CARD Version with configuation file##
 receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 
