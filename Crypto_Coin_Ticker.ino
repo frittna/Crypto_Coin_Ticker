@@ -614,7 +614,7 @@ void setup() {
   //preferences.clear(); //if you want to clear all stored settings from internal memory uncomment this line afterwards "preferences.clear();"
   unsigned int last_stored_Currency = preferences.getUInt("currency", 1);
   unsigned int last_stored_Timeframe = preferences.getUInt("timeframe", 4);
-  if (last_stored_Currency > pairs) {  //prevents loading a coinpair from flash that is higher that the default max.pairs value when no SD config file is loaded
+  if (last_stored_Currency > pairs) {  //prevents loading a coinpair from flash that is higher thab the default max pairs value when no SD config file is loaded
     last_stored_Currency = 1;
   }
   current_Currency = last_stored_Currency;
