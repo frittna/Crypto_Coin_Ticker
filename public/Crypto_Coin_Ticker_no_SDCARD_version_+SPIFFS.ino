@@ -13,7 +13,7 @@
 // hold ButtonC at Startup: will start with alternative SSID/WiFi-password instead (e.g your mobile phone's hotspot)
 // the new infoPanel shows: WiFi-strength, batterylevel and indicates charging (can have delay up to 30s), a colored "busy" light, sleeptimer-active light, changings in %
 // SleepTimer: when holding ButtonB longer than 1,5 seconds it will start a 45 minutes timer to powerOFF the device
-// ButtonC long pressed turns OFF the device (when on usb power there is no option to turn off the unit except by a PowerOFF command)
+// turn OFF the device pressing the red button once OR by holding ButtonC for over 1 second if USB is connected
 // if WiFi is failing more than 2 minutes it reduces the reconnect interval and brightness level, after 10 minutes -> shutdown device
 // prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in the Battery-Bottom Module for M5Stack/Fire with rgb 10 LEDs)
 // Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-card hold buttonA while booting up to start MenuLoader to load your apps
@@ -84,7 +84,7 @@ const char* password2 = ""; // alternative wi-fi password (when ButtonC is held 
 //TimeChangeRule summer = {"CEST", Last, Sun, Mar, 2, 120};         // Central European Time Zone (Frankfurt, Paris)
 //TimeChangeRule standard = {"CET ", Last, Sun, Oct, 3, 60};
 TimeChangeRule summer = {"EDT", Second, Sun, Mar, 2, -240};     // US Eastern Time Zone (New York, Detroit)
-TimeChangeRule standard = {"EST", First, Sun, Nov, 2, -300}; 
+TimeChangeRule standard = {"EST", First, Sun, Nov, 2, -300};
 //TimeChangeRule summer = {"CDT", Second, dowSunday, Mar, 2, -300}; // US Central Time Zone (Chicago, Houston)
 //TimeChangeRule standard = {"CST", First, dowSunday, Nov, 2, -360};
 //TimeChangeRule summer = {"MDT", Second, dowSunday, Mar, 2, -360}; // US Mountain Time Zone (Denver, Salt Lake City)
@@ -251,12 +251,12 @@ void setup() {
   Brightness_level = last_stored_Brightness_level;
   M5.lcd.setBrightness(Brightness_value);                // use last stored brightness value from memory
   yield();
-
-  // Setting Power:
+ 
+  // Setting Power:   see for details: https://github.com/m5stack/m5-docs/blob/master/docs/en/api/power.md
   if (!M5.Power.canControl()) M5.Lcd.printf("IP5306 is not i2c version\n");
-  M5.setWakeupButton(BUTTON_B_PIN);    
-  M5.Power.setPowerBoostKeepOn(false); 
-  M5.Power.setPowerVin(false);         
+  M5.Power.setPowerBtnEn(true);           //allow red power button
+  M5.Power.setPowerBoostSet(true);        //one press on red turns on/off device
+  M5.Power.setPowerVin(false);            //no reset when usb calbe is plugged in
   
   // Connecting to WiFi:
   M5.Lcd.print("\n\nConnecting to ");
