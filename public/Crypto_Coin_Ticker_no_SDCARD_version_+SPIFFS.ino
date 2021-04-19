@@ -1,53 +1,81 @@
-// Crypto Currency Ticker with 24 candlesticks chart for M5Stack - receiving WiFi data from Binance API/Websocket_v3
-//
-// it shows 24 candles, min/max prize and volume as line, the date and time are from time.nist.gov timeserver.
-// original code was for SPI TFT display ILI9341 and NodeMCU Board from: https://github.com/olbed/bitcoin-ticker from 18.dec.2019
-//
-// this version is MODIFIED by frittna to use on M5-Stack with ArduinoIDE - last modified Apr.04.2021 18:24 CET - Version 1.0.1
-// added the use of free fonts, changed format for small currencies, added the use of SPIFFS*) for jpg+png pics, settings will remain stored after a reset
-// buttonA: switches through 8 (as many you want) preconfigured pairs e.g: BTC to USDT etc. which are available on Binance.com
-// buttonB: changes the LCD-Brightness in 4 levels
-// buttonC: 9 changeable Timeframes from 1 Minute to 1 Month
-// press buttonC, then, within 2 sec press buttonA to switch down or buttonB to switch up through the timeframes
-// available timeframes are 1m, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1M
-// hold ButtonC at Startup: will start with alternative SSID/WiFi-password instead (e.g your mobile phone's hotspot)
-// the new infoPanel shows: WiFi-strength, batterylevel and indicates charging (can have delay up to 30s), a colored "busy" light, sleeptimer-active light, changings in %
-// SleepTimer: when holding ButtonB longer than 1,5 seconds it will start a 45 minutes timer to powerOFF the device
-// turn OFF the device pressing the red button once OR by holding ButtonC for over 1 second if USB is connected
-// if WiFi is failing more than 2 minutes it reduces the reconnect interval and brightness level, after 10 minutes -> shutdown device
-// prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in the Battery-Bottom Module for M5Stack/Fire with rgb 10 LEDs)
-// Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-card hold buttonA while booting up to start MenuLoader to load your apps
-// the impoovements are based quick and dirty solutions - no complains please ;) - changings welcome :)
-// known bugs to fix: buttonC debouncing - it often reacts like if it was pressed twice. The battery symbol could be more precise.
+// CRYPTO CURRENCY PRICE TICKER with 24 candlesticks chart for M5Stack
+// ##SPIFFS Version without configuation file - no SD-Card necessary
+// receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 
-// INSTALLATION INSTRUCTIONS:
+// This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.4.2021 18:24 CET - Version 1.0.4
+
+//------------------------------------------------------------------------------------------------------------------------------
+
+// #Using the App:
+// ###############
+// ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com
+// ButtonB: changes the LCD-Brightness in 4 levels
+// ButtonC: 9 changeable Timeframes from 1 Minute to 1 Month
+// turn OFF the device pressing the red button once OR by holding ButtonC for over 1 second if USB is connected
+// Press buttonC, then, within 2 sec press buttonA to switch down, or buttonB to switch up through the timeframes: 1min->15mins->1hour->..
+// available timeframes are 1minute, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1Month
+// if you hold ButtonC at Startup: it will start with alternative SSID/WiFi-password instead (e.g your mobile phone's hotspot)
+
+
+// #Further description:
+// #####################
+// The top infoPanel shows the WiFi-strength, batterylevel, colored indicators for "busy", SleepTimer, price moving and if charging from usb (can have delay up to 30s)
+// right now: english, german, spanish Language (day and month names)
+// SleepTimer: when holding ButtonB longer than 1,5 seconds it will start a user defined timer to powerOFF the device
+// If WiFi is failing more than 2 minutes it reduces the reconnect interval and brightness level, after 10 minutes -> shutdown device
+// Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-card hold buttonA while booting up to start MenuLoader to load your apps
+// It is prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in the Battery-Bottom Module for M5Stack/Fire with rgb 10 LEDs)
+// Some settings like current timeframe, brightness level, active coinpair and the last wifi credentials will remain stored in internal memory after a reset.
+
+
+
+// INSTALLATION INSTRUCTIONS
+// #########################
+// note: there is an SD-Card Version too on my github. 
+// This is a prevouis version because some day i decidet to add a "config file version" which will load 
+// all main settings from a certain text file on your SD-Card. But if you like this more: go for it!
+//
 // - download Arduino IDE from their homepage https://www.arduino.cc/en/Main/Software
 // - like instructed in the M5-Stack mini-manual be sure to add the additional boards manager url at Arduino preferencies:
 //   file -> preferencies: https://dl.espressif.com/dl/package_esp32_index.json  -  then restart Arduino
-// - install the M5-Stack board in Arduino: Tools -> Board -> Boards Manager -> search for esp32 and install it
+// - install the M5-Stack board in Arduino: Tools -> Board -> Boards Manager -> search for esp32 and install ver.1.0.4
+//   ---> !! use ESP32 Board Manager Version 1.0.4 since higher versions are reported to fail !! <<---
 //   afterwards select the right board at the tools menu called M5-Stack-Core-ESP32, then select your actual COM port (restart Arduino
 //   with USB connected to your M5-Stack if no COM-port is shown, also be shure to try the USB connector the other way round if you can't get it done)
 // - open new sketch, save it to create a sketch folder and paste all of this code into the code window
 // - install all included librarys in your Arduino: Sketch -> Include Library -> Manage Libraries -> search for the correct ones (look very carefully)
+// - compile and see the instructions above for adjusting config file and where to put the /data/ folder with all the png images on SD
+
+
+
+// The core for the candlestick view and binance api was from: https://github.com/olbed/bitcoin-ticker on SPI TFT display ILI9341 and NodeMCU Board, from 2019
+
+// Known bugs to fix: buttonC debouncing, battery symbol could be more precise, untested format if price will pass the 100k ;)
+//                    maybe some inefficient code since this is my first public release
+
+//------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------
+//   NOT USED in this version - just skip that -
+//   this is only for the users who want to hardcode everything use NO SD-Card at all and want to compile the program in Arduino-IDE, SPIFFS memory for graphics data
 //
-// - for the esp32fs tool you have to search with google or use the github link bewlow, i have also put all needed files into a folder called public on my github site.
+// - for the esp32fs tool (for uploading the SPIFFS files) you have to search with google or use the github link https://github.com/me-no-dev/arduino-esp32fs-plugin, 
+//   i have also put all needed files into a folder called public on my github site.
 // - to install the esp32fs tool correctly you have to copy the folder called ESP32FS inside the ESP32FS-1.0.zip archive into your Arduino's sketchbook folder
 //   so first create a tools folder if there is no and paste the ESP32FS folder in it (it should look like C:\Users\yourName\Documents\Arduino\tools\ESP32FS\tool\esp32fs.jar )
 //   (for the standalone verion of Arduino put the esp32fs tool into your current arduino program folder like C:\arduino-1.8.13\tools\ESP32FS\tool\esp32fs.jar )
 // - if esp32fs is loaded correctly you can see after a restart of Arduino a tool called ESP32 Sketch Data Uploader in you tools menu
 // - you have to download all my png picture files from my data folder on github and put it into your sketch subfolder called data. (open your sketch folder quickly with CTRL+K)
 //   click verify, afterwards you can click ESP32 Sketch Data Uploader from the tools menu to flash the data into the M5Stack embedded memory
-//
-//   If you don't want to use the SPIFFS filesystem at all you can change "drawPngFile(SPIFFS," to "drawPngFile(SD," in my code and put the pics to your root
+//   If you don't want to use the SPIFFS filesystem at all you can change "drawPngFile(SPIFFS, " to "drawPngFile(SD, " in my code and put the pics to your root
 //   of your SDcard. All this effort is only because i don't want to use a sd-card at all for my graphics data and i want to make the SD-Card optional only (for SD-Menu-Loader e.g.)
-//
-// - finally modify the settings for your wifi ssid/password, your timezone and maybe your favorite currency pair or other individual things in the code
-//
-//--> compile and upload to M5Stack - enjoy
-//
-//
-//
-//
+//   <<<<<<
+//------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
 // ##BEGIN##
 //
 //       name:                                     from:                             version                search library manager exactly for:
