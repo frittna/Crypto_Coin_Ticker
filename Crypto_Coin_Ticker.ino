@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------------------------------------------------------
 
 // #Using the App:
+// ###############
 // This version needs a SD-Card whith the your WiFi credentials, favourite coinpairs, timezone and language(eng/ger/esp) in a textfile - see installation
 // ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com
 // ButtonB: changes the LCD-Brightness in 4 levels
@@ -19,6 +20,7 @@
 
 
 // #Further description:
+// #####################
 // The top infoPanel shows the WiFi-strength, batterylevel, colored indicators for "busy", SleepTimer, price moving and if charging from usb (can have delay up to 30s)
 // right now: english, german, spanish Language (day and month names)
 // SleepTimer: when holding ButtonB longer than 1,5 seconds it will start a user defined timer to powerOFF the device
@@ -29,12 +31,14 @@
 // If no SD-Card is installed iw will load 4 default coinpairs, us-tinezone and englsish language. It will try to load the last set wifi-name/pw from flash memory.
 
 // INSTALLATION INSTRUCTIONS
+// #########################
 // - find a way to transfer the BIN file of this APP into your M5 Device (compile in Arduino*, use SD-menu-loader, etc.)
 // - ! IMPORTANT ! - downlad the zip file "ccticker - zipfile.zip" from github https://github.com/frittna/Crypto_Coin_Ticker)
 //   To run the App correctly you need to put the "data" folder from my zip file into a folder called "ccticker" on the root dir of SD-Card.
 //   Then you have to put the config file "ccticker.cfg" inside this "ccticker" folder.
 //   Modify the settings file "ccticker.cfg" with your personal wifi ssid/password, timezone, favorite currency pair - use a simple text editor !
 //   So on the card you should have a folder like G:\ccticker\data\ with all graphic files and the configuration file like this: G:\ccticker\ccticker.cfg
+
 
 
 // (*INSTALLATION INSTRUCTIONS from skratch) ->> only for those who compile by their own in Arduino IDE <<--
