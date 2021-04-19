@@ -1,4 +1,4 @@
-![](preview/IMG_9.jpg)
+![](preview/IMG_M.jpg)
  
 MULTI CRYPTO COIN PRICE TICKER with 24 candlesticks chart for M5Stack
 ##SD-CARD Version with configuation file##
