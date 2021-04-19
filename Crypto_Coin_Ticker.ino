@@ -29,7 +29,7 @@
 // If no SD-Card is installed iw will load 4 default coinpairs, us-tinezone and englsish language. It will try to load the last set wifi-name/pw from flash memory.
 
 // INSTALLATION INSTRUCTIONS
-// - find a way to transfer the BIN file of this APP into your M5 Device (compile in Arduino, use SD-menu-loader, etc.)
+// - find a way to transfer the BIN file of this APP into your M5 Device (compile in Arduino*, use SD-menu-loader, etc.)
 // - ! IMPORTANT ! - downlad the zip file "ccticker - zipfile.zip" from github https://github.com/frittna/Crypto_Coin_Ticker)
 //   To run the App correctly you need to put the "data" folder from my zip file into a folder called "ccticker" on the root dir of SD-Card.
 //   Then you have to put the config file "ccticker.cfg" inside this "ccticker" folder.
@@ -37,7 +37,9 @@
 //   So on the card you should have a folder like G:\ccticker\data\ with all graphic files and the configuration file like this: G:\ccticker\ccticker.cfg
 
 
-// (INSTALLATION INSTRUCTIONS) ->> only for those who compile by their own in Arduino IDE <<--
+// (*INSTALLATION INSTRUCTIONS from skratch) ->> only for those who compile by their own in Arduino IDE <<--
+//   note: you can adjust basically all main settings in the conig file from sd-card. But if you want to build 
+//         it on your own or if you want to modify something special or even extend this cool gadget go for it!
 // - download Arduino IDE from their homepage https://www.arduino.cc/en/Main/Software
 // - like instructed in the M5-Stack mini-manual be sure to add the additional boards manager url at Arduino preferencies:
 //   file -> preferencies: https://dl.espressif.com/dl/package_esp32_index.json  -  then restart Arduino
@@ -59,9 +61,10 @@
 //------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------
 //   NOT USED in this version - just skip that -
-//   this is only for the users who want to hardcode everything and compile the program in Arduino-IDE, use SPIFFS memory for graphics data and NO sd-card at all !
+//   this is only for the users who want to hardcode everything use NO SD-Card at all and want to compile the program in Arduino-IDE, SPIFFS memory for graphics data
 //
-// - for the esp32fs tool you have to search with google or use the github link https://github.com/me-no-dev/arduino-esp32fs-plugin, i have also put all needed files into a folder called public on my github site.
+// - for the esp32fs tool (for uploading the SPIFFS files) you have to search with google or use the github link https://github.com/me-no-dev/arduino-esp32fs-plugin, 
+//   i have also put all needed files into a folder called public on my github site.
 // - to install the esp32fs tool correctly you have to copy the folder called ESP32FS inside the ESP32FS-1.0.zip archive into your Arduino's sketchbook folder
 //   so first create a tools folder if there is no and paste the ESP32FS folder in it (it should look like C:\Users\yourName\Documents\Arduino\tools\ESP32FS\tool\esp32fs.jar )
 //   (for the standalone verion of Arduino put the esp32fs tool into your current arduino program folder like C:\arduino-1.8.13\tools\ESP32FS\tool\esp32fs.jar )
