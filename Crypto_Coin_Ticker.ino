@@ -31,15 +31,14 @@
 // If no SD-Card is installed iw will load 4 default coinpairs, us-tinezone and englsish language. It will try to load the last set wifi-name/pw from flash memory.
 
 // INSTALLATION INSTRUCTIONS
-// #########################
-// - find a way to transfer the BIN file of this APP into your M5 Device (compile in Arduino*, use SD-menu-loader, etc.)
-// - ! IMPORTANT ! - downlad the zip file "ccticker - zipfile.zip" from github https://github.com/frittna/Crypto_Coin_Ticker)
-//   To run the App correctly you need to put the "data" folder from my zip file into a folder called "ccticker" on the root dir of SD-Card.
-//   Then you have to put the config file "ccticker.cfg" inside this "ccticker" folder.
+// #########################	
+// - find a way to transfer the BIN file of this APP into your M5 Device. A very easy way is to load "M5Burner_ccticker.zip" from https://github.com/frittna/Crypto_Coin_Ticker
+//// - ! IMPORTANT ! - you will need "ccticker - zipfile.zip" from there too.
+//   To run the App correctly you need to have the "data" folder from my zip file in a folder called "ccticker" on the root dir of SD-Card.
+//   Then you must have the config file "ccticker.cfg" inside this "ccticker" folder.
 //   Modify the settings file "ccticker.cfg" with your personal wifi ssid/password, timezone, favorite currency pair - use a simple text editor !
-//   So on the card you should have a folder like G:\ccticker\data\ with all graphic files and the configuration file like this: G:\ccticker\ccticker.cfg
-
-
+//   So on the sd-card you should have a folder like G:\ccticker\data\ with all graphic files and the configuration file like this: G:\ccticker\ccticker.cfg
+//   When you're done insert into the M5Stack and boot it up.
 
 // (*INSTALLATION INSTRUCTIONS from skratch) ->> only for those who compile by their own in Arduino IDE <<--
 //   note: you can adjust basically all main settings in the conig file from sd-card. But if you want to build 
