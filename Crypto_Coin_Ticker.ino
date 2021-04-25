@@ -16,7 +16,7 @@
 // turn OFF the device pressing the red button once OR by holding ButtonC for over 1 second if USB is connected
 // Press buttonC, then, within 2 sec press buttonA to switch down, or buttonB to switch up through the timeframes: 1min->15mins->1hour->..
 // available timeframes are 1minute, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1Month
-// if you hold ButtonC at Startup: it will start with alternative SSID/WiFi-password instead (e.g your mobile phone's hotspot)
+// if you hold ButtonC at Startup: it will start with alternative SSID2/WiFi2-password instead (e.g your mobile phone's hotspot)
 
 
 // #Further description:
@@ -32,7 +32,7 @@
 
 // INSTALLATION INSTRUCTIONS
 // #########################	
-// - find a way to transfer the BIN file of this APP into your M5 Device. A very easy way is to load "M5Burner_ccticker.zip" from https://github.com/frittna/Crypto_Coin_Ticker
+// - find a way to transfer the BIN file of this APP into your M5 Device.  A very easy way is to load "M5Burner_Crypto_Coin_Ticker.zip" from https://github.com/frittna/Crypto_Coin_Ticker
 //// - ! IMPORTANT ! - you will need "ccticker - zipfile.zip" from there too.
 //   To run the App correctly you need to have the "data" folder from my zip file in a folder called "ccticker" on the root dir of SD-Card.
 //   Then you must have the config file "ccticker.cfg" inside this "ccticker" folder.
