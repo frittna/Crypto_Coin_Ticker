@@ -73,8 +73,3 @@ For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.18.2021 12:10 
 
 
 
--- If someone wants to spend some DOGE to say -> "i love crypto tickers" <- i will appreciate that a lot -- 
-
-address: DRUxU8yWKnWuWmhDCJKmn8eBveXANk85Mw (DOGE)
-
-![](preview/IMG_qrd.jpg)                     ![](preview/doge.png)
