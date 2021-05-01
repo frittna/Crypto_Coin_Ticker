@@ -5,7 +5,7 @@ Multi Crypto Coin Price Ticker with candlestick chart
 
 #SD-Card Version with configuation file#  (updated version)
 
-only needs config file "ccticker.cfg" on root of SD-Card
+only needs config file "ccticker.cfg" on SD-Card
 
 
 This will show a 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
