@@ -1,8 +1,10 @@
 ![](preview/IMG_M.jpg)
 
 
+Multi Crypto Coin Price Ticker with candlestick chart
 
-###SD-Card Version with configuation file###
+#SD-Card Version with configuation file#
+
          --updated to a new version--
 
 only needs config file "ccticker.cfg" on root of SD-Card
