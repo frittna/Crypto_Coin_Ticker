@@ -2,7 +2,9 @@
 
 
 
-###SD-Card Version with configuation file### ****updated to a new version****
+###SD-Card Version with configuation file###
+****updated to a new version****
+
 only needs config file "ccticker.cfg" on root of SD-Card
 
 
