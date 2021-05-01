@@ -7,7 +7,7 @@
 // receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified May.01.2021 18:00 CET - Version 1.0.4 using spiffs + SDconfig
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified May.01.2021 19:26 CET - Version 1.0.4 using spiffs + SDconfig
 //
 //----------------------------------------------------------------------------------------------------------------------------
 
