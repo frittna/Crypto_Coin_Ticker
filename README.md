@@ -1,18 +1,18 @@
 ![](preview/IMG_M.jpg)
  
-MULTI CRYPTO COIN PRICE TICKER with 24 candlesticks chart for M5Stack
-##SD-CARD Version with configuation file##
-receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
+###SD-Card Version with configuation file###
+only needs config file "ccticker.cfg" on root of SD-Card
 
 
 This will show a 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.18.2021 12:10 CET - Version 1.0.4
+For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified May.01.2021 18:00 CET - Version 1.0.4 using spiffs + SDconfig
 
 
 
 ##Using the App:
 
 - This version needs a SD-Card whith the your WiFi credentials, favourite coinpairs, timezone and language(eng/ger/esp) in a textfile - see installation
+
 
 - ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com
 
@@ -26,7 +26,7 @@ For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.18.2021 12:10 
 
 - available timeframes are 1minute, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1Month
 
-- if you hold ButtonC at Startup: it will start with alternative SSID/WiFi-password instead (e.g your mobile phone's hotspot)
+- if you hold ButtonC at Startup: it will start with alternative SSID2/WiFi2-password instead (e.g your mobile phone's hotspot)
 
 
 
@@ -42,12 +42,15 @@ For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.18.2021 12:10 
 
 - If WiFi is failing more than 2 minutes it reduces the reconnect interval and brightness level, after 10 minutes -> shutdown device
 
-- SDMenu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-card hold buttonA while booting up to start MenuLoader to load your apps
+- SDMenu Loader compatible, if SD-Updater (menu.bin) is installed in your SD- Card hold buttonA while booting up to start MenuLoader to load your apps
 
 - It is prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in the Battery-Bottom Module for M5Stack/Fire with rgb 10 LEDs)
 
-- Some settings like current timeframe, brightness level, active coinpair and the last wifi credentials will remain stored in internal memory after a reset.
+- The settings will remain stored in internal memory after a reset.
 
+- If no SD-Card is installed it will try to load these settings again.
+
+- If you want to clear all stored settings from internal memory hold ButtonB at start-up
 
 --->   !!! SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE !!!   <---
 
@@ -63,13 +66,3 @@ For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Apr.18.2021 12:10 
 ![](preview/IMG_7.jpg)
 ![](preview/IMG_81.jpg)
 ![](preview/IMG_8.jpg)
-
-
-
-
-
-
-
-
-
-
