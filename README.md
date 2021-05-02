@@ -50,7 +50,7 @@ For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified May.01.2021 18:00 
 
 - It is prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in the Battery-Bottom Module for M5Stack/Fire with rgb 10 LEDs)
 
-- The settings will remain stored in internal memory after a reset.
+- The settings will remain stored in internal memory after a reset. No SD-Card is needed after you have loaded your settings once! (thats new!)
 
 - If no SD-Card is installed it will try to load these settings again.
 
