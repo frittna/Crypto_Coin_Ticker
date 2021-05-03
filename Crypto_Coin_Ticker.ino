@@ -131,6 +131,7 @@ const char*   weekDay_Language1[] = {"", "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa
 const char* monthName_Language1[] = {"", "Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"}; // translated to german
 const char*   weekDay_Language2[] = {"", "do", "lu", "ma", "mi", "ju", "vi", "sá"};                                           // translated to spanish
 const char* monthName_Language2[] = {"", "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"}; // translated to spanish
+const byte timeframes = 9;
 const char* candlesTimeframes[timeframes] = {"1m", "3m", "5m", "15m", "1h", "4h", "1d", "1w", "1M"};
 const char*   weekDay_MyLang[8];
 const char* monthName_MyLang[13];
@@ -143,7 +144,7 @@ int maxLineLength = 127; //Length of the longest line expected in the config fil
 // REST API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
 const char* restApiHost = "api.binance.com";
 const byte candlesLimit = 24;
-const byte timeframes = 9;
+
 String pair_STRING_mem[max_pairs_arrsize];
 String pair_name_mem[max_pairs_arrsize];
 String pair_col_str_mem[max_pairs_arrsize];
