@@ -432,9 +432,7 @@ void setup() {
 void loop()
 {
   currentMs = millis();
-
-  // check for buttons
-  buttonActions();
+  buttonActions();  // check for buttons
   M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_BLACK);  //reset busy light
   if (currentMs - lastPrintTime >= 35000 && second(time(nullptr)) < 25) {  // draw new date and candles regularly
     lastPrintTime = currentMs;
@@ -445,7 +443,6 @@ void loop()
     while (!requestRestApi()) {}
     drawCandles();
     showBatteryLevel();
-
   }
   webSocket.loop();
   M5.update();                                                             // update button checks
