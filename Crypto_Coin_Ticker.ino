@@ -36,7 +36,7 @@
 
 // INSTALLATION INSTRUCTIONS
 // #########################
-// - find a way to transfer this APP into your M5 Device. A very easy way is to load "M5Burner_ccticker.zip" from https://github.com/frittna/Crypto_Coin_Ticker
+// - find a way to transfer this APP into your M5 Device. A very easy way is to load "M5Burner_Crypto_Coin_Ticker.zip" from https://github.com/frittna/Crypto_Coin_Ticker
 // - ! IMPORTANT ! - you will need "ccticker.cfg" as the configuration file on your SD-Card root folder.
 //   To run the App correctly you have to put "ccticker.cfg" in the root of your SD-Card. (FAT32 filesystem is good)
 //   Modify "ccticker.cfg" with your personal wifi ssid/password, timezone, favorite currency pair - use a simple text editor
