@@ -43,6 +43,8 @@
 //   Modify "ccticker.cfg" with your personal wifi ssid/password, timezone, favorite currency pair - use a simple text editor
 //   On the SD-Card you should have something like "G:\ccticker.cfg"
 //   When you're done, safe-remove the SD-Card and insert into the M5Stack -> go, boot it up.
+//   you can eject the SD-Card after the use, the settings will be stored until you update them again with SD-Card
+
 
 
 
