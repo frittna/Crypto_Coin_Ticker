@@ -31,9 +31,8 @@
 // If WiFi is failing more than 2 minutes it reduces the reconnect interval and brightness level, after 10 minutes -> shutdown device
 // Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-Card hold buttonA while booting up to start MenuLoader to load your apps
 // It is prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in the Battery-Bottom Module for M5Stack/Fire with rgb 10 LEDs)
-// The settings will remain stored in internal memory after a reset.
-// If no SD-Card is installed it will try to load these settings again.
-// If you want to clear all stored settings from internal memory hold ButtonB at start-up
+// All settings will remain stored in internal memory after a reset so you can eject the SD-Card after setting up you favourites.
+// If you want to clear all stored settings from internal memory hold ButtonB at start-up.
 
 // INSTALLATION INSTRUCTIONS
 // #########################
@@ -44,7 +43,6 @@
 //   On the SD-Card you should have something like "G:\ccticker.cfg"
 //   When you're done, safe-remove the SD-Card and insert into the M5Stack -> go, boot it up.
 //   you can eject the SD-Card after the use, the settings will be stored until you update them again with SD-Card
-
 
 
 
@@ -1480,870 +1478,870 @@ void buttonActions() {
 
 
 // update settings from SD config file
-  void updateSDSettings() {
-    // check for configuration from SD-Card file
-    SDConfig cfg;
-    // Open the configuration file.
-    if (!cfg.begin(configFile, maxLineLength)) {
-      Serial.print("Failed to open configuration file: ");
-      Serial.println(configFile);
+void updateSDSettings() {
+  // check for configuration from SD-Card file
+  SDConfig cfg;
+  // Open the configuration file.
+  if (!cfg.begin(configFile, maxLineLength)) {
+    Serial.print("Failed to open configuration file: ");
+    Serial.println(configFile);
+  }
+  // from here i did it one by one as i don't get it to work with a 'for' loop
+  while (cfg.readNextSetting()) { //at the moment are up to 36 pairs possible
+    // Put a nameIs() block here for each setting you have.
+    if (cfg.nameIs("welcome")) {  // welcome string (char *)
+      welcome = cfg.copyValue(); Serial.print("Read welcome: "); Serial.println(welcome);
+    } else if (cfg.nameIs("ssid")) {
+      ssid = cfg.copyValue(); Serial.print("Read ssid: "); Serial.println(ssid);
+    } else if (cfg.nameIs("password")) {
+      password = cfg.copyValue(); Serial.print("Read password: "); Serial.println(password);
+    } else if (cfg.nameIs("ssid2")) {
+      ssid2 = cfg.copyValue(); Serial.print("Read ssid2: "); Serial.println(ssid2);
+    } else if (cfg.nameIs("password2")) {
+      password2 = cfg.copyValue(); Serial.print("Read password2: "); Serial.println(password2);
+    } else if (cfg.nameIs("pairs")) {
+      pairs = cfg.getIntValue(); Serial.print("Read pairs: "); Serial.println(pairs);
     }
-    // from here i did it one by one as i don't get it to work with a 'for' loop
-    while (cfg.readNextSetting()) { //at the moment are up to 36 pairs possible
-      // Put a nameIs() block here for each setting you have.
-      if (cfg.nameIs("welcome")) {  // welcome string (char *)
-        welcome = cfg.copyValue(); Serial.print("Read welcome: "); Serial.println(welcome);
-      } else if (cfg.nameIs("ssid")) {
-        ssid = cfg.copyValue(); Serial.print("Read ssid: "); Serial.println(ssid);
-      } else if (cfg.nameIs("password")) {
-        password = cfg.copyValue(); Serial.print("Read password: "); Serial.println(password);
-      } else if (cfg.nameIs("ssid2")) {
-        ssid2 = cfg.copyValue(); Serial.print("Read ssid2: "); Serial.println(ssid2);
-      } else if (cfg.nameIs("password2")) {
-        password2 = cfg.copyValue(); Serial.print("Read password2: "); Serial.println(password2);
-      } else if (cfg.nameIs("pairs")) {
-        pairs = cfg.getIntValue(); Serial.print("Read pairs: "); Serial.println(pairs);
-      }
-      else if (cfg.nameIs("pair_name01")) {
-        pair_name[0] = cfg.copyValue(); Serial.print("Read pair_name01: "); Serial.println(pair_name[0]);
-      } else if (cfg.nameIs("pair_name02")) {
-        pair_name[1] = cfg.copyValue(); Serial.print("Read pair_name02: "); Serial.println(pair_name[1]);
-      } else if (cfg.nameIs("pair_name03")) {
-        pair_name[2] = cfg.copyValue(); Serial.print("Read pair_name03: "); Serial.println(pair_name[2]);
-      } else if (cfg.nameIs("pair_name04")) {
-        pair_name[3] = cfg.copyValue(); Serial.print("Read pair_name04: "); Serial.println(pair_name[3]);
-      } else if (cfg.nameIs("pair_name05")) {
-        pair_name[4] = cfg.copyValue(); Serial.print("Read pair_name05: "); Serial.println(pair_name[4]);
-      } else if (cfg.nameIs("pair_name06")) {
-        pair_name[5] = cfg.copyValue(); Serial.print("Read pair_name06: "); Serial.println(pair_name[5]);
-      } else if (cfg.nameIs("pair_name07")) {
-        pair_name[6] = cfg.copyValue(); Serial.print("Read pair_name07: "); Serial.println(pair_name[6]);
-      } else if (cfg.nameIs("pair_name08")) {
-        pair_name[7] = cfg.copyValue(); Serial.print("Read pair_name08: "); Serial.println(pair_name[7]);
-      } else if (cfg.nameIs("pair_name09")) {
-        pair_name[8] = cfg.copyValue(); Serial.print("Read pair_name09: "); Serial.println(pair_name[8]);
-      } else if (cfg.nameIs("pair_name10")) {
-        pair_name[9] = cfg.copyValue(); Serial.print("Read pair_name10: "); Serial.println(pair_name[9]);
-      } else if (cfg.nameIs("pair_name11")) {
-        pair_name[10] = cfg.copyValue(); Serial.print("Read pair_name11: "); Serial.println(pair_name[10]);
-      } else if (cfg.nameIs("pair_name12")) {
-        pair_name[11] = cfg.copyValue(); Serial.print("Read pair_name12: "); Serial.println(pair_name[11]);
-      } else if (cfg.nameIs("pair_name13")) {
-        pair_name[12] = cfg.copyValue(); Serial.print("Read pair_name13: "); Serial.println(pair_name[12]);
-      } else if (cfg.nameIs("pair_name14")) {
-        pair_name[13] = cfg.copyValue(); Serial.print("Read pair_name14: "); Serial.println(pair_name[13]);
-      } else if (cfg.nameIs("pair_name15")) {
-        pair_name[14] = cfg.copyValue(); Serial.print("Read pair_name15: "); Serial.println(pair_name[14]);
-      } else if (cfg.nameIs("pair_name16")) {
-        pair_name[15] = cfg.copyValue(); Serial.print("Read pair_name16: "); Serial.println(pair_name[15]);
-      } else if (cfg.nameIs("pair_name17")) {
-        pair_name[16] = cfg.copyValue(); Serial.print("Read pair_name17: "); Serial.println(pair_name[16]);
-      } else if (cfg.nameIs("pair_name18")) {
-        pair_name[17] = cfg.copyValue(); Serial.print("Read pair_name18: "); Serial.println(pair_name[17]);
-      } else if (cfg.nameIs("pair_name19")) {
-        pair_name[18] = cfg.copyValue(); Serial.print("Read pair_name19: "); Serial.println(pair_name[18]);
-      } else if (cfg.nameIs("pair_name20")) {
-        pair_name[19] = cfg.copyValue(); Serial.print("Read pair_name20: "); Serial.println(pair_name[19]);
-      } else if (cfg.nameIs("pair_name21")) {
-        pair_name[20] = cfg.copyValue(); Serial.print("Read pair_name21: "); Serial.println(pair_name[20]);
-      } else if (cfg.nameIs("pair_name22")) {
-        pair_name[21] = cfg.copyValue(); Serial.print("Read pair_name22: "); Serial.println(pair_name[21]);
-      } else if (cfg.nameIs("pair_name23")) {
-        pair_name[22] = cfg.copyValue(); Serial.print("Read pair_name23: "); Serial.println(pair_name[22]);
-      } else if (cfg.nameIs("pair_name24")) {
-        pair_name[23] = cfg.copyValue(); Serial.print("Read pair_name24: "); Serial.println(pair_name[23]);
-      } else if (cfg.nameIs("pair_name25")) {
-        pair_name[24] = cfg.copyValue(); Serial.print("Read pair_name25: "); Serial.println(pair_name[24]);
-      }
-      else if (cfg.nameIs("pair_STRING01")) {
-        pair_STRING[0] = cfg.copyValue(); Serial.print("Read pair_STRING01: "); Serial.println(pair_STRING[0]);
-      } else if (cfg.nameIs("pair_STRING02")) {
-        pair_STRING[1] = cfg.copyValue(); Serial.print("Read pair_STRING02: "); Serial.println(pair_STRING[1]);
-      } else if (cfg.nameIs("pair_STRING03")) {
-        pair_STRING[2] = cfg.copyValue(); Serial.print("Read pair_STRING03: "); Serial.println(pair_STRING[2]);
-      } else if (cfg.nameIs("pair_STRING04")) {
-        pair_STRING[3] = cfg.copyValue(); Serial.print("Read pair_STRING04: "); Serial.println(pair_STRING[3]);
-      } else if (cfg.nameIs("pair_STRING05")) {
-        pair_STRING[4] = cfg.copyValue(); Serial.print("Read pair_STRING05: "); Serial.println(pair_STRING[4]);
-      } else if (cfg.nameIs("pair_STRING06")) {
-        pair_STRING[5] = cfg.copyValue(); Serial.print("Read pair_STRING06: "); Serial.println(pair_STRING[5]);
-      } else if (cfg.nameIs("pair_STRING07")) {
-        pair_STRING[6] = cfg.copyValue(); Serial.print("Read pair_STRING07: "); Serial.println(pair_STRING[6]);
-      } else if (cfg.nameIs("pair_STRING08")) {
-        pair_STRING[7] = cfg.copyValue(); Serial.print("Read pair_STRING08: "); Serial.println(pair_STRING[7]);
-      } else if (cfg.nameIs("pair_STRING09")) {
-        pair_STRING[8] = cfg.copyValue(); Serial.print("Read pair_STRING09: "); Serial.println(pair_STRING[8]);
-      } else if (cfg.nameIs("pair_STRING10")) {
-        pair_STRING[9] = cfg.copyValue(); Serial.print("Read pair_STRING10: "); Serial.println(pair_STRING[9]);
-      } else if (cfg.nameIs("pair_STRING11")) {
-        pair_STRING[10] = cfg.copyValue(); Serial.print("Read pair_STRING11: "); Serial.println(pair_STRING[10]);
-      } else if (cfg.nameIs("pair_STRING12")) {
-        pair_STRING[11] = cfg.copyValue(); Serial.print("Read pair_STRING12: "); Serial.println(pair_STRING[11]);
-      } else if (cfg.nameIs("pair_STRING13")) {
-        pair_STRING[12] = cfg.copyValue(); Serial.print("Read pair_STRING13: "); Serial.println(pair_STRING[12]);
-      } else if (cfg.nameIs("pair_STRING14")) {
-        pair_STRING[13] = cfg.copyValue(); Serial.print("Read pair_STRING14: "); Serial.println(pair_STRING[13]);
-      } else if (cfg.nameIs("pair_STRING15")) {
-        pair_STRING[14] = cfg.copyValue(); Serial.print("Read pair_STRING15: "); Serial.println(pair_STRING[14]);
-      } else if (cfg.nameIs("pair_STRING16")) {
-        pair_STRING[15] = cfg.copyValue(); Serial.print("Read pair_STRING16: "); Serial.println(pair_STRING[15]);
-      } else if (cfg.nameIs("pair_STRING17")) {
-        pair_STRING[16] = cfg.copyValue(); Serial.print("Read pair_STRING17: "); Serial.println(pair_STRING[16]);
-      } else if (cfg.nameIs("pair_STRING18")) {
-        pair_STRING[17] = cfg.copyValue(); Serial.print("Read pair_STRING18: "); Serial.println(pair_STRING[17]);
-      } else if (cfg.nameIs("pair_STRING19")) {
-        pair_STRING[18] = cfg.copyValue(); Serial.print("Read pair_STRING19: "); Serial.println(pair_STRING[18]);
-      } else if (cfg.nameIs("pair_STRING20")) {
-        pair_STRING[19] = cfg.copyValue(); Serial.print("Read pair_STRING20: "); Serial.println(pair_STRING[19]);
-      } else if (cfg.nameIs("pair_STRING21")) {
-        pair_STRING[20] = cfg.copyValue(); Serial.print("Read pair_STRING21: "); Serial.println(pair_STRING[20]);
-      } else if (cfg.nameIs("pair_STRING22")) {
-        pair_STRING[21] = cfg.copyValue(); Serial.print("Read pair_STRING22: "); Serial.println(pair_STRING[21]);
-      } else if (cfg.nameIs("pair_STRING23")) {
-        pair_STRING[22] = cfg.copyValue(); Serial.print("Read pair_STRING23: "); Serial.println(pair_STRING[22]);
-      } else if (cfg.nameIs("pair_STRING24")) {
-        pair_STRING[23] = cfg.copyValue(); Serial.print("Read pair_STRING24: "); Serial.println(pair_STRING[23]);
-      } else if (cfg.nameIs("pair_STRING25")) {
-        pair_STRING[24] = cfg.copyValue(); Serial.print("Read pair_STRING25: "); Serial.println(pair_STRING[24]);
-      }
-      else if (cfg.nameIs("pair_color01")) {
-        pair_col_str[0] = cfg.copyValue(); Serial.print("Read pair_color01: "); Serial.println(pair_col_str[0]);
-      } else if (cfg.nameIs("pair_color02")) {
-        pair_col_str[1] = cfg.copyValue(); Serial.print("Read pair_color02: "); Serial.println(pair_col_str[1]);
-      } else if (cfg.nameIs("pair_color03")) {
-        pair_col_str[2] = cfg.copyValue(); Serial.print("Read pair_color03: "); Serial.println(pair_col_str[2]);
-      } else if (cfg.nameIs("pair_color04")) {
-        pair_col_str[3] = cfg.copyValue(); Serial.print("Read pair_color04: "); Serial.println(pair_col_str[3]);
-      } else if (cfg.nameIs("pair_color05")) {
-        pair_col_str[4] = cfg.copyValue(); Serial.print("Read pair_color05: "); Serial.println(pair_col_str[4]);
-      } else if (cfg.nameIs("pair_color06")) {
-        pair_col_str[5] = cfg.copyValue(); Serial.print("Read pair_color06: "); Serial.println(pair_col_str[5]);
-      } else if (cfg.nameIs("pair_color07")) {
-        pair_col_str[6] = cfg.copyValue(); Serial.print("Read pair_color07: "); Serial.println(pair_col_str[6]);
-      } else if (cfg.nameIs("pair_color08")) {
-        pair_col_str[7] = cfg.copyValue(); Serial.print("Read pair_color08: "); Serial.println(pair_col_str[7]);
-      } else if (cfg.nameIs("pair_color09")) {
-        pair_col_str[8] = cfg.copyValue(); Serial.print("Read pair_color09: "); Serial.println(pair_col_str[8]);
-      } else if (cfg.nameIs("pair_color10")) {
-        pair_col_str[9] = cfg.copyValue(); Serial.print("Read pair_color10: "); Serial.println(pair_col_str[9]);
-      } else if (cfg.nameIs("pair_color11")) {
-        pair_col_str[10] = cfg.copyValue(); Serial.print("Read pair_color11: "); Serial.println(pair_col_str[10]);
-      } else if (cfg.nameIs("pair_color12")) {
-        pair_col_str[11] = cfg.copyValue(); Serial.print("Read pair_color12: "); Serial.println(pair_col_str[11]);
-      } else if (cfg.nameIs("pair_color13")) {
-        pair_col_str[12] = cfg.copyValue(); Serial.print("Read pair_color13: "); Serial.println(pair_col_str[12]);
-      } else if (cfg.nameIs("pair_color14")) {
-        pair_col_str[13] = cfg.copyValue(); Serial.print("Read pair_color14: "); Serial.println(pair_col_str[13]);
-      } else if (cfg.nameIs("pair_color15")) {
-        pair_col_str[14] = cfg.copyValue(); Serial.print("Read pair_color15: "); Serial.println(pair_col_str[14]);
-      } else if (cfg.nameIs("pair_color16")) {
-        pair_col_str[15] = cfg.copyValue(); Serial.print("Read pair_color16: "); Serial.println(pair_col_str[15]);
-      } else if (cfg.nameIs("pair_color17")) {
-        pair_col_str[16] = cfg.copyValue(); Serial.print("Read pair_color17: "); Serial.println(pair_col_str[16]);
-      } else if (cfg.nameIs("pair_color18")) {
-        pair_col_str[17] = cfg.copyValue(); Serial.print("Read pair_color18: "); Serial.println(pair_col_str[17]);
-      } else if (cfg.nameIs("pair_color19")) {
-        pair_col_str[18] = cfg.copyValue(); Serial.print("Read pair_color19: "); Serial.println(pair_col_str[18]);
-      } else if (cfg.nameIs("pair_color20")) {
-        pair_col_str[19] = cfg.copyValue(); Serial.print("Read pair_color20: "); Serial.println(pair_col_str[19]);
-      } else if (cfg.nameIs("pair_color21")) {
-        pair_col_str[20] = cfg.copyValue(); Serial.print("Read pair_color21: "); Serial.println(pair_col_str[20]);
-      } else if (cfg.nameIs("pair_color22")) {
-        pair_col_str[21] = cfg.copyValue(); Serial.print("Read pair_color22: "); Serial.println(pair_col_str[21]);
-      } else if (cfg.nameIs("pair_color23")) {
-        pair_col_str[22] = cfg.copyValue(); Serial.print("Read pair_color23: "); Serial.println(pair_col_str[22]);
-      } else if (cfg.nameIs("pair_color24")) {
-        pair_col_str[23] = cfg.copyValue(); Serial.print("Read pair_color24: "); Serial.println(pair_col_str[23]);
-      } else if (cfg.nameIs("pair_color25")) {
-        pair_col_str[24] = cfg.copyValue(); Serial.print("Read pair_color25: "); Serial.println(pair_col_str[24]);
-      }
-      else if (cfg.nameIs("myTimeZone")) {
-        myTimeZone = cfg.getIntValue(); Serial.print("Read myTimeZone: "); Serial.println(myTimeZone);
-      } else if (cfg.nameIs("myLanguage")) {
-        myLanguage = cfg.getIntValue(); Serial.print("Read myLanguage: "); Serial.println(myLanguage);
-      } else if (cfg.nameIs("mySleeptime")) {
-        mySleeptime = cfg.getIntValue(); Serial.print("Read mySleeptime: "); Serial.println(mySleeptime);
-      } else {
-        // report unrecognized names.
-        Serial.print("unknown contend in configfile: "); Serial.println(cfg.getName());
-        M5.Lcd.print("\nunknown contend in SD confg file");
-        delay(1750);
-      }
+    else if (cfg.nameIs("pair_name01")) {
+      pair_name[0] = cfg.copyValue(); Serial.print("Read pair_name01: "); Serial.println(pair_name[0]);
+    } else if (cfg.nameIs("pair_name02")) {
+      pair_name[1] = cfg.copyValue(); Serial.print("Read pair_name02: "); Serial.println(pair_name[1]);
+    } else if (cfg.nameIs("pair_name03")) {
+      pair_name[2] = cfg.copyValue(); Serial.print("Read pair_name03: "); Serial.println(pair_name[2]);
+    } else if (cfg.nameIs("pair_name04")) {
+      pair_name[3] = cfg.copyValue(); Serial.print("Read pair_name04: "); Serial.println(pair_name[3]);
+    } else if (cfg.nameIs("pair_name05")) {
+      pair_name[4] = cfg.copyValue(); Serial.print("Read pair_name05: "); Serial.println(pair_name[4]);
+    } else if (cfg.nameIs("pair_name06")) {
+      pair_name[5] = cfg.copyValue(); Serial.print("Read pair_name06: "); Serial.println(pair_name[5]);
+    } else if (cfg.nameIs("pair_name07")) {
+      pair_name[6] = cfg.copyValue(); Serial.print("Read pair_name07: "); Serial.println(pair_name[6]);
+    } else if (cfg.nameIs("pair_name08")) {
+      pair_name[7] = cfg.copyValue(); Serial.print("Read pair_name08: "); Serial.println(pair_name[7]);
+    } else if (cfg.nameIs("pair_name09")) {
+      pair_name[8] = cfg.copyValue(); Serial.print("Read pair_name09: "); Serial.println(pair_name[8]);
+    } else if (cfg.nameIs("pair_name10")) {
+      pair_name[9] = cfg.copyValue(); Serial.print("Read pair_name10: "); Serial.println(pair_name[9]);
+    } else if (cfg.nameIs("pair_name11")) {
+      pair_name[10] = cfg.copyValue(); Serial.print("Read pair_name11: "); Serial.println(pair_name[10]);
+    } else if (cfg.nameIs("pair_name12")) {
+      pair_name[11] = cfg.copyValue(); Serial.print("Read pair_name12: "); Serial.println(pair_name[11]);
+    } else if (cfg.nameIs("pair_name13")) {
+      pair_name[12] = cfg.copyValue(); Serial.print("Read pair_name13: "); Serial.println(pair_name[12]);
+    } else if (cfg.nameIs("pair_name14")) {
+      pair_name[13] = cfg.copyValue(); Serial.print("Read pair_name14: "); Serial.println(pair_name[13]);
+    } else if (cfg.nameIs("pair_name15")) {
+      pair_name[14] = cfg.copyValue(); Serial.print("Read pair_name15: "); Serial.println(pair_name[14]);
+    } else if (cfg.nameIs("pair_name16")) {
+      pair_name[15] = cfg.copyValue(); Serial.print("Read pair_name16: "); Serial.println(pair_name[15]);
+    } else if (cfg.nameIs("pair_name17")) {
+      pair_name[16] = cfg.copyValue(); Serial.print("Read pair_name17: "); Serial.println(pair_name[16]);
+    } else if (cfg.nameIs("pair_name18")) {
+      pair_name[17] = cfg.copyValue(); Serial.print("Read pair_name18: "); Serial.println(pair_name[17]);
+    } else if (cfg.nameIs("pair_name19")) {
+      pair_name[18] = cfg.copyValue(); Serial.print("Read pair_name19: "); Serial.println(pair_name[18]);
+    } else if (cfg.nameIs("pair_name20")) {
+      pair_name[19] = cfg.copyValue(); Serial.print("Read pair_name20: "); Serial.println(pair_name[19]);
+    } else if (cfg.nameIs("pair_name21")) {
+      pair_name[20] = cfg.copyValue(); Serial.print("Read pair_name21: "); Serial.println(pair_name[20]);
+    } else if (cfg.nameIs("pair_name22")) {
+      pair_name[21] = cfg.copyValue(); Serial.print("Read pair_name22: "); Serial.println(pair_name[21]);
+    } else if (cfg.nameIs("pair_name23")) {
+      pair_name[22] = cfg.copyValue(); Serial.print("Read pair_name23: "); Serial.println(pair_name[22]);
+    } else if (cfg.nameIs("pair_name24")) {
+      pair_name[23] = cfg.copyValue(); Serial.print("Read pair_name24: "); Serial.println(pair_name[23]);
+    } else if (cfg.nameIs("pair_name25")) {
+      pair_name[24] = cfg.copyValue(); Serial.print("Read pair_name25: "); Serial.println(pair_name[24]);
     }
-    cfg.end();// end of sd reading
+    else if (cfg.nameIs("pair_STRING01")) {
+      pair_STRING[0] = cfg.copyValue(); Serial.print("Read pair_STRING01: "); Serial.println(pair_STRING[0]);
+    } else if (cfg.nameIs("pair_STRING02")) {
+      pair_STRING[1] = cfg.copyValue(); Serial.print("Read pair_STRING02: "); Serial.println(pair_STRING[1]);
+    } else if (cfg.nameIs("pair_STRING03")) {
+      pair_STRING[2] = cfg.copyValue(); Serial.print("Read pair_STRING03: "); Serial.println(pair_STRING[2]);
+    } else if (cfg.nameIs("pair_STRING04")) {
+      pair_STRING[3] = cfg.copyValue(); Serial.print("Read pair_STRING04: "); Serial.println(pair_STRING[3]);
+    } else if (cfg.nameIs("pair_STRING05")) {
+      pair_STRING[4] = cfg.copyValue(); Serial.print("Read pair_STRING05: "); Serial.println(pair_STRING[4]);
+    } else if (cfg.nameIs("pair_STRING06")) {
+      pair_STRING[5] = cfg.copyValue(); Serial.print("Read pair_STRING06: "); Serial.println(pair_STRING[5]);
+    } else if (cfg.nameIs("pair_STRING07")) {
+      pair_STRING[6] = cfg.copyValue(); Serial.print("Read pair_STRING07: "); Serial.println(pair_STRING[6]);
+    } else if (cfg.nameIs("pair_STRING08")) {
+      pair_STRING[7] = cfg.copyValue(); Serial.print("Read pair_STRING08: "); Serial.println(pair_STRING[7]);
+    } else if (cfg.nameIs("pair_STRING09")) {
+      pair_STRING[8] = cfg.copyValue(); Serial.print("Read pair_STRING09: "); Serial.println(pair_STRING[8]);
+    } else if (cfg.nameIs("pair_STRING10")) {
+      pair_STRING[9] = cfg.copyValue(); Serial.print("Read pair_STRING10: "); Serial.println(pair_STRING[9]);
+    } else if (cfg.nameIs("pair_STRING11")) {
+      pair_STRING[10] = cfg.copyValue(); Serial.print("Read pair_STRING11: "); Serial.println(pair_STRING[10]);
+    } else if (cfg.nameIs("pair_STRING12")) {
+      pair_STRING[11] = cfg.copyValue(); Serial.print("Read pair_STRING12: "); Serial.println(pair_STRING[11]);
+    } else if (cfg.nameIs("pair_STRING13")) {
+      pair_STRING[12] = cfg.copyValue(); Serial.print("Read pair_STRING13: "); Serial.println(pair_STRING[12]);
+    } else if (cfg.nameIs("pair_STRING14")) {
+      pair_STRING[13] = cfg.copyValue(); Serial.print("Read pair_STRING14: "); Serial.println(pair_STRING[13]);
+    } else if (cfg.nameIs("pair_STRING15")) {
+      pair_STRING[14] = cfg.copyValue(); Serial.print("Read pair_STRING15: "); Serial.println(pair_STRING[14]);
+    } else if (cfg.nameIs("pair_STRING16")) {
+      pair_STRING[15] = cfg.copyValue(); Serial.print("Read pair_STRING16: "); Serial.println(pair_STRING[15]);
+    } else if (cfg.nameIs("pair_STRING17")) {
+      pair_STRING[16] = cfg.copyValue(); Serial.print("Read pair_STRING17: "); Serial.println(pair_STRING[16]);
+    } else if (cfg.nameIs("pair_STRING18")) {
+      pair_STRING[17] = cfg.copyValue(); Serial.print("Read pair_STRING18: "); Serial.println(pair_STRING[17]);
+    } else if (cfg.nameIs("pair_STRING19")) {
+      pair_STRING[18] = cfg.copyValue(); Serial.print("Read pair_STRING19: "); Serial.println(pair_STRING[18]);
+    } else if (cfg.nameIs("pair_STRING20")) {
+      pair_STRING[19] = cfg.copyValue(); Serial.print("Read pair_STRING20: "); Serial.println(pair_STRING[19]);
+    } else if (cfg.nameIs("pair_STRING21")) {
+      pair_STRING[20] = cfg.copyValue(); Serial.print("Read pair_STRING21: "); Serial.println(pair_STRING[20]);
+    } else if (cfg.nameIs("pair_STRING22")) {
+      pair_STRING[21] = cfg.copyValue(); Serial.print("Read pair_STRING22: "); Serial.println(pair_STRING[21]);
+    } else if (cfg.nameIs("pair_STRING23")) {
+      pair_STRING[22] = cfg.copyValue(); Serial.print("Read pair_STRING23: "); Serial.println(pair_STRING[22]);
+    } else if (cfg.nameIs("pair_STRING24")) {
+      pair_STRING[23] = cfg.copyValue(); Serial.print("Read pair_STRING24: "); Serial.println(pair_STRING[23]);
+    } else if (cfg.nameIs("pair_STRING25")) {
+      pair_STRING[24] = cfg.copyValue(); Serial.print("Read pair_STRING25: "); Serial.println(pair_STRING[24]);
+    }
+    else if (cfg.nameIs("pair_color01")) {
+      pair_col_str[0] = cfg.copyValue(); Serial.print("Read pair_color01: "); Serial.println(pair_col_str[0]);
+    } else if (cfg.nameIs("pair_color02")) {
+      pair_col_str[1] = cfg.copyValue(); Serial.print("Read pair_color02: "); Serial.println(pair_col_str[1]);
+    } else if (cfg.nameIs("pair_color03")) {
+      pair_col_str[2] = cfg.copyValue(); Serial.print("Read pair_color03: "); Serial.println(pair_col_str[2]);
+    } else if (cfg.nameIs("pair_color04")) {
+      pair_col_str[3] = cfg.copyValue(); Serial.print("Read pair_color04: "); Serial.println(pair_col_str[3]);
+    } else if (cfg.nameIs("pair_color05")) {
+      pair_col_str[4] = cfg.copyValue(); Serial.print("Read pair_color05: "); Serial.println(pair_col_str[4]);
+    } else if (cfg.nameIs("pair_color06")) {
+      pair_col_str[5] = cfg.copyValue(); Serial.print("Read pair_color06: "); Serial.println(pair_col_str[5]);
+    } else if (cfg.nameIs("pair_color07")) {
+      pair_col_str[6] = cfg.copyValue(); Serial.print("Read pair_color07: "); Serial.println(pair_col_str[6]);
+    } else if (cfg.nameIs("pair_color08")) {
+      pair_col_str[7] = cfg.copyValue(); Serial.print("Read pair_color08: "); Serial.println(pair_col_str[7]);
+    } else if (cfg.nameIs("pair_color09")) {
+      pair_col_str[8] = cfg.copyValue(); Serial.print("Read pair_color09: "); Serial.println(pair_col_str[8]);
+    } else if (cfg.nameIs("pair_color10")) {
+      pair_col_str[9] = cfg.copyValue(); Serial.print("Read pair_color10: "); Serial.println(pair_col_str[9]);
+    } else if (cfg.nameIs("pair_color11")) {
+      pair_col_str[10] = cfg.copyValue(); Serial.print("Read pair_color11: "); Serial.println(pair_col_str[10]);
+    } else if (cfg.nameIs("pair_color12")) {
+      pair_col_str[11] = cfg.copyValue(); Serial.print("Read pair_color12: "); Serial.println(pair_col_str[11]);
+    } else if (cfg.nameIs("pair_color13")) {
+      pair_col_str[12] = cfg.copyValue(); Serial.print("Read pair_color13: "); Serial.println(pair_col_str[12]);
+    } else if (cfg.nameIs("pair_color14")) {
+      pair_col_str[13] = cfg.copyValue(); Serial.print("Read pair_color14: "); Serial.println(pair_col_str[13]);
+    } else if (cfg.nameIs("pair_color15")) {
+      pair_col_str[14] = cfg.copyValue(); Serial.print("Read pair_color15: "); Serial.println(pair_col_str[14]);
+    } else if (cfg.nameIs("pair_color16")) {
+      pair_col_str[15] = cfg.copyValue(); Serial.print("Read pair_color16: "); Serial.println(pair_col_str[15]);
+    } else if (cfg.nameIs("pair_color17")) {
+      pair_col_str[16] = cfg.copyValue(); Serial.print("Read pair_color17: "); Serial.println(pair_col_str[16]);
+    } else if (cfg.nameIs("pair_color18")) {
+      pair_col_str[17] = cfg.copyValue(); Serial.print("Read pair_color18: "); Serial.println(pair_col_str[17]);
+    } else if (cfg.nameIs("pair_color19")) {
+      pair_col_str[18] = cfg.copyValue(); Serial.print("Read pair_color19: "); Serial.println(pair_col_str[18]);
+    } else if (cfg.nameIs("pair_color20")) {
+      pair_col_str[19] = cfg.copyValue(); Serial.print("Read pair_color20: "); Serial.println(pair_col_str[19]);
+    } else if (cfg.nameIs("pair_color21")) {
+      pair_col_str[20] = cfg.copyValue(); Serial.print("Read pair_color21: "); Serial.println(pair_col_str[20]);
+    } else if (cfg.nameIs("pair_color22")) {
+      pair_col_str[21] = cfg.copyValue(); Serial.print("Read pair_color22: "); Serial.println(pair_col_str[21]);
+    } else if (cfg.nameIs("pair_color23")) {
+      pair_col_str[22] = cfg.copyValue(); Serial.print("Read pair_color23: "); Serial.println(pair_col_str[22]);
+    } else if (cfg.nameIs("pair_color24")) {
+      pair_col_str[23] = cfg.copyValue(); Serial.print("Read pair_color24: "); Serial.println(pair_col_str[23]);
+    } else if (cfg.nameIs("pair_color25")) {
+      pair_col_str[24] = cfg.copyValue(); Serial.print("Read pair_color25: "); Serial.println(pair_col_str[24]);
+    }
+    else if (cfg.nameIs("myTimeZone")) {
+      myTimeZone = cfg.getIntValue(); Serial.print("Read myTimeZone: "); Serial.println(myTimeZone);
+    } else if (cfg.nameIs("myLanguage")) {
+      myLanguage = cfg.getIntValue(); Serial.print("Read myLanguage: "); Serial.println(myLanguage);
+    } else if (cfg.nameIs("mySleeptime")) {
+      mySleeptime = cfg.getIntValue(); Serial.print("Read mySleeptime: "); Serial.println(mySleeptime);
+    } else {
+      // report unrecognized names.
+      Serial.print("unknown contend in configfile: "); Serial.println(cfg.getName());
+      M5.Lcd.print("\nunknown contend in SD confg file");
+      delay(1750);
+    }
+  }
+  cfg.end();// end of sd reading
 
-    // load last settings from memory on startup
-    preferences.begin("settings", false);
-    if (M5.BtnB.isPressed()) { //if you want to clear all stored settings from internal memory hold ButtonB at start-up
-      preferences.clear();
-      M5.Lcd.print("\n\n*** Memory cleared by user ***");
-      Serial.println("*** Memory cleared by user ***");
-      delay(2000);
-      M5.Lcd.fillScreen(TFT_BLACK);
-    }
+  // load last settings from memory on startup
+  preferences.begin("settings", false);
+  if (M5.BtnB.isPressed()) { //if you want to clear all stored settings from internal memory hold ButtonB at start-up
+    preferences.clear();
+    M5.Lcd.print("\n\n*** Memory cleared by user ***");
+    Serial.println("*** Memory cleared by user ***");
+    delay(2000);
+    M5.Lcd.fillScreen(TFT_BLACK);
+  }
 
-    ssid_mem = preferences.getString("ssid", "");
-    ssid2_mem = preferences.getString("ssid2", "");
-    password_mem = preferences.getString("password", "");
-    password2_mem = preferences.getString("password2", "");
-    mySleeptime_mem = preferences.getInt("mySleeptime", 45);
-    myTimeZone_mem = preferences.getInt("myTimeZone", 4);
-    myLanguage_mem = preferences.getInt("myLanguage", 0);
-    pairs_mem = preferences.getInt("pairs", 4);
-    pair_name_mem[0] = preferences.getString("pair_name01", "");
-    pair_name_mem[1] = preferences.getString("pair_name02", "");
-    pair_name_mem[2] = preferences.getString("pair_name03", "");
-    pair_name_mem[3] = preferences.getString("pair_name04", "");
-    pair_name_mem[4] = preferences.getString("pair_name05", "");
-    pair_name_mem[5] = preferences.getString("pair_name06", "");
-    pair_name_mem[6] = preferences.getString("pair_name07", "");
-    pair_name_mem[7] = preferences.getString("pair_name08", "");
-    pair_name_mem[8] = preferences.getString("pair_name09", "");
-    pair_name_mem[9] = preferences.getString("pair_name10", "");
-    pair_name_mem[10] = preferences.getString("pair_name11", "");
-    pair_name_mem[11] = preferences.getString("pair_name12", "");
-    pair_name_mem[12] = preferences.getString("pair_name13", "");
-    pair_name_mem[13] = preferences.getString("pair_name14", "");
-    pair_name_mem[14] = preferences.getString("pair_name15", "");
-    pair_name_mem[15] = preferences.getString("pair_name16", "");
-    pair_name_mem[16] = preferences.getString("pair_name17", "");
-    pair_name_mem[17] = preferences.getString("pair_name18", "");
-    pair_name_mem[18] = preferences.getString("pair_name19", "");
-    pair_name_mem[19] = preferences.getString("pair_name20", "");
-    pair_name_mem[20] = preferences.getString("pair_name21", "");
-    pair_name_mem[21] = preferences.getString("pair_name22", "");
-    pair_name_mem[22] = preferences.getString("pair_name23", "");
-    pair_name_mem[23] = preferences.getString("pair_name24", "");
-    pair_name_mem[24] = preferences.getString("pair_name25", "");
-    pair_STRING_mem[0] = preferences.getString("pair_STRING01", "");
-    pair_STRING_mem[1] = preferences.getString("pair_STRING02", "");
-    pair_STRING_mem[2] = preferences.getString("pair_STRING03", "");
-    pair_STRING_mem[3] = preferences.getString("pair_STRING04", "");
-    pair_STRING_mem[4] = preferences.getString("pair_STRING05", "");
-    pair_STRING_mem[5] = preferences.getString("pair_STRING06", "");
-    pair_STRING_mem[6] = preferences.getString("pair_STRING07", "");
-    pair_STRING_mem[7] = preferences.getString("pair_STRING08", "");
-    pair_STRING_mem[8] = preferences.getString("pair_STRING09", "");
-    pair_STRING_mem[9] = preferences.getString("pair_STRING10", "");
-    pair_STRING_mem[10] = preferences.getString("pair_STRING11", "");
-    pair_STRING_mem[11] = preferences.getString("pair_STRING12", "");
-    pair_STRING_mem[12] = preferences.getString("pair_STRING13", "");
-    pair_STRING_mem[13] = preferences.getString("pair_STRING14", "");
-    pair_STRING_mem[14] = preferences.getString("pair_STRING15", "");
-    pair_STRING_mem[15] = preferences.getString("pair_STRING16", "");
-    pair_STRING_mem[16] = preferences.getString("pair_STRING17", "");
-    pair_STRING_mem[17] = preferences.getString("pair_STRING18", "");
-    pair_STRING_mem[18] = preferences.getString("pair_STRING19", "");
-    pair_STRING_mem[19] = preferences.getString("pair_STRING20", "");
-    pair_STRING_mem[20] = preferences.getString("pair_STRING21", "");
-    pair_STRING_mem[21] = preferences.getString("pair_STRING22", "");
-    pair_STRING_mem[22] = preferences.getString("pair_STRING23", "");
-    pair_STRING_mem[23] = preferences.getString("pair_STRING24", "");
-    pair_STRING_mem[24] = preferences.getString("pair_STRING25", "");
-    pair_col_str_mem[0] = preferences.getString("pair_col_str01", "");
-    pair_col_str_mem[1] = preferences.getString("pair_col_str02", "");
-    pair_col_str_mem[2] = preferences.getString("pair_col_str03", "");
-    pair_col_str_mem[3] = preferences.getString("pair_col_str04", "");
-    pair_col_str_mem[4] = preferences.getString("pair_col_str05", "");
-    pair_col_str_mem[5] = preferences.getString("pair_col_str06", "");
-    pair_col_str_mem[6] = preferences.getString("pair_col_str07", "");
-    pair_col_str_mem[7] = preferences.getString("pair_col_str08", "");
-    pair_col_str_mem[8] = preferences.getString("pair_col_str09", "");
-    pair_col_str_mem[9] = preferences.getString("pair_col_str10", "");
-    pair_col_str_mem[10] = preferences.getString("pair_col_str11", "");
-    pair_col_str_mem[11] = preferences.getString("pair_col_str12", "");
-    pair_col_str_mem[12] = preferences.getString("pair_col_str13", "");
-    pair_col_str_mem[13] = preferences.getString("pair_col_str14", "");
-    pair_col_str_mem[14] = preferences.getString("pair_col_str15", "");
-    pair_col_str_mem[15] = preferences.getString("pair_col_str16", "");
-    pair_col_str_mem[16] = preferences.getString("pair_col_str17", "");
-    pair_col_str_mem[17] = preferences.getString("pair_col_str18", "");
-    pair_col_str_mem[18] = preferences.getString("pair_col_str19", "");
-    pair_col_str_mem[19] = preferences.getString("pair_col_str20", "");
-    pair_col_str_mem[20] = preferences.getString("pair_col_str21", "");
-    pair_col_str_mem[21] = preferences.getString("pair_col_str22", "");
-    pair_col_str_mem[22] = preferences.getString("pair_col_str23", "");
-    pair_col_str_mem[23] = preferences.getString("pair_col_str24", "");
-    pair_col_str_mem[24] = preferences.getString("pair_col_str25", "");
+  ssid_mem = preferences.getString("ssid", "");
+  ssid2_mem = preferences.getString("ssid2", "");
+  password_mem = preferences.getString("password", "");
+  password2_mem = preferences.getString("password2", "");
+  mySleeptime_mem = preferences.getInt("mySleeptime", 45);
+  myTimeZone_mem = preferences.getInt("myTimeZone", 4);
+  myLanguage_mem = preferences.getInt("myLanguage", 0);
+  pairs_mem = preferences.getInt("pairs", 4);
+  pair_name_mem[0] = preferences.getString("pair_name01", "");
+  pair_name_mem[1] = preferences.getString("pair_name02", "");
+  pair_name_mem[2] = preferences.getString("pair_name03", "");
+  pair_name_mem[3] = preferences.getString("pair_name04", "");
+  pair_name_mem[4] = preferences.getString("pair_name05", "");
+  pair_name_mem[5] = preferences.getString("pair_name06", "");
+  pair_name_mem[6] = preferences.getString("pair_name07", "");
+  pair_name_mem[7] = preferences.getString("pair_name08", "");
+  pair_name_mem[8] = preferences.getString("pair_name09", "");
+  pair_name_mem[9] = preferences.getString("pair_name10", "");
+  pair_name_mem[10] = preferences.getString("pair_name11", "");
+  pair_name_mem[11] = preferences.getString("pair_name12", "");
+  pair_name_mem[12] = preferences.getString("pair_name13", "");
+  pair_name_mem[13] = preferences.getString("pair_name14", "");
+  pair_name_mem[14] = preferences.getString("pair_name15", "");
+  pair_name_mem[15] = preferences.getString("pair_name16", "");
+  pair_name_mem[16] = preferences.getString("pair_name17", "");
+  pair_name_mem[17] = preferences.getString("pair_name18", "");
+  pair_name_mem[18] = preferences.getString("pair_name19", "");
+  pair_name_mem[19] = preferences.getString("pair_name20", "");
+  pair_name_mem[20] = preferences.getString("pair_name21", "");
+  pair_name_mem[21] = preferences.getString("pair_name22", "");
+  pair_name_mem[22] = preferences.getString("pair_name23", "");
+  pair_name_mem[23] = preferences.getString("pair_name24", "");
+  pair_name_mem[24] = preferences.getString("pair_name25", "");
+  pair_STRING_mem[0] = preferences.getString("pair_STRING01", "");
+  pair_STRING_mem[1] = preferences.getString("pair_STRING02", "");
+  pair_STRING_mem[2] = preferences.getString("pair_STRING03", "");
+  pair_STRING_mem[3] = preferences.getString("pair_STRING04", "");
+  pair_STRING_mem[4] = preferences.getString("pair_STRING05", "");
+  pair_STRING_mem[5] = preferences.getString("pair_STRING06", "");
+  pair_STRING_mem[6] = preferences.getString("pair_STRING07", "");
+  pair_STRING_mem[7] = preferences.getString("pair_STRING08", "");
+  pair_STRING_mem[8] = preferences.getString("pair_STRING09", "");
+  pair_STRING_mem[9] = preferences.getString("pair_STRING10", "");
+  pair_STRING_mem[10] = preferences.getString("pair_STRING11", "");
+  pair_STRING_mem[11] = preferences.getString("pair_STRING12", "");
+  pair_STRING_mem[12] = preferences.getString("pair_STRING13", "");
+  pair_STRING_mem[13] = preferences.getString("pair_STRING14", "");
+  pair_STRING_mem[14] = preferences.getString("pair_STRING15", "");
+  pair_STRING_mem[15] = preferences.getString("pair_STRING16", "");
+  pair_STRING_mem[16] = preferences.getString("pair_STRING17", "");
+  pair_STRING_mem[17] = preferences.getString("pair_STRING18", "");
+  pair_STRING_mem[18] = preferences.getString("pair_STRING19", "");
+  pair_STRING_mem[19] = preferences.getString("pair_STRING20", "");
+  pair_STRING_mem[20] = preferences.getString("pair_STRING21", "");
+  pair_STRING_mem[21] = preferences.getString("pair_STRING22", "");
+  pair_STRING_mem[22] = preferences.getString("pair_STRING23", "");
+  pair_STRING_mem[23] = preferences.getString("pair_STRING24", "");
+  pair_STRING_mem[24] = preferences.getString("pair_STRING25", "");
+  pair_col_str_mem[0] = preferences.getString("pair_col_str01", "");
+  pair_col_str_mem[1] = preferences.getString("pair_col_str02", "");
+  pair_col_str_mem[2] = preferences.getString("pair_col_str03", "");
+  pair_col_str_mem[3] = preferences.getString("pair_col_str04", "");
+  pair_col_str_mem[4] = preferences.getString("pair_col_str05", "");
+  pair_col_str_mem[5] = preferences.getString("pair_col_str06", "");
+  pair_col_str_mem[6] = preferences.getString("pair_col_str07", "");
+  pair_col_str_mem[7] = preferences.getString("pair_col_str08", "");
+  pair_col_str_mem[8] = preferences.getString("pair_col_str09", "");
+  pair_col_str_mem[9] = preferences.getString("pair_col_str10", "");
+  pair_col_str_mem[10] = preferences.getString("pair_col_str11", "");
+  pair_col_str_mem[11] = preferences.getString("pair_col_str12", "");
+  pair_col_str_mem[12] = preferences.getString("pair_col_str13", "");
+  pair_col_str_mem[13] = preferences.getString("pair_col_str14", "");
+  pair_col_str_mem[14] = preferences.getString("pair_col_str15", "");
+  pair_col_str_mem[15] = preferences.getString("pair_col_str16", "");
+  pair_col_str_mem[16] = preferences.getString("pair_col_str17", "");
+  pair_col_str_mem[17] = preferences.getString("pair_col_str18", "");
+  pair_col_str_mem[18] = preferences.getString("pair_col_str19", "");
+  pair_col_str_mem[19] = preferences.getString("pair_col_str20", "");
+  pair_col_str_mem[20] = preferences.getString("pair_col_str21", "");
+  pair_col_str_mem[21] = preferences.getString("pair_col_str22", "");
+  pair_col_str_mem[22] = preferences.getString("pair_col_str23", "");
+  pair_col_str_mem[23] = preferences.getString("pair_col_str24", "");
+  pair_col_str_mem[24] = preferences.getString("pair_col_str25", "");
 
-    // when processed SD-Card config is other than the saved ones, save new value to memory
-    if (SD.begin(pinSelectSD)) {                                                        //main settings
-      if (ssid != ssid_mem) {
-        Serial.print("old ssid_mem was: "); Serial.println(ssid_mem);
-        preferences.putString("ssid", ssid);
-        Serial.print("new ssid save is: "); Serial.println(ssid);
-        change_count++;
-      }
-      if (ssid2 != ssid2_mem) {
-        Serial.print("old ssid2_mem was: "); Serial.println(ssid2_mem);
-        preferences.putString("ssid2", ssid2);
-        Serial.print("new ssid2 save is: "); Serial.println(ssid2);
-        change_count++;
-      }
-      if (password != password_mem) {
-        Serial.print("old password_mem was: "); Serial.println(password_mem);
-        preferences.putString("password", password);
-        Serial.print("new password save is: "); Serial.println(password);
-        change_count++;
-      }
-      if (password2 != password2_mem) {
-        Serial.print("old password2_mem was: "); Serial.println(password2_mem);
-        preferences.putString("password2", password2);
-        Serial.print("new password2 save is: "); Serial.println(password2);
-        change_count++;
-      }
-      if (mySleeptime != mySleeptime_mem) {
-        Serial.print("old mySleeptime_mem was: "); Serial.println(mySleeptime_mem);
-        preferences.putInt("mySleeptime", mySleeptime);
-        Serial.print("new mySleeptime save is: "); Serial.println(mySleeptime);
-        change_count++;
-      }
-      if (myTimeZone != myTimeZone_mem) {
-        Serial.print("old myTimeZone_mem was: "); Serial.println(myTimeZone_mem);
-        preferences.putInt("myTimeZone", myTimeZone);
-        Serial.print("new myTimeZone save is: "); Serial.println(myTimeZone);
-        change_count++;
-      }
-      if (myLanguage != myLanguage_mem) {
-        Serial.print("old myLanguage_mem was: "); Serial.println(myLanguage_mem);
-        preferences.putInt("myLanguage", myLanguage);
-        Serial.print("new myLanguage save is: "); Serial.println(myLanguage);
-        change_count++;
-      }
-      if (pairs != pairs_mem) {
-        Serial.print("old pairs_mem was: "); Serial.println(pairs_mem);
-        preferences.putInt("pairs", pairs);
-        Serial.print("new pairs save is: "); Serial.println(pairs);
-        change_count++;
-      }
-      if (pair_name[0] != pair_name_mem[0]) {                                      //pair name for top bar
-        Serial.print("old pair_name01_mem was: "); Serial.println(pair_name_mem[0]);
-        preferences.putString("pair_name01", pair_name[0]);
-        Serial.print("new pair_name01 save is: "); Serial.println(pair_name[0]);
-        change_count++;
-      }
-      if (pair_name[1] != pair_name_mem[1]) {
-        Serial.print("old pair_name02_mem was: "); Serial.println(pair_name_mem[1]);
-        preferences.putString("pair_name02", pair_name[1]);
-        Serial.print("new pair_name02 save is: "); Serial.println(pair_name[1]);
-        change_count++;
-      }
-      if (pair_name[2] != pair_name_mem[2]) {
-        Serial.print("old pair_name03_mem was: "); Serial.println(pair_name_mem[2]);
-        preferences.putString("pair_name03", pair_name[2]);
-        Serial.print("new pair_name03 save is: "); Serial.println(pair_name[2]);
-        change_count++;
-      }
-      if (pair_name[3] != pair_name_mem[3]) {
-        Serial.print("old pair_name04_mem was: "); Serial.println(pair_name_mem[3]);
-        preferences.putString("pair_name04", pair_name[3]);
-        Serial.print("new pair_name04 save is: "); Serial.println(pair_name[3]);
-        change_count++;
-      }
-      if (pair_name[4] != pair_name_mem[4]) {
-        Serial.print("old pair_name05_mem was: "); Serial.println(pair_name_mem[4]);
-        preferences.putString("pair_name05", pair_name[4]);
-        Serial.print("new pair_name05 save is: "); Serial.println(pair_name[4]);
-        change_count++;
-      }
-      if (pair_name[5] != pair_name_mem[5]) {
-        Serial.print("old pair_name06_mem was: "); Serial.println(pair_name_mem[5]);
-        preferences.putString("pair_name06", pair_name[5]);
-        Serial.print("new pair_name06 save is: "); Serial.println(pair_name[5]);
-        change_count++;
-      }
-      if (pair_name[6] != pair_name_mem[6]) {
-        Serial.print("old pair_name07_mem was: "); Serial.println(pair_name_mem[6]);
-        preferences.putString("pair_name07", pair_name[6]);
-        Serial.print("new pair_name07 save is: "); Serial.println(pair_name[6]);
-        change_count++;
-      }
-      if (pair_name[7] != pair_name_mem[7]) {
-        Serial.print("old pair_name08_mem was: "); Serial.println(pair_name_mem[7]);
-        preferences.putString("pair_name08", pair_name[7]);
-        Serial.print("new pair_name08 save is: "); Serial.println(pair_name[7]);
-        change_count++;
-      }
-      if (pair_name[8] != pair_name_mem[8]) {
-        Serial.print("old pair_name09_mem was: "); Serial.println(pair_name_mem[8]);
-        preferences.putString("pair_name09", pair_name[8]);
-        Serial.print("new pair_name09 save is: "); Serial.println(pair_name[8]);
-        change_count++;
-      }
-      if (pair_name[9] != pair_name_mem[9]) {
-        Serial.print("old pair_name10_mem was: "); Serial.println(pair_name_mem[9]);
-        preferences.putString("pair_name10", pair_name[9]);
-        Serial.print("new pair_name10 save is: "); Serial.println(pair_name[9]);
-        change_count++;
-      }
-      if (pair_name[10] != pair_name_mem[10]) {
-        Serial.print("old pair_name11_mem was: "); Serial.println(pair_name_mem[10]);
-        preferences.putString("pair_name11", pair_name[10]);
-        Serial.print("new pair_name11 save is: "); Serial.println(pair_name[10]);
-        change_count++;
-      }
-      if (pair_name[11] != pair_name_mem[11]) {
-        Serial.print("old pair_name12_mem was: "); Serial.println(pair_name_mem[11]);
-        preferences.putString("pair_name12", pair_name[11]);
-        Serial.print("new pair_name12 save is: "); Serial.println(pair_name[11]);
-        change_count++;
-      }
-      if (pair_name[12] != pair_name_mem[12]) {
-        Serial.print("old pair_name13_mem was: "); Serial.println(pair_name_mem[12]);
-        preferences.putString("pair_name13", pair_name[12]);
-        Serial.print("new pair_name13 save is: "); Serial.println(pair_name[12]);
-        change_count++;
-      }
-      if (pair_name[13] != pair_name_mem[13]) {
-        Serial.print("old pair_name14_mem was: "); Serial.println(pair_name_mem[13]);
-        preferences.putString("pair_name14", pair_name[13]);
-        Serial.print("new pair_name14 save is: "); Serial.println(pair_name[13]);
-        change_count++;
-      }
-      if (pair_name[14] != pair_name_mem[14]) {
-        Serial.print("old pair_name15_mem was: "); Serial.println(pair_name_mem[14]);
-        preferences.putString("pair_name15", pair_name[14]);
-        Serial.print("new pair_name15 save is: "); Serial.println(pair_name[14]);
-        change_count++;
-      }
-      if (pair_name[15] != pair_name_mem[15]) {
-        Serial.print("old pair_name16_mem was: "); Serial.println(pair_name_mem[15]);
-        preferences.putString("pair_name16", pair_name[15]);
-        Serial.print("new pair_name16 save is: "); Serial.println(pair_name[15]);
-        change_count++;
-      }
-      if (pair_name[16] != pair_name_mem[16]) {
-        Serial.print("old pair_name17_mem was: "); Serial.println(pair_name_mem[16]);
-        preferences.putString("pair_name17", pair_name[16]);
-        Serial.print("new pair_name17 save is: "); Serial.println(pair_name[16]);
-        change_count++;
-      }
-      if (pair_name[17] != pair_name_mem[17]) {
-        Serial.print("old pair_name18_mem was: "); Serial.println(pair_name_mem[17]);
-        preferences.putString("pair_name18", pair_name[17]);
-        Serial.print("new pair_name18 save is: "); Serial.println(pair_name[17]);
-        change_count++;
-      }
-      if (pair_name[18] != pair_name_mem[18]) {
-        Serial.print("old pair_name19_mem was: "); Serial.println(pair_name_mem[18]);
-        preferences.putString("pair_name19", pair_name[18]);
-        Serial.print("new pair_name19 save is: "); Serial.println(pair_name[18]);
-        change_count++;
-      }
-      if (pair_name[19] != pair_name_mem[19]) {
-        Serial.print("old pair_name20_mem was: "); Serial.println(pair_name_mem[19]);
-        preferences.putString("pair_name20", pair_name[19]);
-        Serial.print("new pair_name20 save is: "); Serial.println(pair_name[19]);
-        change_count++;
-      }
-      if (pair_name[20] != pair_name_mem[20]) {
-        Serial.print("old pair_name21_mem was: "); Serial.println(pair_name_mem[20]);
-        preferences.putString("pair_name21", pair_name[20]);
-        Serial.print("new pair_name21 save is: "); Serial.println(pair_name[20]);
-        change_count++;
-      }
-      if (pair_name[21] != pair_name_mem[21]) {
-        Serial.print("old pair_name22_mem was: "); Serial.println(pair_name_mem[21]);
-        preferences.putString("pair_name22", pair_name[21]);
-        Serial.print("new pair_name22 save is: "); Serial.println(pair_name[21]);
-        change_count++;
-      }
-      if (pair_name[22] != pair_name_mem[22]) {
-        Serial.print("old pair_name23_mem was: "); Serial.println(pair_name_mem[22]);
-        preferences.putString("pair_name23", pair_name[22]);
-        Serial.print("new pair_name23 save is: "); Serial.println(pair_name[22]);
-        change_count++;
-      }
-      if (pair_name[23] != pair_name_mem[23]) {
-        Serial.print("old pair_name24_mem was: "); Serial.println(pair_name_mem[23]);
-        preferences.putString("pair_name24", pair_name[23]);
-        Serial.print("new pair_name24 save is: "); Serial.println(pair_name[23]);
-        change_count++;
-      }
-      if (pair_name[24] != pair_name_mem[24]) {
-        Serial.print("old pair_name25_mem was: "); Serial.println(pair_name_mem[24]);
-        preferences.putString("pair_name25", pair_name[24]);
-        Serial.print("new pair_name25 save is: "); Serial.println(pair_name[24]);
-        change_count++;
-      }
-      if (pair_STRING[0] != pair_STRING_mem[0]) {                                 //pair STRING in capitals for the binance api url
-        Serial.print("old pair_STRING01_mem was: "); Serial.println(pair_STRING_mem[0]);
-        preferences.putString("pair_STRING01", pair_STRING[0]);
-        Serial.print("new pair_STRING01 save is: "); Serial.println(pair_STRING[0]);
-        change_count++;
-      }
-      if (pair_STRING[1] != pair_STRING_mem[1]) {
-        Serial.print("old pair_STRING02_mem was: "); Serial.println(pair_STRING_mem[1]);
-        preferences.putString("pair_STRING02", pair_STRING[1]);
-        Serial.print("new pair_STRING02 save is: "); Serial.println(pair_STRING[1]);
-        change_count++;
-      }
-      if (pair_STRING[2] != pair_STRING_mem[2]) {
-        Serial.print("old pair_STRING03_mem was: "); Serial.println(pair_STRING_mem[2]);
-        preferences.putString("pair_STRING03", pair_STRING[2]);
-        Serial.print("new pair_STRING03 save is: "); Serial.println(pair_STRING[2]);
-        change_count++;
-      }
-      if (pair_STRING[3] != pair_STRING_mem[3]) {
-        Serial.print("old pair_STRING04_mem was: "); Serial.println(pair_STRING_mem[3]);
-        preferences.putString("pair_STRING04", pair_STRING[3]);
-        Serial.print("new pair_STRING04 save is: "); Serial.println(pair_STRING[3]);
-        change_count++;
-      }
-      if (pair_STRING[4] != pair_STRING_mem[4]) {
-        Serial.print("old pair_STRING05_mem was: "); Serial.println(pair_STRING_mem[4]);
-        preferences.putString("pair_STRING05", pair_STRING[4]);
-        Serial.print("new pair_STRING05 save is: "); Serial.println(pair_STRING[4]);
-        change_count++;
-      }
-      if (pair_STRING[5] != pair_STRING_mem[5]) {
-        Serial.print("old pair_STRING06_mem was: "); Serial.println(pair_STRING_mem[5]);
-        preferences.putString("pair_STRING06", pair_STRING[5]);
-        Serial.print("new pair_STRING06 save is: "); Serial.println(pair_STRING[5]);
-        change_count++;
-      }
-      if (pair_STRING[6] != pair_STRING_mem[6]) {
-        Serial.print("old pair_STRING07_mem was: "); Serial.println(pair_STRING_mem[6]);
-        preferences.putString("pair_STRING07", pair_STRING[6]);
-        Serial.print("new pair_STRING07 save is: "); Serial.println(pair_STRING[6]);
-        change_count++;
-      }
-      if (pair_STRING[7] != pair_STRING_mem[7]) {
-        Serial.print("old pair_STRING08_mem was: "); Serial.println(pair_STRING_mem[7]);
-        preferences.putString("pair_STRING08", pair_STRING[7]);
-        Serial.print("new pair_STRING08 save is: "); Serial.println(pair_STRING[7]);
-        change_count++;
-      }
-      if (pair_STRING[8] != pair_STRING_mem[8]) {
-        Serial.print("old pair_STRING09_mem was: "); Serial.println(pair_STRING_mem[8]);
-        preferences.putString("pair_STRING09", pair_STRING[8]);
-        Serial.print("new pair_STRING09 save is: "); Serial.println(pair_STRING[8]);
-        change_count++;
-      }
-      if (pair_STRING[9] != pair_STRING_mem[9]) {
-        Serial.print("old pair_STRING10_mem was: "); Serial.println(pair_STRING_mem[9]);
-        preferences.putString("pair_STRING10", pair_STRING[9]);
-        Serial.print("new pair_STRING10 save is: "); Serial.println(pair_STRING[9]);
-        change_count++;
-      }
-      if (pair_STRING[10] != pair_STRING_mem[10]) {
-        Serial.print("old pair_STRING11_mem was: "); Serial.println(pair_STRING_mem[10]);
-        preferences.putString("pair_STRING11", pair_STRING[10]);
-        Serial.print("new pair_STRING11 save is: "); Serial.println(pair_STRING[10]);
-        change_count++;
-      }
-      if (pair_STRING[11] != pair_STRING_mem[11]) {
-        Serial.print("old pair_STRING12_mem was: "); Serial.println(pair_STRING_mem[11]);
-        preferences.putString("pair_STRING12", pair_STRING[11]);
-        Serial.print("new pair_STRING12 save is: "); Serial.println(pair_STRING[11]);
-        change_count++;
-      }
-      if (pair_STRING[12] != pair_STRING_mem[12]) {
-        Serial.print("old pair_STRING13_mem was: "); Serial.println(pair_STRING_mem[12]);
-        preferences.putString("pair_STRING13", pair_STRING[12]);
-        Serial.print("new pair_STRING13 save is: "); Serial.println(pair_STRING[12]);
-        change_count++;
-      }
-      if (pair_STRING[13] != pair_STRING_mem[13]) {
-        Serial.print("old pair_STRING14_mem was: "); Serial.println(pair_STRING_mem[13]);
-        preferences.putString("pair_STRING14", pair_STRING[13]);
-        Serial.print("new pair_STRING14 save is: "); Serial.println(pair_STRING[13]);
-        change_count++;
-      }
-      if (pair_STRING[14] != pair_STRING_mem[14]) {
-        Serial.print("old pair_STRING15_mem was: "); Serial.println(pair_STRING_mem[14]);
-        preferences.putString("pair_STRING15", pair_STRING[14]);
-        Serial.print("new pair_STRING15 save is: "); Serial.println(pair_STRING[14]);
-        change_count++;
-      }
-      if (pair_STRING[15] != pair_STRING_mem[15]) {
-        Serial.print("old pair_STRING16_mem was: "); Serial.println(pair_STRING_mem[15]);
-        preferences.putString("pair_STRING16", pair_STRING[15]);
-        Serial.print("new pair_STRING16 save is: "); Serial.println(pair_STRING[15]);
-        change_count++;
-      }
-      if (pair_STRING[16] != pair_STRING_mem[16]) {
-        Serial.print("old pair_STRING17_mem was: "); Serial.println(pair_STRING_mem[16]);
-        preferences.putString("pair_STRING17", pair_STRING[16]);
-        Serial.print("new pair_STRING17 save is: "); Serial.println(pair_STRING[16]);
-        change_count++;
-      }
-      if (pair_STRING[17] != pair_STRING_mem[17]) {
-        Serial.print("old pair_STRING18_mem was: "); Serial.println(pair_STRING_mem[17]);
-        preferences.putString("pair_STRING18", pair_STRING[17]);
-        Serial.print("new pair_STRING18 save is: "); Serial.println(pair_STRING[17]);
-        change_count++;
-      }
-      if (pair_STRING[18] != pair_STRING_mem[18]) {
-        Serial.print("old pair_STRING19_mem was: "); Serial.println(pair_STRING_mem[18]);
-        preferences.putString("pair_STRING19", pair_STRING[18]);
-        Serial.print("new pair_STRING19 save is: "); Serial.println(pair_STRING[18]);
-        change_count++;
-      }
-      if (pair_STRING[19] != pair_STRING_mem[19]) {
-        Serial.print("old pair_STRING20_mem was: "); Serial.println(pair_STRING_mem[19]);
-        preferences.putString("pair_STRING20", pair_STRING[19]);
-        Serial.print("new pair_STRING20 save is: "); Serial.println(pair_STRING[19]);
-        change_count++;
-      }
-      if (pair_STRING[20] != pair_STRING_mem[20]) {
-        Serial.print("old pair_STRING21_mem was: "); Serial.println(pair_STRING_mem[20]);
-        preferences.putString("pair_STRING21", pair_STRING[20]);
-        Serial.print("new pair_STRING21 save is: "); Serial.println(pair_STRING[20]);
-        change_count++;
-      }
-      if (pair_STRING[21] != pair_STRING_mem[21]) {
-        Serial.print("old pair_STRING22_mem was: "); Serial.println(pair_STRING_mem[21]);
-        preferences.putString("pair_STRING22", pair_STRING[21]);
-        Serial.print("new pair_STRING22 save is: "); Serial.println(pair_STRING[21]);
-        change_count++;
-      }
-      if (pair_STRING[22] != pair_STRING_mem[22]) {
-        Serial.print("old pair_STRING23_mem was: "); Serial.println(pair_STRING_mem[22]);
-        preferences.putString("pair_STRING23", pair_STRING[22]);
-        Serial.print("new pair_STRING23 save is: "); Serial.println(pair_STRING[22]);
-        change_count++;
-      }
-      if (pair_STRING[23] != pair_STRING_mem[23]) {
-        Serial.print("old pair_STRING24_mem was: "); Serial.println(pair_STRING_mem[23]);
-        preferences.putString("pair_STRING24", pair_STRING[23]);
-        Serial.print("new pair_STRING24 save is: "); Serial.println(pair_STRING[23]);
-        change_count++;
-      }
-      if (pair_STRING[24] != pair_STRING_mem[24]) {
-        Serial.print("old pair_STRING25_mem was: "); Serial.println(pair_STRING_mem[24]);
-        preferences.putString("pair_STRING25", pair_STRING[24]);
-        Serial.print("new pair_STRING25 save is: "); Serial.println(pair_STRING[24]);
-        change_count++;
-      }
-      if (pair_col_str[0] != pair_col_str_mem[0]) {                               //pair color in hex for the names
-        Serial.print("old pair_col_str01_mem was: "); Serial.println(pair_col_str_mem[0]);
-        preferences.putString("pair_col_str01", pair_col_str[0]);
-        Serial.print("new pair_col_str01 save is: "); Serial.println(pair_col_str[0]);
-        change_count++;
-      }
-      if (pair_col_str[1] != pair_col_str_mem[1]) {
-        Serial.print("old pair_col_str02_mem was: "); Serial.println(pair_col_str_mem[1]);
-        preferences.putString("pair_col_str02", pair_col_str[1]);
-        Serial.print("new pair_col_str02 save is: "); Serial.println(pair_col_str[1]);
-        change_count++;
-      }
-      if (pair_col_str[2] != pair_col_str_mem[2]) {
-        Serial.print("old pair_col_str03_mem was: "); Serial.println(pair_col_str_mem[2]);
-        preferences.putString("pair_col_str03", pair_col_str[2]);
-        Serial.print("new pair_col_str03 save is: "); Serial.println(pair_col_str[2]);
-        change_count++;
-      }
-      if (pair_col_str[3] != pair_col_str_mem[3]) {
-        Serial.print("old pair_col_str04_mem was: "); Serial.println(pair_col_str_mem[3]);
-        preferences.putString("pair_col_str04", pair_col_str[3]);
-        Serial.print("new pair_col_str04 save is: "); Serial.println(pair_col_str[3]);
-        change_count++;
-      }
-      if (pair_col_str[4] != pair_col_str_mem[4]) {
-        Serial.print("old pair_col_str05_mem was: "); Serial.println(pair_col_str_mem[4]);
-        preferences.putString("pair_col_str05", pair_col_str[4]);
-        Serial.print("new pair_col_str05 save is: "); Serial.println(pair_col_str[4]);
-        change_count++;
-      }
-      if (pair_col_str[5] != pair_col_str_mem[5]) {
-        Serial.print("old pair_col_str06_mem was: "); Serial.println(pair_col_str_mem[5]);
-        preferences.putString("pair_col_str06", pair_col_str[5]);
-        Serial.print("new pair_col_str06 save is: "); Serial.println(pair_col_str[5]);
-        change_count++;
-      }
-      if (pair_col_str[6] != pair_col_str_mem[6]) {
-        Serial.print("old pair_col_str07_mem was: "); Serial.println(pair_col_str_mem[6]);
-        preferences.putString("pair_col_str07", pair_col_str[6]);
-        Serial.print("new pair_col_str07 save is: "); Serial.println(pair_col_str[6]);
-        change_count++;
-      }
-      if (pair_col_str[7] != pair_col_str_mem[7]) {
-        Serial.print("old pair_col_str08_mem was: "); Serial.println(pair_col_str_mem[7]);
-        preferences.putString("pair_col_str08", pair_col_str[7]);
-        Serial.print("new pair_col_str08 save is: "); Serial.println(pair_col_str[7]);
-        change_count++;
-      }
-      if (pair_col_str[8] != pair_col_str_mem[8]) {
-        Serial.print("old pair_col_str09_mem was: "); Serial.println(pair_col_str_mem[8]);
-        preferences.putString("pair_col_str09", pair_col_str[8]);
-        Serial.print("new pair_col_str09 save is: "); Serial.println(pair_col_str[8]);
-        change_count++;
-      }
-      if (pair_col_str[9] != pair_col_str_mem[9]) {
-        Serial.print("old pair_col_str10_mem was: "); Serial.println(pair_col_str_mem[9]);
-        preferences.putString("pair_col_str10", pair_col_str[9]);
-        Serial.print("new pair_col_str10 save is: "); Serial.println(pair_col_str[9]);
-        change_count++;
-      }
-      if (pair_col_str[10] != pair_col_str_mem[10]) {
-        Serial.print("old pair_col_str11_mem was: "); Serial.println(pair_col_str_mem[10]);
-        preferences.putString("pair_col_str11", pair_col_str[10]);
-        Serial.print("new pair_col_str11 save is: "); Serial.println(pair_col_str[10]);
-        change_count++;
-      }
-      if (pair_col_str[11] != pair_col_str_mem[11]) {
-        Serial.print("old pair_col_str12_mem was: "); Serial.println(pair_col_str_mem[11]);
-        preferences.putString("pair_col_str12", pair_col_str[11]);
-        Serial.print("new pair_col_str12 save is: "); Serial.println(pair_col_str[11]);
-        change_count++;
-      }
-      if (pair_col_str[12] != pair_col_str_mem[12]) {
-        Serial.print("old pair_col_str13_mem was: "); Serial.println(pair_col_str_mem[12]);
-        preferences.putString("pair_col_str13", pair_col_str[12]);
-        Serial.print("new pair_col_str13 save is: "); Serial.println(pair_col_str[12]);
-        change_count++;
-      }
-      if (pair_col_str[13] != pair_col_str_mem[13]) {
-        Serial.print("old pair_col_str14_mem was: "); Serial.println(pair_col_str_mem[13]);
-        preferences.putString("pair_col_str14", pair_col_str[13]);
-        Serial.print("new pair_col_str14 save is: "); Serial.println(pair_col_str[13]);
-        change_count++;
-      }
-      if (pair_col_str[14] != pair_col_str_mem[14]) {
-        Serial.print("old pair_col_str15_mem was: "); Serial.println(pair_col_str_mem[14]);
-        preferences.putString("pair_col_str15", pair_col_str[14]);
-        Serial.print("new pair_col_str15 save is: "); Serial.println(pair_col_str[14]);
-        change_count++;
-      }
-      if (pair_col_str[15] != pair_col_str_mem[15]) {
-        Serial.print("old pair_col_str16_mem was: "); Serial.println(pair_col_str_mem[15]);
-        preferences.putString("pair_col_str16", pair_col_str[15]);
-        Serial.print("new pair_col_str16 save is: "); Serial.println(pair_col_str[15]);
-        change_count++;
-      }
-      if (pair_col_str[16] != pair_col_str_mem[16]) {
-        Serial.print("old pair_col_str17_mem was: "); Serial.println(pair_col_str_mem[16]);
-        preferences.putString("pair_col_str17", pair_col_str[16]);
-        Serial.print("new pair_col_str17 save is: "); Serial.println(pair_col_str[16]);
-        change_count++;
-      }
-      if (pair_col_str[17] != pair_col_str_mem[17]) {
-        Serial.print("old pair_col_str18_mem was: "); Serial.println(pair_col_str_mem[17]);
-        preferences.putString("pair_col_str18", pair_col_str[17]);
-        Serial.print("new pair_col_str18 save is: "); Serial.println(pair_col_str[17]);
-        change_count++;
-      }
-      if (pair_col_str[18] != pair_col_str_mem[18]) {
-        Serial.print("old pair_col_str19_mem was: "); Serial.println(pair_col_str_mem[18]);
-        preferences.putString("pair_col_str19", pair_col_str[18]);
-        Serial.print("new pair_col_str19 save is: "); Serial.println(pair_col_str[18]);
-        change_count++;
-      }
-      if (pair_col_str[19] != pair_col_str_mem[19]) {
-        Serial.print("old pair_col_str20_mem was: "); Serial.println(pair_col_str_mem[19]);
-        preferences.putString("pair_col_str20", pair_col_str[19]);
-        Serial.print("new pair_col_str20 save is: "); Serial.println(pair_col_str[19]);
-        change_count++;
-      }
-      if (pair_col_str[20] != pair_col_str_mem[20]) {
-        Serial.print("old pair_col_str21_mem was: "); Serial.println(pair_col_str_mem[20]);
-        preferences.putString("pair_col_str21", pair_col_str[20]);
-        Serial.print("new pair_col_str21 save is: "); Serial.println(pair_col_str[20]);
-        change_count++;
-      }
-      if (pair_col_str[21] != pair_col_str_mem[21]) {
-        Serial.print("old pair_col_str22_mem was: "); Serial.println(pair_col_str_mem[21]);
-        preferences.putString("pair_col_str22", pair_col_str[21]);
-        Serial.print("new pair_col_str22 save is: "); Serial.println(pair_col_str[21]);
-        change_count++;
-      }
-      if (pair_col_str[22] != pair_col_str_mem[22]) {
-        Serial.print("old pair_col_str23_mem was: "); Serial.println(pair_col_str_mem[22]);
-        preferences.putString("pair_col_str23", pair_col_str[22]);
-        Serial.print("new pair_col_str23 save is: "); Serial.println(pair_col_str[22]);
-        change_count++;
-      }
-      if (pair_col_str[23] != pair_col_str_mem[23]) {
-        Serial.print("old pair_col_str24_mem was: "); Serial.println(pair_col_str_mem[23]);
-        preferences.putString("pair_col_str24", pair_col_str[23]);
-        Serial.print("new pair_col_str24 save is: "); Serial.println(pair_col_str[23]);
-        change_count++;
-      }
-      if (pair_col_str[24] != pair_col_str_mem[24]) {
-        Serial.print("old pair_col_str25_mem was: "); Serial.println(pair_col_str_mem[24]);
-        preferences.putString("pair_col_str25", pair_col_str[24]);
-        Serial.print("new pair_col_str25 save is: "); Serial.println(pair_col_str[24]);
-        change_count++;
-      }
-      if (change_count != 0) {
-        M5.Lcd.printf("\nupdated %i settings from SD", change_count);
-        Serial.printf("updated %i settings from SD-Card", change_count); Serial.println();
-        change_count = 0;
-        delay(1750);
-      }
+  // when processed SD-Card config is other than the saved ones, save new value to memory
+  if (SD.begin(pinSelectSD)) {                                                        //main settings
+    if (ssid != ssid_mem) {
+      Serial.print("old ssid_mem was: "); Serial.println(ssid_mem);
+      preferences.putString("ssid", ssid);
+      Serial.print("new ssid save is: "); Serial.println(ssid);
+      change_count++;
     }
-    else {        //when no SD-Card is loaded load last saved preferences from internal memory
-      ssid = ssid_mem;
-      ssid2 = ssid2_mem;
-      password = password_mem;
-      password2 = password2_mem;
-      mySleeptime = mySleeptime_mem;
-      myTimeZone = myTimeZone_mem;
-      myLanguage = myLanguage_mem;
-      pairs = pairs_mem;
-      for (int i = 0; i < pairs; i++) {
-        pair_name[i] = pair_name_mem[i];
-        pair_STRING[i] = pair_STRING_mem[i];
-        pair_col_str[i] = pair_col_str_mem[i];
-      }
+    if (ssid2 != ssid2_mem) {
+      Serial.print("old ssid2_mem was: "); Serial.println(ssid2_mem);
+      preferences.putString("ssid2", ssid2);
+      Serial.print("new ssid2 save is: "); Serial.println(ssid2);
+      change_count++;
     }
-    //preferences.end();
-
-    // Setting Language
-    int arrsize_mn = sizeof(monthName_MyLang) / sizeof(int);
-    int arrsize_wd = sizeof(weekDay_MyLang) / sizeof(int);
-    if (myLanguage == 1) { // select weekday and month names from different languages (selected by e.g.: "myLanguage=1" in Config file)
-      for (int i = 0; i < arrsize_mn; i++) {
-        monthName_MyLang[i] = monthName_Language1[i];
-      }
-      for (int i = 0; i < arrsize_wd; i++) {
-        weekDay_MyLang[i] = weekDay_Language1[i];
-      }
+    if (password != password_mem) {
+      Serial.print("old password_mem was: "); Serial.println(password_mem);
+      preferences.putString("password", password);
+      Serial.print("new password save is: "); Serial.println(password);
+      change_count++;
     }
-    else if (myLanguage == 2) {
-      for (int i = 0; i < arrsize_mn; i++) {
-        monthName_MyLang[i] = monthName_Language2[i];
-      }
-      for (int i = 0; i < arrsize_wd; i++) {
-        weekDay_MyLang[i] = weekDay_Language2[i];
-      }
+    if (password2 != password2_mem) {
+      Serial.print("old password2_mem was: "); Serial.println(password2_mem);
+      preferences.putString("password2", password2);
+      Serial.print("new password2 save is: "); Serial.println(password2);
+      change_count++;
     }
-    //  else if (myLanguage == 3) {              // ---> append here if you want to extend more languages for day and month names (Mo Tu We .. Jan Feb ..)
-    //    for (int i = 0; i < arrsize_mn; i++) { //      3 would represent the "MyLanguage=value" from the config file (0=english, 1=german, 2=spanish, 3=up to you)
-    //      monthName_MyLang[i] = monthName_Language3[i];
-    //    }
-    //    for (int i = 0; i < arrsize_wd; i++) {
-    //      weekDay_MyLang[i] = weekDay_Language3[i];
-    //    }
-    //  }
-    else {
-      for (int i = 0; i < arrsize_mn; i++) {
-        monthName_MyLang[i] = monthName_Language0[i];
-      }
-      for (int i = 0; i < arrsize_wd; i++) {
-        weekDay_MyLang[i] = weekDay_Language0[i];
-      }
+    if (mySleeptime != mySleeptime_mem) {
+      Serial.print("old mySleeptime_mem was: "); Serial.println(mySleeptime_mem);
+      preferences.putInt("mySleeptime", mySleeptime);
+      Serial.print("new mySleeptime save is: "); Serial.println(mySleeptime);
+      change_count++;
     }
-
-    // make a copy of the pair names in LowerCase for the binance api url
+    if (myTimeZone != myTimeZone_mem) {
+      Serial.print("old myTimeZone_mem was: "); Serial.println(myTimeZone_mem);
+      preferences.putInt("myTimeZone", myTimeZone);
+      Serial.print("new myTimeZone save is: "); Serial.println(myTimeZone);
+      change_count++;
+    }
+    if (myLanguage != myLanguage_mem) {
+      Serial.print("old myLanguage_mem was: "); Serial.println(myLanguage_mem);
+      preferences.putInt("myLanguage", myLanguage);
+      Serial.print("new myLanguage save is: "); Serial.println(myLanguage);
+      change_count++;
+    }
+    if (pairs != pairs_mem) {
+      Serial.print("old pairs_mem was: "); Serial.println(pairs_mem);
+      preferences.putInt("pairs", pairs);
+      Serial.print("new pairs save is: "); Serial.println(pairs);
+      change_count++;
+    }
+    if (pair_name[0] != pair_name_mem[0]) {                                      //pair name for top bar
+      Serial.print("old pair_name01_mem was: "); Serial.println(pair_name_mem[0]);
+      preferences.putString("pair_name01", pair_name[0]);
+      Serial.print("new pair_name01 save is: "); Serial.println(pair_name[0]);
+      change_count++;
+    }
+    if (pair_name[1] != pair_name_mem[1]) {
+      Serial.print("old pair_name02_mem was: "); Serial.println(pair_name_mem[1]);
+      preferences.putString("pair_name02", pair_name[1]);
+      Serial.print("new pair_name02 save is: "); Serial.println(pair_name[1]);
+      change_count++;
+    }
+    if (pair_name[2] != pair_name_mem[2]) {
+      Serial.print("old pair_name03_mem was: "); Serial.println(pair_name_mem[2]);
+      preferences.putString("pair_name03", pair_name[2]);
+      Serial.print("new pair_name03 save is: "); Serial.println(pair_name[2]);
+      change_count++;
+    }
+    if (pair_name[3] != pair_name_mem[3]) {
+      Serial.print("old pair_name04_mem was: "); Serial.println(pair_name_mem[3]);
+      preferences.putString("pair_name04", pair_name[3]);
+      Serial.print("new pair_name04 save is: "); Serial.println(pair_name[3]);
+      change_count++;
+    }
+    if (pair_name[4] != pair_name_mem[4]) {
+      Serial.print("old pair_name05_mem was: "); Serial.println(pair_name_mem[4]);
+      preferences.putString("pair_name05", pair_name[4]);
+      Serial.print("new pair_name05 save is: "); Serial.println(pair_name[4]);
+      change_count++;
+    }
+    if (pair_name[5] != pair_name_mem[5]) {
+      Serial.print("old pair_name06_mem was: "); Serial.println(pair_name_mem[5]);
+      preferences.putString("pair_name06", pair_name[5]);
+      Serial.print("new pair_name06 save is: "); Serial.println(pair_name[5]);
+      change_count++;
+    }
+    if (pair_name[6] != pair_name_mem[6]) {
+      Serial.print("old pair_name07_mem was: "); Serial.println(pair_name_mem[6]);
+      preferences.putString("pair_name07", pair_name[6]);
+      Serial.print("new pair_name07 save is: "); Serial.println(pair_name[6]);
+      change_count++;
+    }
+    if (pair_name[7] != pair_name_mem[7]) {
+      Serial.print("old pair_name08_mem was: "); Serial.println(pair_name_mem[7]);
+      preferences.putString("pair_name08", pair_name[7]);
+      Serial.print("new pair_name08 save is: "); Serial.println(pair_name[7]);
+      change_count++;
+    }
+    if (pair_name[8] != pair_name_mem[8]) {
+      Serial.print("old pair_name09_mem was: "); Serial.println(pair_name_mem[8]);
+      preferences.putString("pair_name09", pair_name[8]);
+      Serial.print("new pair_name09 save is: "); Serial.println(pair_name[8]);
+      change_count++;
+    }
+    if (pair_name[9] != pair_name_mem[9]) {
+      Serial.print("old pair_name10_mem was: "); Serial.println(pair_name_mem[9]);
+      preferences.putString("pair_name10", pair_name[9]);
+      Serial.print("new pair_name10 save is: "); Serial.println(pair_name[9]);
+      change_count++;
+    }
+    if (pair_name[10] != pair_name_mem[10]) {
+      Serial.print("old pair_name11_mem was: "); Serial.println(pair_name_mem[10]);
+      preferences.putString("pair_name11", pair_name[10]);
+      Serial.print("new pair_name11 save is: "); Serial.println(pair_name[10]);
+      change_count++;
+    }
+    if (pair_name[11] != pair_name_mem[11]) {
+      Serial.print("old pair_name12_mem was: "); Serial.println(pair_name_mem[11]);
+      preferences.putString("pair_name12", pair_name[11]);
+      Serial.print("new pair_name12 save is: "); Serial.println(pair_name[11]);
+      change_count++;
+    }
+    if (pair_name[12] != pair_name_mem[12]) {
+      Serial.print("old pair_name13_mem was: "); Serial.println(pair_name_mem[12]);
+      preferences.putString("pair_name13", pair_name[12]);
+      Serial.print("new pair_name13 save is: "); Serial.println(pair_name[12]);
+      change_count++;
+    }
+    if (pair_name[13] != pair_name_mem[13]) {
+      Serial.print("old pair_name14_mem was: "); Serial.println(pair_name_mem[13]);
+      preferences.putString("pair_name14", pair_name[13]);
+      Serial.print("new pair_name14 save is: "); Serial.println(pair_name[13]);
+      change_count++;
+    }
+    if (pair_name[14] != pair_name_mem[14]) {
+      Serial.print("old pair_name15_mem was: "); Serial.println(pair_name_mem[14]);
+      preferences.putString("pair_name15", pair_name[14]);
+      Serial.print("new pair_name15 save is: "); Serial.println(pair_name[14]);
+      change_count++;
+    }
+    if (pair_name[15] != pair_name_mem[15]) {
+      Serial.print("old pair_name16_mem was: "); Serial.println(pair_name_mem[15]);
+      preferences.putString("pair_name16", pair_name[15]);
+      Serial.print("new pair_name16 save is: "); Serial.println(pair_name[15]);
+      change_count++;
+    }
+    if (pair_name[16] != pair_name_mem[16]) {
+      Serial.print("old pair_name17_mem was: "); Serial.println(pair_name_mem[16]);
+      preferences.putString("pair_name17", pair_name[16]);
+      Serial.print("new pair_name17 save is: "); Serial.println(pair_name[16]);
+      change_count++;
+    }
+    if (pair_name[17] != pair_name_mem[17]) {
+      Serial.print("old pair_name18_mem was: "); Serial.println(pair_name_mem[17]);
+      preferences.putString("pair_name18", pair_name[17]);
+      Serial.print("new pair_name18 save is: "); Serial.println(pair_name[17]);
+      change_count++;
+    }
+    if (pair_name[18] != pair_name_mem[18]) {
+      Serial.print("old pair_name19_mem was: "); Serial.println(pair_name_mem[18]);
+      preferences.putString("pair_name19", pair_name[18]);
+      Serial.print("new pair_name19 save is: "); Serial.println(pair_name[18]);
+      change_count++;
+    }
+    if (pair_name[19] != pair_name_mem[19]) {
+      Serial.print("old pair_name20_mem was: "); Serial.println(pair_name_mem[19]);
+      preferences.putString("pair_name20", pair_name[19]);
+      Serial.print("new pair_name20 save is: "); Serial.println(pair_name[19]);
+      change_count++;
+    }
+    if (pair_name[20] != pair_name_mem[20]) {
+      Serial.print("old pair_name21_mem was: "); Serial.println(pair_name_mem[20]);
+      preferences.putString("pair_name21", pair_name[20]);
+      Serial.print("new pair_name21 save is: "); Serial.println(pair_name[20]);
+      change_count++;
+    }
+    if (pair_name[21] != pair_name_mem[21]) {
+      Serial.print("old pair_name22_mem was: "); Serial.println(pair_name_mem[21]);
+      preferences.putString("pair_name22", pair_name[21]);
+      Serial.print("new pair_name22 save is: "); Serial.println(pair_name[21]);
+      change_count++;
+    }
+    if (pair_name[22] != pair_name_mem[22]) {
+      Serial.print("old pair_name23_mem was: "); Serial.println(pair_name_mem[22]);
+      preferences.putString("pair_name23", pair_name[22]);
+      Serial.print("new pair_name23 save is: "); Serial.println(pair_name[22]);
+      change_count++;
+    }
+    if (pair_name[23] != pair_name_mem[23]) {
+      Serial.print("old pair_name24_mem was: "); Serial.println(pair_name_mem[23]);
+      preferences.putString("pair_name24", pair_name[23]);
+      Serial.print("new pair_name24 save is: "); Serial.println(pair_name[23]);
+      change_count++;
+    }
+    if (pair_name[24] != pair_name_mem[24]) {
+      Serial.print("old pair_name25_mem was: "); Serial.println(pair_name_mem[24]);
+      preferences.putString("pair_name25", pair_name[24]);
+      Serial.print("new pair_name25 save is: "); Serial.println(pair_name[24]);
+      change_count++;
+    }
+    if (pair_STRING[0] != pair_STRING_mem[0]) {                                 //pair STRING in capitals for the binance api url
+      Serial.print("old pair_STRING01_mem was: "); Serial.println(pair_STRING_mem[0]);
+      preferences.putString("pair_STRING01", pair_STRING[0]);
+      Serial.print("new pair_STRING01 save is: "); Serial.println(pair_STRING[0]);
+      change_count++;
+    }
+    if (pair_STRING[1] != pair_STRING_mem[1]) {
+      Serial.print("old pair_STRING02_mem was: "); Serial.println(pair_STRING_mem[1]);
+      preferences.putString("pair_STRING02", pair_STRING[1]);
+      Serial.print("new pair_STRING02 save is: "); Serial.println(pair_STRING[1]);
+      change_count++;
+    }
+    if (pair_STRING[2] != pair_STRING_mem[2]) {
+      Serial.print("old pair_STRING03_mem was: "); Serial.println(pair_STRING_mem[2]);
+      preferences.putString("pair_STRING03", pair_STRING[2]);
+      Serial.print("new pair_STRING03 save is: "); Serial.println(pair_STRING[2]);
+      change_count++;
+    }
+    if (pair_STRING[3] != pair_STRING_mem[3]) {
+      Serial.print("old pair_STRING04_mem was: "); Serial.println(pair_STRING_mem[3]);
+      preferences.putString("pair_STRING04", pair_STRING[3]);
+      Serial.print("new pair_STRING04 save is: "); Serial.println(pair_STRING[3]);
+      change_count++;
+    }
+    if (pair_STRING[4] != pair_STRING_mem[4]) {
+      Serial.print("old pair_STRING05_mem was: "); Serial.println(pair_STRING_mem[4]);
+      preferences.putString("pair_STRING05", pair_STRING[4]);
+      Serial.print("new pair_STRING05 save is: "); Serial.println(pair_STRING[4]);
+      change_count++;
+    }
+    if (pair_STRING[5] != pair_STRING_mem[5]) {
+      Serial.print("old pair_STRING06_mem was: "); Serial.println(pair_STRING_mem[5]);
+      preferences.putString("pair_STRING06", pair_STRING[5]);
+      Serial.print("new pair_STRING06 save is: "); Serial.println(pair_STRING[5]);
+      change_count++;
+    }
+    if (pair_STRING[6] != pair_STRING_mem[6]) {
+      Serial.print("old pair_STRING07_mem was: "); Serial.println(pair_STRING_mem[6]);
+      preferences.putString("pair_STRING07", pair_STRING[6]);
+      Serial.print("new pair_STRING07 save is: "); Serial.println(pair_STRING[6]);
+      change_count++;
+    }
+    if (pair_STRING[7] != pair_STRING_mem[7]) {
+      Serial.print("old pair_STRING08_mem was: "); Serial.println(pair_STRING_mem[7]);
+      preferences.putString("pair_STRING08", pair_STRING[7]);
+      Serial.print("new pair_STRING08 save is: "); Serial.println(pair_STRING[7]);
+      change_count++;
+    }
+    if (pair_STRING[8] != pair_STRING_mem[8]) {
+      Serial.print("old pair_STRING09_mem was: "); Serial.println(pair_STRING_mem[8]);
+      preferences.putString("pair_STRING09", pair_STRING[8]);
+      Serial.print("new pair_STRING09 save is: "); Serial.println(pair_STRING[8]);
+      change_count++;
+    }
+    if (pair_STRING[9] != pair_STRING_mem[9]) {
+      Serial.print("old pair_STRING10_mem was: "); Serial.println(pair_STRING_mem[9]);
+      preferences.putString("pair_STRING10", pair_STRING[9]);
+      Serial.print("new pair_STRING10 save is: "); Serial.println(pair_STRING[9]);
+      change_count++;
+    }
+    if (pair_STRING[10] != pair_STRING_mem[10]) {
+      Serial.print("old pair_STRING11_mem was: "); Serial.println(pair_STRING_mem[10]);
+      preferences.putString("pair_STRING11", pair_STRING[10]);
+      Serial.print("new pair_STRING11 save is: "); Serial.println(pair_STRING[10]);
+      change_count++;
+    }
+    if (pair_STRING[11] != pair_STRING_mem[11]) {
+      Serial.print("old pair_STRING12_mem was: "); Serial.println(pair_STRING_mem[11]);
+      preferences.putString("pair_STRING12", pair_STRING[11]);
+      Serial.print("new pair_STRING12 save is: "); Serial.println(pair_STRING[11]);
+      change_count++;
+    }
+    if (pair_STRING[12] != pair_STRING_mem[12]) {
+      Serial.print("old pair_STRING13_mem was: "); Serial.println(pair_STRING_mem[12]);
+      preferences.putString("pair_STRING13", pair_STRING[12]);
+      Serial.print("new pair_STRING13 save is: "); Serial.println(pair_STRING[12]);
+      change_count++;
+    }
+    if (pair_STRING[13] != pair_STRING_mem[13]) {
+      Serial.print("old pair_STRING14_mem was: "); Serial.println(pair_STRING_mem[13]);
+      preferences.putString("pair_STRING14", pair_STRING[13]);
+      Serial.print("new pair_STRING14 save is: "); Serial.println(pair_STRING[13]);
+      change_count++;
+    }
+    if (pair_STRING[14] != pair_STRING_mem[14]) {
+      Serial.print("old pair_STRING15_mem was: "); Serial.println(pair_STRING_mem[14]);
+      preferences.putString("pair_STRING15", pair_STRING[14]);
+      Serial.print("new pair_STRING15 save is: "); Serial.println(pair_STRING[14]);
+      change_count++;
+    }
+    if (pair_STRING[15] != pair_STRING_mem[15]) {
+      Serial.print("old pair_STRING16_mem was: "); Serial.println(pair_STRING_mem[15]);
+      preferences.putString("pair_STRING16", pair_STRING[15]);
+      Serial.print("new pair_STRING16 save is: "); Serial.println(pair_STRING[15]);
+      change_count++;
+    }
+    if (pair_STRING[16] != pair_STRING_mem[16]) {
+      Serial.print("old pair_STRING17_mem was: "); Serial.println(pair_STRING_mem[16]);
+      preferences.putString("pair_STRING17", pair_STRING[16]);
+      Serial.print("new pair_STRING17 save is: "); Serial.println(pair_STRING[16]);
+      change_count++;
+    }
+    if (pair_STRING[17] != pair_STRING_mem[17]) {
+      Serial.print("old pair_STRING18_mem was: "); Serial.println(pair_STRING_mem[17]);
+      preferences.putString("pair_STRING18", pair_STRING[17]);
+      Serial.print("new pair_STRING18 save is: "); Serial.println(pair_STRING[17]);
+      change_count++;
+    }
+    if (pair_STRING[18] != pair_STRING_mem[18]) {
+      Serial.print("old pair_STRING19_mem was: "); Serial.println(pair_STRING_mem[18]);
+      preferences.putString("pair_STRING19", pair_STRING[18]);
+      Serial.print("new pair_STRING19 save is: "); Serial.println(pair_STRING[18]);
+      change_count++;
+    }
+    if (pair_STRING[19] != pair_STRING_mem[19]) {
+      Serial.print("old pair_STRING20_mem was: "); Serial.println(pair_STRING_mem[19]);
+      preferences.putString("pair_STRING20", pair_STRING[19]);
+      Serial.print("new pair_STRING20 save is: "); Serial.println(pair_STRING[19]);
+      change_count++;
+    }
+    if (pair_STRING[20] != pair_STRING_mem[20]) {
+      Serial.print("old pair_STRING21_mem was: "); Serial.println(pair_STRING_mem[20]);
+      preferences.putString("pair_STRING21", pair_STRING[20]);
+      Serial.print("new pair_STRING21 save is: "); Serial.println(pair_STRING[20]);
+      change_count++;
+    }
+    if (pair_STRING[21] != pair_STRING_mem[21]) {
+      Serial.print("old pair_STRING22_mem was: "); Serial.println(pair_STRING_mem[21]);
+      preferences.putString("pair_STRING22", pair_STRING[21]);
+      Serial.print("new pair_STRING22 save is: "); Serial.println(pair_STRING[21]);
+      change_count++;
+    }
+    if (pair_STRING[22] != pair_STRING_mem[22]) {
+      Serial.print("old pair_STRING23_mem was: "); Serial.println(pair_STRING_mem[22]);
+      preferences.putString("pair_STRING23", pair_STRING[22]);
+      Serial.print("new pair_STRING23 save is: "); Serial.println(pair_STRING[22]);
+      change_count++;
+    }
+    if (pair_STRING[23] != pair_STRING_mem[23]) {
+      Serial.print("old pair_STRING24_mem was: "); Serial.println(pair_STRING_mem[23]);
+      preferences.putString("pair_STRING24", pair_STRING[23]);
+      Serial.print("new pair_STRING24 save is: "); Serial.println(pair_STRING[23]);
+      change_count++;
+    }
+    if (pair_STRING[24] != pair_STRING_mem[24]) {
+      Serial.print("old pair_STRING25_mem was: "); Serial.println(pair_STRING_mem[24]);
+      preferences.putString("pair_STRING25", pair_STRING[24]);
+      Serial.print("new pair_STRING25 save is: "); Serial.println(pair_STRING[24]);
+      change_count++;
+    }
+    if (pair_col_str[0] != pair_col_str_mem[0]) {                               //pair color in hex for the names
+      Serial.print("old pair_col_str01_mem was: "); Serial.println(pair_col_str_mem[0]);
+      preferences.putString("pair_col_str01", pair_col_str[0]);
+      Serial.print("new pair_col_str01 save is: "); Serial.println(pair_col_str[0]);
+      change_count++;
+    }
+    if (pair_col_str[1] != pair_col_str_mem[1]) {
+      Serial.print("old pair_col_str02_mem was: "); Serial.println(pair_col_str_mem[1]);
+      preferences.putString("pair_col_str02", pair_col_str[1]);
+      Serial.print("new pair_col_str02 save is: "); Serial.println(pair_col_str[1]);
+      change_count++;
+    }
+    if (pair_col_str[2] != pair_col_str_mem[2]) {
+      Serial.print("old pair_col_str03_mem was: "); Serial.println(pair_col_str_mem[2]);
+      preferences.putString("pair_col_str03", pair_col_str[2]);
+      Serial.print("new pair_col_str03 save is: "); Serial.println(pair_col_str[2]);
+      change_count++;
+    }
+    if (pair_col_str[3] != pair_col_str_mem[3]) {
+      Serial.print("old pair_col_str04_mem was: "); Serial.println(pair_col_str_mem[3]);
+      preferences.putString("pair_col_str04", pair_col_str[3]);
+      Serial.print("new pair_col_str04 save is: "); Serial.println(pair_col_str[3]);
+      change_count++;
+    }
+    if (pair_col_str[4] != pair_col_str_mem[4]) {
+      Serial.print("old pair_col_str05_mem was: "); Serial.println(pair_col_str_mem[4]);
+      preferences.putString("pair_col_str05", pair_col_str[4]);
+      Serial.print("new pair_col_str05 save is: "); Serial.println(pair_col_str[4]);
+      change_count++;
+    }
+    if (pair_col_str[5] != pair_col_str_mem[5]) {
+      Serial.print("old pair_col_str06_mem was: "); Serial.println(pair_col_str_mem[5]);
+      preferences.putString("pair_col_str06", pair_col_str[5]);
+      Serial.print("new pair_col_str06 save is: "); Serial.println(pair_col_str[5]);
+      change_count++;
+    }
+    if (pair_col_str[6] != pair_col_str_mem[6]) {
+      Serial.print("old pair_col_str07_mem was: "); Serial.println(pair_col_str_mem[6]);
+      preferences.putString("pair_col_str07", pair_col_str[6]);
+      Serial.print("new pair_col_str07 save is: "); Serial.println(pair_col_str[6]);
+      change_count++;
+    }
+    if (pair_col_str[7] != pair_col_str_mem[7]) {
+      Serial.print("old pair_col_str08_mem was: "); Serial.println(pair_col_str_mem[7]);
+      preferences.putString("pair_col_str08", pair_col_str[7]);
+      Serial.print("new pair_col_str08 save is: "); Serial.println(pair_col_str[7]);
+      change_count++;
+    }
+    if (pair_col_str[8] != pair_col_str_mem[8]) {
+      Serial.print("old pair_col_str09_mem was: "); Serial.println(pair_col_str_mem[8]);
+      preferences.putString("pair_col_str09", pair_col_str[8]);
+      Serial.print("new pair_col_str09 save is: "); Serial.println(pair_col_str[8]);
+      change_count++;
+    }
+    if (pair_col_str[9] != pair_col_str_mem[9]) {
+      Serial.print("old pair_col_str10_mem was: "); Serial.println(pair_col_str_mem[9]);
+      preferences.putString("pair_col_str10", pair_col_str[9]);
+      Serial.print("new pair_col_str10 save is: "); Serial.println(pair_col_str[9]);
+      change_count++;
+    }
+    if (pair_col_str[10] != pair_col_str_mem[10]) {
+      Serial.print("old pair_col_str11_mem was: "); Serial.println(pair_col_str_mem[10]);
+      preferences.putString("pair_col_str11", pair_col_str[10]);
+      Serial.print("new pair_col_str11 save is: "); Serial.println(pair_col_str[10]);
+      change_count++;
+    }
+    if (pair_col_str[11] != pair_col_str_mem[11]) {
+      Serial.print("old pair_col_str12_mem was: "); Serial.println(pair_col_str_mem[11]);
+      preferences.putString("pair_col_str12", pair_col_str[11]);
+      Serial.print("new pair_col_str12 save is: "); Serial.println(pair_col_str[11]);
+      change_count++;
+    }
+    if (pair_col_str[12] != pair_col_str_mem[12]) {
+      Serial.print("old pair_col_str13_mem was: "); Serial.println(pair_col_str_mem[12]);
+      preferences.putString("pair_col_str13", pair_col_str[12]);
+      Serial.print("new pair_col_str13 save is: "); Serial.println(pair_col_str[12]);
+      change_count++;
+    }
+    if (pair_col_str[13] != pair_col_str_mem[13]) {
+      Serial.print("old pair_col_str14_mem was: "); Serial.println(pair_col_str_mem[13]);
+      preferences.putString("pair_col_str14", pair_col_str[13]);
+      Serial.print("new pair_col_str14 save is: "); Serial.println(pair_col_str[13]);
+      change_count++;
+    }
+    if (pair_col_str[14] != pair_col_str_mem[14]) {
+      Serial.print("old pair_col_str15_mem was: "); Serial.println(pair_col_str_mem[14]);
+      preferences.putString("pair_col_str15", pair_col_str[14]);
+      Serial.print("new pair_col_str15 save is: "); Serial.println(pair_col_str[14]);
+      change_count++;
+    }
+    if (pair_col_str[15] != pair_col_str_mem[15]) {
+      Serial.print("old pair_col_str16_mem was: "); Serial.println(pair_col_str_mem[15]);
+      preferences.putString("pair_col_str16", pair_col_str[15]);
+      Serial.print("new pair_col_str16 save is: "); Serial.println(pair_col_str[15]);
+      change_count++;
+    }
+    if (pair_col_str[16] != pair_col_str_mem[16]) {
+      Serial.print("old pair_col_str17_mem was: "); Serial.println(pair_col_str_mem[16]);
+      preferences.putString("pair_col_str17", pair_col_str[16]);
+      Serial.print("new pair_col_str17 save is: "); Serial.println(pair_col_str[16]);
+      change_count++;
+    }
+    if (pair_col_str[17] != pair_col_str_mem[17]) {
+      Serial.print("old pair_col_str18_mem was: "); Serial.println(pair_col_str_mem[17]);
+      preferences.putString("pair_col_str18", pair_col_str[17]);
+      Serial.print("new pair_col_str18 save is: "); Serial.println(pair_col_str[17]);
+      change_count++;
+    }
+    if (pair_col_str[18] != pair_col_str_mem[18]) {
+      Serial.print("old pair_col_str19_mem was: "); Serial.println(pair_col_str_mem[18]);
+      preferences.putString("pair_col_str19", pair_col_str[18]);
+      Serial.print("new pair_col_str19 save is: "); Serial.println(pair_col_str[18]);
+      change_count++;
+    }
+    if (pair_col_str[19] != pair_col_str_mem[19]) {
+      Serial.print("old pair_col_str20_mem was: "); Serial.println(pair_col_str_mem[19]);
+      preferences.putString("pair_col_str20", pair_col_str[19]);
+      Serial.print("new pair_col_str20 save is: "); Serial.println(pair_col_str[19]);
+      change_count++;
+    }
+    if (pair_col_str[20] != pair_col_str_mem[20]) {
+      Serial.print("old pair_col_str21_mem was: "); Serial.println(pair_col_str_mem[20]);
+      preferences.putString("pair_col_str21", pair_col_str[20]);
+      Serial.print("new pair_col_str21 save is: "); Serial.println(pair_col_str[20]);
+      change_count++;
+    }
+    if (pair_col_str[21] != pair_col_str_mem[21]) {
+      Serial.print("old pair_col_str22_mem was: "); Serial.println(pair_col_str_mem[21]);
+      preferences.putString("pair_col_str22", pair_col_str[21]);
+      Serial.print("new pair_col_str22 save is: "); Serial.println(pair_col_str[21]);
+      change_count++;
+    }
+    if (pair_col_str[22] != pair_col_str_mem[22]) {
+      Serial.print("old pair_col_str23_mem was: "); Serial.println(pair_col_str_mem[22]);
+      preferences.putString("pair_col_str23", pair_col_str[22]);
+      Serial.print("new pair_col_str23 save is: "); Serial.println(pair_col_str[22]);
+      change_count++;
+    }
+    if (pair_col_str[23] != pair_col_str_mem[23]) {
+      Serial.print("old pair_col_str24_mem was: "); Serial.println(pair_col_str_mem[23]);
+      preferences.putString("pair_col_str24", pair_col_str[23]);
+      Serial.print("new pair_col_str24 save is: "); Serial.println(pair_col_str[23]);
+      change_count++;
+    }
+    if (pair_col_str[24] != pair_col_str_mem[24]) {
+      Serial.print("old pair_col_str25_mem was: "); Serial.println(pair_col_str_mem[24]);
+      preferences.putString("pair_col_str25", pair_col_str[24]);
+      Serial.print("new pair_col_str25 save is: "); Serial.println(pair_col_str[24]);
+      change_count++;
+    }
+    if (change_count != 0) {
+      M5.Lcd.printf("\nupdated %i settings from SD", change_count);
+      Serial.printf("updated %i settings from SD-Card", change_count); Serial.println();
+      change_count = 0;
+      delay(1750);
+    }
+  }
+  else {        //when no SD-Card is loaded load last saved preferences from internal memory
+    ssid = ssid_mem;
+    ssid2 = ssid2_mem;
+    password = password_mem;
+    password2 = password2_mem;
+    mySleeptime = mySleeptime_mem;
+    myTimeZone = myTimeZone_mem;
+    myLanguage = myLanguage_mem;
+    pairs = pairs_mem;
     for (int i = 0; i < pairs; i++) {
-      pair_string[i] = pair_STRING[i];
-      pair_string[i].toLowerCase();
-      //    Serial.print("LowerCase pair_string"); Serial.print(i + 1); Serial.print(": "); Serial.println(pair_string[i]);   //debug
+      pair_name[i] = pair_name_mem[i];
+      pair_STRING[i] = pair_STRING_mem[i];
+      pair_col_str[i] = pair_col_str_mem[i];
     }
+  }
+  //preferences.end();
 
-    // change pair_colors from sd-cfg file from string to uint16_t for M5.Lcd
-    for (int i = 0; i < pairs; i++) {
-      //    Serial.print("String color code"); Serial.print(i + 1); Serial.print(": "); Serial.println(pair_col_str[i]);    //debug
-      rgb565_pair_color[i] = strtol(pair_col_str[i].c_str(), NULL , 0);
-      //    Serial.print("RGB565 color code"); Serial.print(i + 1); Serial.print(": "); Serial.println(rgb565_pair_color[i], HEX);    //debug
+  // Setting Language
+  int arrsize_mn = sizeof(monthName_MyLang) / sizeof(int);
+  int arrsize_wd = sizeof(weekDay_MyLang) / sizeof(int);
+  if (myLanguage == 1) { // select weekday and month names from different languages (selected by e.g.: "myLanguage=1" in Config file)
+    for (int i = 0; i < arrsize_mn; i++) {
+      monthName_MyLang[i] = monthName_Language1[i];
     }
-    
-    //prevents loading a coinpair number from flash that is higher than the default max pairs value when no SD config file is loaded
-    if (last_stored_Currency > pairs) {
-      last_stored_Currency = 1;
+    for (int i = 0; i < arrsize_wd; i++) {
+      weekDay_MyLang[i] = weekDay_Language1[i];
     }
+  }
+  else if (myLanguage == 2) {
+    for (int i = 0; i < arrsize_mn; i++) {
+      monthName_MyLang[i] = monthName_Language2[i];
+    }
+    for (int i = 0; i < arrsize_wd; i++) {
+      weekDay_MyLang[i] = weekDay_Language2[i];
+    }
+  }
+  //  else if (myLanguage == 3) {              // ---> append here if you want to extend more languages for day and month names (Mo Tu We .. Jan Feb ..)
+  //    for (int i = 0; i < arrsize_mn; i++) { //      3 would represent the "MyLanguage=value" from the config file (0=english, 1=german, 2=spanish, 3=up to you)
+  //      monthName_MyLang[i] = monthName_Language3[i];
+  //    }
+  //    for (int i = 0; i < arrsize_wd; i++) {
+  //      weekDay_MyLang[i] = weekDay_Language3[i];
+  //    }
+  //  }
+  else {
+    for (int i = 0; i < arrsize_mn; i++) {
+      monthName_MyLang[i] = monthName_Language0[i];
+    }
+    for (int i = 0; i < arrsize_wd; i++) {
+      weekDay_MyLang[i] = weekDay_Language0[i];
+    }
+  }
+
+  // make a copy of the pair names in LowerCase for the binance api url
+  for (int i = 0; i < pairs; i++) {
+    pair_string[i] = pair_STRING[i];
+    pair_string[i].toLowerCase();
+    //    Serial.print("LowerCase pair_string"); Serial.print(i + 1); Serial.print(": "); Serial.println(pair_string[i]);   //debug
+  }
+
+  // change pair_colors from sd-cfg file from string to uint16_t for M5.Lcd
+  for (int i = 0; i < pairs; i++) {
+    //    Serial.print("String color code"); Serial.print(i + 1); Serial.print(": "); Serial.println(pair_col_str[i]);    //debug
+    rgb565_pair_color[i] = strtol(pair_col_str[i].c_str(), NULL , 0);
+    //    Serial.print("RGB565 color code"); Serial.print(i + 1); Serial.print(": "); Serial.println(rgb565_pair_color[i], HEX);    //debug
+  }
+
+  //prevents loading a coinpair number from flash that is higher than the default max pairs value when no SD config file is loaded
+  if (last_stored_Currency > pairs) {
+    last_stored_Currency = 1;
+  }
 
   //finally use the settings
   current_Currency = last_stored_Currency;
@@ -2352,7 +2350,7 @@ void buttonActions() {
   strname_ws = pair_string[current_Currency - 1];
   strname_currency = pair_name[current_Currency - 1];
   strname_color = rgb565_pair_color[current_Currency - 1];
-  }
+}
 
 
 
