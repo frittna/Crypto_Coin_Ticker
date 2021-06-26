@@ -56,11 +56,11 @@ For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified May.02.2021 23:22 
 
 - If you want to clear all stored settings from internal memory hold ButtonB at start-up
 
---->   !!! SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE !!!   <---
+SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE
 
 
 
-* * *  >>  support me and donate some TRX (Tron) THRo4ujdmD5eYVPD2XUodN7NowRZ88F9rN  <<  * * *
+>>>>>>>>>>>>>>support me and donate some TRX (Tron) THRo4ujdmD5eYVPD2XUodN7NowRZ88F9rN <<<<<<<<<<<<<<<<<  
 
 
 ![](preview/IMG_1.jpg)
