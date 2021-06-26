@@ -58,7 +58,7 @@ For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified May.02.2021 23:22 
 
 --->   !!! SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE !!!   <---
 
-
+#### > Donations welcome THRo4ujdmD5eYVPD2XUodN7NowRZ88F9rN  -  TRX (Tron)  < ####
 ![](preview/IMG_1.jpg)
 ![](preview/IMG_0new.jpg)
 ![](preview/IMG_0.jpg)
