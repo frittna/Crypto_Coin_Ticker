@@ -60,7 +60,7 @@ SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE
 
 
 
->>> support me and donate some TRX (Tron) THRo4ujdmD5eYVPD2XUodN7NowRZ88F9rN 
+>>> this is ALL FREE - please support me if you like it and donate some TRX (Tron) THRo4ujdmD5eYVPD2XUodN7NowRZ88F9rN or DOGE (Dogecoin) DRUxU8yWKnWuWmhDCJKmn8eBveXANk85Mw <<< 
 
 
 ![](preview/IMG_1.jpg)
