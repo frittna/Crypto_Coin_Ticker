@@ -60,7 +60,12 @@ SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE
 
 
 
->>> this is ALL FREE - please support me if you like it and donate some TRX (Tron) THRo4ujdmD5eYVPD2XUodN7NowRZ88F9rN or DOGE (Dogecoin) DRUxU8yWKnWuWmhDCJKmn8eBveXANk85Mw <<< 
+## -- THIS IS ALL FREE - please support me with some crypto if you love it  -- ##
+    -> Bitcoin  bc1qvfjd0x2r7fk3p0lwwaxvjjzgdrgjnu5fhqjqcv               (nat.segw)
+    -> Ethereum 0x8D88c8ff9A467F0821E8d1941D206164b11F4056               (erc20/bsc)
+    -> Dogecoin DRUxU8yWKnWuWmhDCJKmn8eBveXANk85Mw                       (doge)
+    -> Tron     THRo4ujdmD5eYVPD2XUodN7NowRZ88F9rN                       (trc10)
+    -> Stellar  GDY2LAUPJFWCR4XWN5EHQ72VLYRY53CNCCA4IXTBBZBKMAGT2BSY7KUT (xlm)
 
 
 ![](preview/IMG_1.jpg)
