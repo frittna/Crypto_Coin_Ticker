@@ -62,9 +62,9 @@ SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE
 
 ## -- THIS IS ALL FREE - please support me with some crypto if you love it  -- ##
     -> Bitcoin  bc1qvfjd0x2r7fk3p0lwwaxvjjzgdrgjnu5fhqjqcv               (nat.segw)
-    -> Ethereum 0x8D88c8ff9A467F0821E8d1941D206164b11F4056               (erc20/bsc)
+    -> Ethereum 0x8D88c8ff9A467F0821E8d1941D206164b11F4056               (erc20 or bsc/bep20)
     -> Dogecoin D5QEBVqY3B9kUEMn9nRHexSbMaRgRafKiY                       (doge)
-    -> Tron     THRo4ujdmD5eYVPD2XUodN7NowRZ88F9rN                       (trc10)
+    -> Tron     THRo4ujdmD5eYVPD2XUodN7NowRZ88F9rN                       (trx)
     -> Stellar  GDY2LAUPJFWCR4XWN5EHQ72VLYRY53CNCCA4IXTBBZBKMAGT2BSY7KUT (xlm)
 
 
