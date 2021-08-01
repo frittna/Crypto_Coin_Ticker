@@ -9,8 +9,8 @@ only needs config file "ccticker.cfg" on SD-Card
 
 
 This will show a 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified May.02.2021 23:22 CET - Version 1.0.4 using spiffs + SDconfig
-
+For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.01.2021 12:27 CET - Version 1.0.5 using spiffs + SDconfig
+last edit: added support for the SHT30 Temperature and Humidity sensor in the official grey vertical base - makes a bit larger info panel
 
 
 ##Using the App:
