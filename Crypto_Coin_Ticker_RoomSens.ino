@@ -10,6 +10,7 @@
 // For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.01.2021 12:27 CET - Version 1.0.5 using spiffs + SDconfig
 // last edit: added optional support for the SHT30 Temperature and Humidity sensor in the official grey vertical base
 // makes a bit larger info panel so only select if you want it -> when using the M5Burner just select regular or the sensor version (Celcius or Fahrenheit)
+// For regular users without the vertical base i recomment to use the usual version because i had to make the info panel a bit larger.
 //----------------------------------------------------------------------------------------------------------------------------
 
 // #Using the App:
