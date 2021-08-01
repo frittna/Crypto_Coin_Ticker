@@ -7,8 +7,8 @@
 // receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified May.03.2021 10:45 CET - Version 1.0.4 using spiffs + SDconfig
-//
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.01.2021 12:27 CET - Version 1.0.5 using spiffs + SDconfig
+// last edit: added support for the SHT30 Temperature and Humidity sensor in the official grey vertical base - makes a bit larger info panel
 //----------------------------------------------------------------------------------------------------------------------------
 
 // #Using the App:
@@ -83,16 +83,14 @@
 
 // ##BEGIN##
 
-// ---->> for this SD-Card Version nothing has to be edited here - use the "ccticker.cfg" textfile on the SD-Card root folder <<----
+// ---->> for THIS SD-Card Version nothing has to be edited here - use the "ccticker.cfg" textfile on the SD-Card root folder <<----
 
 // Wi-Fi connection settings:
 String ssid      = "";  // change here to "myName" or whatever you have as Wifi SSID name (127 characters max.)
 String password  = "";  // enter your password like "myPassword"
-
 //optional:
 String ssid2     = "";  // alternative wi-fi network to connect when ButtonC is held at startup
 String password2 = "";  //
-
 //       name:                                     from:                             version                search library manager exactly for:
 // ---------------------------------------+------------------------------------------+------ + --------------------------------------------------------------|
 #include "Free_Fonts.h"       // Library  | Arduino built-in                         |       |                                                               |
@@ -107,8 +105,8 @@ String password2 = "";  //
 #include "M5StackUpdater.h"   // Library  | Arduino Librarymanager SD-Menu Loader    | 0.5.2!| "M5Stack SD"  i use 0.5.2 , not new 1.0.2 because of problems |
 #include <Adafruit_NeoPixel.h>// Library  | Arduino Librarymanager Adafruit NeoPixel | 1.7.0 | "Adafriut Neopixel"                                           |
 #include "FS.h"               // Prog-Tool| github: esp32fs for SPIFFS filesystem    |  1.0  | https://github.com/me-no-dev/arduino-esp32fs-plugin           |
+#include "SHT3X.h"             // Library  | M5Stack-Examples for base with SHT30 
 // ---------------------------------------+------------------------------------------+-------+----------------------------------------------------------------
-
 //  **if you compile and have problems resulting a reset or no proper connection to WiFi after powering up you schould check
 //    all versions again if they are really identical to the ones from this instruction above.
 //    ---->>  especially for the ESP32 Board Manager use Version 1.0.4 since higher versions are reported to fail !!
@@ -143,7 +141,6 @@ int maxLineLength = 127; //Length of the longest line expected in the config fil
 // REST API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
 const char* restApiHost = "api.binance.com";
 const byte candlesLimit = 24;
-
 String pair_STRING_mem[max_pairs_arrsize];
 String pair_name_mem[max_pairs_arrsize];
 String pair_col_str_mem[max_pairs_arrsize];
@@ -169,7 +166,7 @@ const char* wsApiHost = "stream.binance.com";
 const int wsApiPort = 9443;
 // Layout: The space between the info and the bottom panel is for candlechart => 240px minus top+info+bottom
 const byte topPanel = 22;
-const byte infoPanel = 12;
+const byte infoPanel = 26;
 const byte bottomPanel = 36;
 Preferences preferences; //the last read-in SD-Card settings are saved in internal memory
 WiFiClient client;
@@ -253,7 +250,10 @@ float ph; // Price High
 float pl; // Price Low
 float vh; // Volume High
 float vl; // Volume Low
-
+SHT3X sht30; // (optional) for the grey vertical base with built in sensor
+float tmpC = 0.0; // for temperature sensor Celsius
+float tmpF = 0.0; // for temperature sensor Fahrenheit
+float hum = 0.0;  // for humidity sensor
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void setup() {
@@ -343,7 +343,7 @@ void setup() {
     WiFi.begin(ssid2.c_str(), password2.c_str());
   }
   while (WiFi.status() != WL_CONNECTED) {
-    M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_RED);  //busy light red
+    M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2 - 7), 4, TFT_RED);  //busy light red
     M5.Lcd.setTextWrap(true);
     M5.Lcd.print(".");
     err_count ++;
@@ -415,10 +415,11 @@ void setup() {
   showWifiStrength();
   printTime();    //routine to print the time on lcd screen,  adjusted to your local timzone
 
-  // load battery meter and draw all candles
+  // load battery meter and draw all candles, and sensor values
   showBatteryLevel();
   while (!requestRestApi()) {}
   drawCandles();
+  drawSensorValues();
 
   // Connecting to WS:
   webSocket.beginSSL(wsApiHost, wsApiPort, getWsApiUrl());
@@ -432,10 +433,11 @@ void loop()
 {
   currentMs = millis();
   buttonActions();  // check for buttons
-  M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_BLACK);  //reset busy light
+  M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2 - 7), 4, TFT_BLACK);  //reset busy light
   if (currentMs - lastPrintTime >= 35000 && second(time(nullptr)) < 25) {  // draw new date and candles regularly
     lastPrintTime = currentMs;
     printTime();
+    drawSensorValues();
     multi_level = 0;
     webSocket.disconnect();
     webSocket.beginSSL(wsApiHost, wsApiPort, getWsApiUrl());
@@ -451,10 +453,10 @@ void loop()
 
 
 void printTime() {
-  M5.Lcd.fillRect(0, 0, 320, topPanel, TFT_BLACK); M5.Lcd.setFreeFont(FSSB12);
-  M5.Lcd.setCursor(1, 19); M5.Lcd.setTextSize(1); M5.Lcd.setTextColor(strname_color);
+  M5.Lcd.fillRect(0, 0, 320, topPanel - 1, TFT_BLACK); M5.Lcd.setFreeFont(FSSB12);
+  M5.Lcd.setCursor(1, 18); M5.Lcd.setTextSize(1); M5.Lcd.setTextColor(strname_color);
   M5.Lcd.print(strname_currency);
-  M5.Lcd.setFreeFont(FMB12); M5.Lcd.setCursor(111, 15); M5.Lcd.setTextColor(TFT_LIGHTGREY);
+  M5.Lcd.setFreeFont(FMB12); M5.Lcd.setCursor(111, 14); M5.Lcd.setTextColor(TFT_LIGHTGREY);
   TimeChangeRule *tcr;
   if (myTimeZone == 0) {
     time_t now = myTZ0.toLocal(time(nullptr), &tcr);
@@ -502,7 +504,7 @@ String getWsApiUrl() {
 
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
-  M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_DARKGREY);  //busy light darkgrey
+  M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2 - 7), 4, TFT_DARKGREY);  //busy light darkgrey
   showWifiStrength();
   switch (type) {
     case WStype_DISCONNECTED:
@@ -569,7 +571,7 @@ bool requestRestApi() {
                "Connection: close\r\n\r\n");
 
   while (client.connected()) {
-    M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_YELLOW);  //busy light yellow
+    M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2 - 7), 4, TFT_YELLOW);  //busy light yellow
     String line = client.readStringUntil('\r');
     line.trim();
     if (line.startsWith("[") && line.endsWith("]")) {
@@ -653,8 +655,7 @@ void formatPrice() {
 
 
 void drawCandles() {
-
-  M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_MAGENTA);  //busy light magenta
+  M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2 - 7), 4, TFT_MAGENTA);  //busy light magenta
   // Find highs and lows
   ph = candles[0 + empty_candles].h;
   pl = candles[0 + empty_candles].l;
@@ -682,7 +683,7 @@ void drawCandles() {
   for (int i = 0; i < candlesLimit - empty_candles; i++) {
     drawCandle(i);
   }
-  M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_DARKGREY); // reset magenta busy light;
+  M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2 - 7), 4, TFT_DARKGREY); // reset magenta busy light;
 }
 
 
@@ -761,7 +762,6 @@ void  showBatteryLevel() {
 }
 
 
-
 void drawPrice() {
   float price = (candles[candlesLimit - 1].c);
   float oy_var2 (candles[candlesLimit - 1].o);
@@ -830,7 +830,7 @@ void drawPrice() {
 // price changings for info panel: changings relative to the 24th past candles close price in percent (with exceptions):
 void PriceChangings() {
   if (!timeframe_really_changed) {
-    M5.Lcd.fillRect(108, topPanel, 225, infoPanel, TFT_BLACK);
+    M5.Lcd.fillRect(108, topPanel + 13, 212, infoPanel - 12, TFT_BLACK);
     M5.Lcd.setFreeFont(FM9); M5.Lcd.setCursor(108, topPanel + infoPanel - 2); M5.Lcd.setTextSize(1);
     if (current_Timeframe == 0) { //1m
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 21].c) {
@@ -1137,9 +1137,8 @@ void PriceChangings() {
 // show Wifi-RSSI level (signal strength)
 void showWifiStrength() {
   int WifiRSSI = WiFi.RSSI();
-  //  M5.Lcd.fillRect(2, topPanel + infoPanel + 8, 69, 15, TFT_BLACK);
-  //  M5.Lcd.setCursor(2, topPanel + infoPanel + 20); M5.Lcd.setFreeFont(FM9); M5.Lcd.setTextSize(1); M5.Lcd.setTextColor(TFT_WHITE);
-  //  M5.Lcd.print(String(WifiRSSI) + "dBm");
+  //M5.Lcd.fillRect(2, topPanel + infoPanel + 8, 69, 15, TFT_BLACK);
+  //M5.Lcd.print(String(WifiRSSI) + "dBm");
   if (WifiRSSI > -50 & ! WifiRSSI == 0 ) M5.Lcd.fillRoundRect(26, topPanel, 5, 12, 1, TFT_WHITE);
   else
     M5.Lcd.fillRoundRect(26, topPanel, 5, 12, 1, TFT_DARKGREY);
@@ -1413,7 +1412,7 @@ void buttonActions() {
       M5.lcd.setBrightness(Brightness_value);
       preferences.putUInt("bright", Brightness_value);            // store setting to memory
       preferences.putUInt("briglv", Brightness_level);            // store setting to memory
-      M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2), 5, TFT_BLUE); // set blue status light when sleeptimer was activated
+      M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2 - 7), 5, TFT_BLUE); // set blue status light when sleeptimer was activated
       drawCandles();
       M5.Lcd.drawPngFile(SPIFFS, "/sleep.png", (320 / 2) - (100 / 2), (240 / 2) - ((100 / 2))); // sleep.png is 100x100px
       LEDbar.clear();
@@ -1444,7 +1443,7 @@ void buttonActions() {
       }
       M5.lcd.setBrightness(Brightness_value);
       preferences.putUInt("bright", Brightness_value);            // store setting to memory
-      M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2), 5, TFT_BLACK); // reset blue status light when sleeptimer was deactivated
+      M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2 - 7), 5, TFT_BLACK); // reset blue status light when sleeptimer was deactivated
       drawCandles();
       M5.Lcd.drawPngFile(SPIFFS, "/cancel_sleep.png", (320 / 2) - (120 / 2), (240 / 2) - ((120 / 2))); //sleep.png is 120x120px
       LEDbar.clear();
@@ -1457,7 +1456,7 @@ void buttonActions() {
   }
   if (sleeptimer_bool == true && (now() > (sleeptimer_counter + sleeptime))) {
     sleeptimer_bool = false;
-    M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2), 5, TFT_BLACK); // reset status light when sleeptimer was finished
+    M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2 - 7), 5, TFT_BLACK); // reset status light when sleeptimer was finished
     M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
     delay(1000);
     for (int i = Brightness_value; i > 0 ; i--) {                  // dimm LCD slowly before shutdown
@@ -2386,7 +2385,6 @@ void rainbow_effect(int wait) {
 }
 
 
-
 // ## LED functions - for details see: https://github.com/adafruit/Adafruit_NeoPixel
 // Fill LEDbar pixels one after another with a color. LEDbar is NOT cleared
 // first; anything there will be covered pixel by pixel. Pass in color
@@ -2395,5 +2393,22 @@ void rainbow_effect(int wait) {
 // and a delay time (in milliseconds) between pixels.
 
 
+void drawSensorValues() { //only if you have it in the grey vertical base stand with SHT30 Sensor)
+  if (sht30.get() == 0) {
+    tmpC = sht30.cTemp; //sensor value in °Celsius
+    hum = sht30.humidity;
+    M5.Lcd.fillRect(108, topPanel - 1, 212, infoPanel - 12 , TFT_BLACK);
+    M5.Lcd.setCursor(112, topPanel + 9); M5.Lcd.setFreeFont(FM9); M5.Lcd.setTextSize(1); M5.Lcd.setTextColor(TFT_LIGHTGREY);
+    //tmpF = (tmpC * 1.8) + 32; //formula to convert C to F -->    98,6 °F = (37 °C × 9/5) + 32 
+    //M5.Lcd.printf("Tmp:%3.1fF  Hum:%2.0f%%", tmpF, hum);     //show in Fahrenheit , 3 digits + 1 decimal
+    M5.Lcd.printf("Temp:%2.1fC  Hum:%2.0f%%", tmpC, hum);  //show in Celsius    , 2 digits + 1 decimal
+   }
+  else {
+    M5.Lcd.fillRect(108, topPanel - 1, 212, infoPanel - 12 , TFT_BLACK);
+    M5.Lcd.setCursor(112, topPanel + 9); M5.Lcd.setFreeFont(FM9); M5.Lcd.setTextSize(1); M5.Lcd.setTextColor(TFT_DARKGREY);
+    M5.Lcd.printf(" no sensor found");
+  }
+  ;
+}
 
 // ##END##
