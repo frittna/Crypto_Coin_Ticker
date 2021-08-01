@@ -80,3 +80,4 @@ SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE
 ![](preview/IMG_7.jpg)
 ![](preview/IMG_81.jpg)
 ![](preview/IMG_8.jpg)
+![](preview/Sensor.jpg)
