@@ -59,7 +59,7 @@ For regular users **without the vertical base** i recommend to use the **usual v
 
 SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE
 
-
+M5-Stack-Community-Forum: https://community.m5stack.com/topic/1801/bitcoin-multi-crypto-coin-ticker-with-24-candlesticks-chart
 
 ## -- THIS IS ALL FREE - please support me with some crypto if you love it  -- ##
     -> Bitcoin  bc1qvfjd0x2r7fk3p0lwwaxvjjzgdrgjnu5fhqjqcv               (nat.segw)
