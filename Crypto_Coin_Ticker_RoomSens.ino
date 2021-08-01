@@ -8,7 +8,8 @@
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
 // For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.01.2021 12:27 CET - Version 1.0.5 using spiffs + SDconfig
-// last edit: added support for the SHT30 Temperature and Humidity sensor in the official grey vertical base - makes a bit larger info panel
+// last edit: added optional support for the SHT30 Temperature and Humidity sensor in the official grey vertical base - makes a bit larger info panel so only select if you want it.
+// -> when using the M5Burner just select regular or the sensor version (Celcius or Fahrenheit)
 //----------------------------------------------------------------------------------------------------------------------------
 
 // #Using the App:
