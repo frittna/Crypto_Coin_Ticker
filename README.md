@@ -61,12 +61,12 @@ SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE
 
 M5-Stack-Community-Forum: https://community.m5stack.com/topic/1801/bitcoin-multi-crypto-coin-ticker-with-24-candlesticks-chart
 
-## -- THIS IS ALL FREE - please support me with some crypto if you love it  -- ##
-    -> Bitcoin  bc1qvfjd0x2r7fk3p0lwwaxvjjzgdrgjnu5fhqjqcv               (nat.segw)
-    -> Ethereum 0x8D88c8ff9A467F0821E8d1941D206164b11F4056               (any erc20 or bsc/bep20 token)
-    -> Dogecoin D5QEBVqY3B9kUEMn9nRHexSbMaRgRafKiY                       (doge)
-    -> Tron     THRo4ujdmD5eYVPD2XUodN7NowRZ88F9rN                       (any trx)
-    -> Stellar  GDY2LAUPJFWCR4XWN5EHQ72VLYRY53CNCCA4IXTBBZBKMAGT2BSY7KUT (xlm)
+## -- THIS IS ALL FREE - please support me with any crypto if you love it  -- ##
+    -> bc1qvfjd0x2r7fk3p0lwwaxvjjzgdrgjnu5fhqjqcv               (Bitcoin/BTC - native segwit)
+    -> 0x8D88c8ff9A467F0821E8d1941D206164b11F4056               (Ethereum/ETH - or any ERC20 or BSC/BEP20 tokens)
+    -> D5QEBVqY3B9kUEMn9nRHexSbMaRgRafKiY                       (Doge/DOGE)
+    -> THRo4ujdmD5eYVPD2XUodN7NowRZ88F9rN                       (Tron/TRX or any TRC10/TRC20 tokens)
+    -> GDY2LAUPJFWCR4XWN5EHQ72VLYRY53CNCCA4IXTBBZBKMAGT2BSY7KUT (Stellar/XLM)
 
 
 ![](preview/IMG_1.jpg)
