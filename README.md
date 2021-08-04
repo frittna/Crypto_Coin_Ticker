@@ -61,7 +61,7 @@ SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE
 
 M5-Stack-Community-Forum: https://community.m5stack.com/topic/1801/bitcoin-multi-crypto-coin-ticker-with-24-candlesticks-chart
 
-## -- THIS IS ALL FREE - please support me with any crypto if you love it  -- ##
+## -- THIS IS ALL FREE - if you love it please support me with any crypto tokens  -- ##
     -> bc1qvfjd0x2r7fk3p0lwwaxvjjzgdrgjnu5fhqjqcv               (Bitcoin/BTC - native segwit)
     -> 0x8D88c8ff9A467F0821E8d1941D206164b11F4056               (Ethereum/ETH - or any ERC20 or BSC/BEP20 tokens)
     -> D5QEBVqY3B9kUEMn9nRHexSbMaRgRafKiY                       (Doge/DOGE)
