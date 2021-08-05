@@ -82,4 +82,6 @@ SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE
 ![](preview/IMG_7.jpg)
 ![](preview/IMG_81.jpg)
 ![](preview/IMG_8.jpg)
+
+Here the Version with room sensor built in the M5 vertical base
 ![](preview/Sensor.jpg)
