@@ -9,13 +9,11 @@ only needs config file "ccticker.cfg" on SD-Card
 
 
 This will show a 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.01.2021 12:27 CET - Version 1.0.5 using spiffs + SDconfig
+For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.04.2021 23:54 CET - Version 1.0.5 using spiffs + SDconfig
 
 **last edit:** added optional support for the SHT30 Temperature and Humidity sensor in the official grey vertical base - makes a bit larger info panel so only select if you want it.  -> when using the M5Burner just select regular or the sensor version (Celcius or Fahrenheit)
 For regular users **without the vertical base** i recommend to use the **usual version** because you would loose some pixels from the candle chart for no benefit.
-
---------> **NOTE:** I discovered a **bug** that the current used settings are not saved to internal memory or are not loaded back correclty. After a restart it always shows BTC and 1 hour timeframe and medium brightness. Usually this should be saved automatically. I will fix this issue soon i guess. sorry
-
+--------> **NOTE:** I fixed a **bug** where user settings was not saved to internal memory and gone after a restart.
 
 
 ##Using the App:
