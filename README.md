@@ -9,7 +9,7 @@ only needs config file "ccticker.cfg" on SD-Card
 
 
 This will show a 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.05.2021 23:54 CET - Version 1.0.5 using spiffs + SDconfig
+For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.05.2021 23:54 CET - Version 1.0.5 using spiffs + SDconfig + SHT30 Room Sensor
 
 **last edit:** added optional support for the SHT30 Temperature and Humidity sensor in the official grey vertical base - makes a bit larger info panel so only select if you want it.  -> when using the M5Burner just select regular or the sensor version (Celcius or Fahrenheit)
 For regular users **without the vertical base** i recommend to use the **usual version** because you would loose some pixels from the candle chart for no benefit.
