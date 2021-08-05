@@ -9,11 +9,11 @@ only needs config file "ccticker.cfg" on SD-Card
 
 
 This will show a 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.04.2021 23:54 CET - Version 1.0.5 using spiffs + SDconfig
+For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.05.2021 23:54 CET - Version 1.0.5 using spiffs + SDconfig
 
 **last edit:** added optional support for the SHT30 Temperature and Humidity sensor in the official grey vertical base - makes a bit larger info panel so only select if you want it.  -> when using the M5Burner just select regular or the sensor version (Celcius or Fahrenheit)
 For regular users **without the vertical base** i recommend to use the **usual version** because you would loose some pixels from the candle chart for no benefit.
---------> **NOTE:** I fixed a **bug** where user settings was not saved to internal memory and gone after a restart.
+--------> **NOTE:** Aug.5.2021: I fixed a **BUG** in the recent version where your settings was not saved to internal memory and gone after a restart 
 
 
 ##Using the App:
@@ -61,9 +61,9 @@ For regular users **without the vertical base** i recommend to use the **usual v
 
 SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE
 
-M5-Stack-Community-Forum: https://community.m5stack.com/topic/1801/bitcoin-multi-crypto-coin-ticker-with-24-candlesticks-chart
 
-## -- THIS IS ALL FREE - if you love it please support me with any crypto tokens  -- ##
+
+## -- THIS IS ALL FREE - you love it ? please feel free and support me with any crypto  -- ##
     -> bc1qvfjd0x2r7fk3p0lwwaxvjjzgdrgjnu5fhqjqcv               (Bitcoin/BTC - native segwit)
     -> 0x8D88c8ff9A467F0821E8d1941D206164b11F4056               (Ethereum/ETH - or any ERC20 or BSC/BEP20 tokens)
     -> D5QEBVqY3B9kUEMn9nRHexSbMaRgRafKiY                       (Doge/DOGE)
