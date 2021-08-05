@@ -7,7 +7,7 @@
 // receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified May.03.2021 10:45 CET - Version 1.0.4 using spiffs + SDconfig
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.05.2021 23:52 CET - Version 1.0.4 using spiffs + SDconfig
 //
 //----------------------------------------------------------------------------------------------------------------------------
 
@@ -314,13 +314,10 @@ void setup() {
   M5.Lcd.setTextSize(1); M5.Lcd.setTextColor(TFT_WHITE);
   M5.Lcd.setFreeFont(FSS12);
   M5.Lcd.setTextWrap(false);
-  last_stored_Brightness_value = preferences.getUInt("bright", 22);
-  last_stored_Brightness_level = preferences.getUInt("briglv", 2);
-  last_stored_Currency = preferences.getUInt("currency", 1);
-  last_stored_Timeframe = preferences.getUInt("timeframe", 4);
-  Brightness_value = last_stored_Brightness_value;
-  Brightness_level = last_stored_Brightness_level;
-  M5.lcd.setBrightness(Brightness_value);                // use last stored brightness value from memory
+
+  // update settings if SD config file is found
+  updateSDSettings();
+  M5.lcd.setBrightness(Brightness_value);                
   yield();
 
   // Setting Power:   see for details: https://github.com/m5stack/m5-docs/blob/master/docs/en/api/power.md
@@ -329,8 +326,6 @@ void setup() {
   M5.Power.setPowerBoostSet(true);        //one press on red turns on/off device
   M5.Power.setPowerVin(false);            //no reset when usb calbe is plugged in
 
-  // update settings if SD config file is found
-  updateSDSettings();
 
   // Connecting to WiFi:
   M5.Lcd.print("\n\nConnecting to ");
@@ -2340,6 +2335,12 @@ void updateSDSettings() {
   }
 
   //finally use the settings
+  last_stored_Brightness_value = preferences.getUInt("bright", 22);
+  last_stored_Brightness_level = preferences.getUInt("briglv", 2);
+  last_stored_Currency = preferences.getUInt("currency", 1);
+  last_stored_Timeframe = preferences.getUInt("timeframe", 4);
+  Brightness_value = last_stored_Brightness_value;
+  Brightness_level = last_stored_Brightness_level;
   current_Currency = last_stored_Currency;
   current_Timeframe = last_stored_Timeframe;
   strname_api = pair_STRING[current_Currency - 1];
