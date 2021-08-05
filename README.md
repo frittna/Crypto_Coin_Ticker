@@ -59,7 +59,7 @@ For regular users **without the vertical base** i recommend to use the **usual v
 
 - If you want to clear all stored settings from internal memory hold ButtonB at start-up
 
-SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD DATA FOLDER AND CONFIG FILE
+SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD AND CONFIG FILE
 
 
 
