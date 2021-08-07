@@ -7,14 +7,15 @@ Multi Crypto Coin Price Ticker with candlestick chart
 
 only needs config file "ccticker.cfg" on SD-Card
 
+Descriptin:
+This App will show you  a 24 candle chart in changeable timeframes including min/max price and the volume as line. Date and time are from time.nist.gov timeserver. The price data is from the binance api.
 
-This will show a 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.05.2021 23:54 CET - Version 1.0.5 using spiffs + SDconfig + SHT30 Room Sensor
+For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.05.2021 23:54 CET - Version 1.0.5 "using spiffs + SDconfig + SHT30 Room Sensor"
 
 **last edit:** added optional support for the SHT30 Temperature and Humidity sensor in the official grey vertical base - makes a bit larger info panel so only select if you want it.  -> when using the M5Burner just select regular or the sensor version (Celcius or Fahrenheit)
 
 For users **without the vertical base i recommend to use the usual version**
-you would loose some pixels from the candle chart for no benefit.
+you would loose some pixels from the candle chart for no benefit
 
 --------> **NOTE:** Aug.5.2021: I fixed a **BUG** in the recent version where your settings was not saved
 
@@ -24,8 +25,7 @@ you would loose some pixels from the candle chart for no benefit.
 
 - This version needs a SD-Card whith the your WiFi credentials, favourite coinpairs, timezone and language(eng/ger/esp) in a textfile - see installation
 
-
-- ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com
+- ButtonA: switches through your favourite coinpair (up to 25) e.g: BTC/USDT or whatever is available on the spot exchange Binance.com
 
 - ButtonB: changes the LCD-Brightness in 4 levels
 
@@ -33,7 +33,6 @@ you would loose some pixels from the candle chart for no benefit.
            available timeframes are 1minute, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1Month
 
 - To turn OFF the device press the red button once OR by holding ButtonC for over 1 second (e.g if USB is connected)
-
 
 - if you hold ButtonC at Startup: it will start with alternative SSID2/WiFi2-password instead (e.g your mobile phone's hotspot)
 
@@ -46,7 +45,7 @@ you would loose some pixels from the candle chart for no benefit.
 
 - The top infoPanel shows the WiFi-strength, batterylevel, colored indicators for "busy", SleepTimer, price moving and if charging from usb (can have delay up to 30s)
 
-- right now: english, german, spanish (day and month names)
+- right now: english, german, spanish (for day and month names only)
 
 - SleepTimer: when holding ButtonB longer than 1,5 seconds it will start a user defined timer to powerOFF the device
 
@@ -60,7 +59,7 @@ you would loose some pixels from the candle chart for no benefit.
 
 - If no SD-Card is installed it will load the last good settings again - to clear all stored settings from internal memory hold ButtonB at start-up
 
-SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD AND CONFIG FILE
+SEE CODE OR IN THE PACKAGE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD AND CONFIG FILE
 
 
 
