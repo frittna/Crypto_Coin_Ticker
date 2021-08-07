@@ -12,10 +12,14 @@ This will show a 24 candles, the min/max price and the volume as line, date and 
 For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.05.2021 23:54 CET - Version 1.0.5 using spiffs + SDconfig + SHT30 Room Sensor
 
 **last edit:** added optional support for the SHT30 Temperature and Humidity sensor in the official grey vertical base - makes a bit larger info panel so only select if you want it.  -> when using the M5Burner just select regular or the sensor version (Celcius or Fahrenheit)
-For regular users **without the vertical base** i recommend to use the **usual version** because you would loose some pixels from the candle chart for no benefit.
---------> **NOTE:** Aug.5.2021: I fixed a **BUG** in the recent version where your settings was not saved to internal memory and gone after a restart 
 
+For users **without the vertical base i recommend to use the usual version**
+you would loose some pixels from the candle chart for no benefit.
 
+--------> **NOTE:** Aug.5.2021: I fixed a **BUG** in the recent version where your settings was not saved
+
+#
+#
 ##Using the App:
 
 - This version needs a SD-Card whith the your WiFi credentials, favourite coinpairs, timezone and language(eng/ger/esp) in a textfile - see installation
@@ -25,16 +29,15 @@ For regular users **without the vertical base** i recommend to use the **usual v
 
 - ButtonB: changes the LCD-Brightness in 4 levels
 
-- ButtonC: 9 changeable Timeframes from 1 Minute to 1 Month
+- ButtonC: press buttonC then, within 2 sec press buttonA to switch down, or buttonB to switch up through the timeframes
+           available timeframes are 1minute, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1Month
 
-- turn OFF the device pressing the red button once OR by holding ButtonC for over 1 second if USB is connected
+- To turn OFF the device press the red button once OR by holding ButtonC for over 1 second (e.g if USB is connected)
 
-- Press buttonC, then, within 2 sec press buttonA to switch down, or buttonB to switch up through the timeframes: 1min->15mins->1hour->..
-
-- available timeframes are 1minute, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1Month
 
 - if you hold ButtonC at Startup: it will start with alternative SSID2/WiFi2-password instead (e.g your mobile phone's hotspot)
 
+- if you hold ButtonB at Startup: it will delete all user settings stored from internal memory
 
 
 
@@ -55,9 +58,7 @@ For regular users **without the vertical base** i recommend to use the **usual v
 
 - The settings will remain stored in internal memory after a reset. No SD-Card is needed after you have loaded your settings once! (thats new!)
 
-- If no SD-Card is installed it will try to load these settings again.
-
-- If you want to clear all stored settings from internal memory hold ButtonB at start-up
+- If no SD-Card is installed it will load the last good settings again - to clear all stored settings from internal memory hold ButtonB at start-up
 
 SEE CODE FOR FURTHER INSTRUCTIONS ABOUT THE SD-CARD AND CONFIG FILE
 
