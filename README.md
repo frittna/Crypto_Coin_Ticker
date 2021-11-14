@@ -17,7 +17,7 @@ For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.05.2021 23:54 
 For users **without the vertical base i recommend to use the usual version**
 you would loose some pixels from the candle chart for no benefit
 
---------> **NOTE:** Aug.5.2021: I fixed a **BUG** in the recent version where your settings was not saved
+--------> **NOTE:** Aug.5.2021: I fixed a **BUG** in the recent version where your settings were not saved
 
 #
 #
