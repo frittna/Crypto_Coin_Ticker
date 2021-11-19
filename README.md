@@ -24,6 +24,8 @@ autodetect the optional room sensor and show a 12x high sensor panel in case
 
 temperature unit C or F and offset is set from SD-Config and not hardcoded anymore 
 (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
+
+ do not forget to update your sdconfig.cfg on SD-card too
                  
              
  
