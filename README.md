@@ -25,8 +25,8 @@ last edits:     added cycling function (ButtonA+ButtonC together) which steps th
 
 
 #Using the App:
-###############
 
+###############
 
 This version needs a SD-Card whith the your WiFi credentials, favourite coinpairs, timezone and language(eng/ger/esp) in a textfile - see installation
 
@@ -47,6 +47,8 @@ if you hold ButtonC at Startup: it will start with alternative SSID2/WiFi2-passw
 press ButtonA and ButtonC together to enable/disable cycling throut all currencies after a set time (default:off, when turned on default:15sec)
 
 
+
+##################################################################
 
 #Further description:
 
