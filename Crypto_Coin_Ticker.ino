@@ -32,7 +32,7 @@
 // Press ButtonC, then, within 2 sec press ButtonA to switch down, or ButtonB to switch up through the timeframes: 1min->15mins->1hour->..
 // available timeframes are 1minute, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1Month
 // if you hold ButtonC at Startup: it will start with alternative SSID2/WiFi2-password instead (e.g your mobile phone's hotspot)
-// press ButtonA and ButtonC together to enable/disable cycling throut all currencies after a set time (default:off, when turned on default:15sec)
+// press ButtonA and ButtonC together to enable/disable cycling through all currencies after a set time (default:off, when turned on default:15sec)
 
 // #Further description:
 // #####################
