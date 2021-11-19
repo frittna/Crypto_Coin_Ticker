@@ -7,9 +7,20 @@
 // receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Aug.05.2021 23:52 CET - Version 1.0.4 using spiffs + SDconfig
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Nov.19.2021 12:07 CET - Version 1.0.53 using spiffs + SDconfig
 //
-//----------------------------------------------------------------------------------------------------------------------------
+//
+//
+// last edits:    -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
+//                -> added Timezone for Singapore (UTC+8)
+//                -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
+//                                    - autodetect the optional room sensor and show a 12x high sensor panel in case
+//                                    - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore 
+//                                      (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
+//                
+// 
+//
+// ----------------------------------------------------------------------------------------------------------------------------
 
 // #Using the App:
 // ###############
@@ -17,11 +28,11 @@
 // ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com
 // ButtonB: changes the LCD-Brightness in 4 levels
 // ButtonC: 9 changeable Timeframes from 1 Minute to 1 Month
-// turn OFF the device pressing the red button once OR by holding ButtonC for over 1 second if USB is connected
-// Press buttonC, then, within 2 sec press buttonA to switch down, or buttonB to switch up through the timeframes: 1min->15mins->1hour->..
+// turn OFF the device pressing the red Button once OR by holding ButtonC for over 1 second
+// Press ButtonC, then, within 2 sec press ButtonA to switch down, or ButtonB to switch up through the timeframes: 1min->15mins->1hour->..
 // available timeframes are 1minute, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1Month
 // if you hold ButtonC at Startup: it will start with alternative SSID2/WiFi2-password instead (e.g your mobile phone's hotspot)
-
+// press ButtonA and ButtonC together to enable/disable cycling throut all currencies after a set time (default:off, when turned on default:15sec)
 
 // #Further description:
 // #####################
@@ -29,10 +40,11 @@
 // right now: english, german, spanish Language (day and month names)
 // SleepTimer: when holding ButtonB longer than 1,5 seconds it will start a user defined timer to powerOFF the device
 // If WiFi is failing more than 2 minutes it reduces the reconnect interval and brightness level, after 10 minutes -> shutdown device
-// Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-Card hold buttonA while booting up to start MenuLoader to load your apps
+// Menu Loader compatible, if SD-Updater (menu.bin) is installed in your SD-Card hold ButtonA while booting up to start MenuLoader to load your apps
 // It is prepared for the use of a Neopixel RGB-LED bar (i use the built-in one in the Battery-Bottom Module for M5Stack/Fire with rgb 10 LEDs)
 // All settings will remain stored in internal memory after a reset so you can eject the SD-Card after setting up you favourites.
 // If you want to clear all stored settings from internal memory hold ButtonB at start-up.
+// If M5-Stack is in his BTC stand (the original grey vertical stand) the internal room sensor is found and shows temp and humidity.
 
 // INSTALLATION INSTRUCTIONS
 // #########################
@@ -72,7 +84,7 @@
 //------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------
 // The core for the candlestick view and binance api was from: https://github.com/olbed/bitcoin-ticker on SPI TFT display ILI9341 and NodeMCU Board, from 2019
-// Known bugs to fix: buttonC debouncing, battery symbol could be more precise, untested format if price will pass the 100k ;)
+// Known bugs to fix: ButtonC debouncing, battery symbol could be more precise, untested format if price will pass the 100k ;)
 //                    maybe some inefficient code since this is my first public release
 //------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -83,16 +95,14 @@
 
 // ##BEGIN##
 
-// ---->> for this SD-Card Version nothing has to be edited here - use the "ccticker.cfg" textfile on the SD-Card root folder <<----
+// ---->> for THIS SD-Card Version nothing has to be edited here - use the "ccticker.cfg" textfile on the SD-Card root folder <<----
 
 // Wi-Fi connection settings:
 String ssid      = "";  // change here to "myName" or whatever you have as Wifi SSID name (127 characters max.)
 String password  = "";  // enter your password like "myPassword"
-
 //optional:
 String ssid2     = "";  // alternative wi-fi network to connect when ButtonC is held at startup
 String password2 = "";  //
-
 //       name:                                     from:                             version                search library manager exactly for:
 // ---------------------------------------+------------------------------------------+------ + --------------------------------------------------------------|
 #include "Free_Fonts.h"       // Library  | Arduino built-in                         |       |                                                               |
@@ -107,11 +117,14 @@ String password2 = "";  //
 #include "M5StackUpdater.h"   // Library  | Arduino Librarymanager SD-Menu Loader    | 0.5.2!| "M5Stack SD"  i use 0.5.2 , not new 1.0.2 because of problems |
 #include <Adafruit_NeoPixel.h>// Library  | Arduino Librarymanager Adafruit NeoPixel | 1.7.0 | "Adafriut Neopixel"                                           |
 #include "FS.h"               // Prog-Tool| github: esp32fs for SPIFFS filesystem    |  1.0  | https://github.com/me-no-dev/arduino-esp32fs-plugin           |
+#include "SHT3X.h"             // Library  | M5Stack-Examples for base with SHT30 
 // ---------------------------------------+------------------------------------------+-------+----------------------------------------------------------------
-
 //  **if you compile and have problems resulting a reset or no proper connection to WiFi after powering up you schould check
 //    all versions again if they are really identical to the ones from this instruction above.
 //    ---->>  especially for the ESP32 Board Manager use Version 1.0.4 since higher versions are reported to fail !!
+
+
+//NOTE: all settings below are only the default values when no configurations are loaded from SD-Card (the ccticker.cfg file), no change needed here in the Code!
 
 char configFile[] = "/ccticker.cfg"; // filename for configuration file on root of your SD-Card - if no file/card is found last settings will be loaded
 char* welcome = "Hey You! ;)";
@@ -143,13 +156,13 @@ int maxLineLength = 127; //Length of the longest line expected in the config fil
 // REST API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
 const char* restApiHost = "api.binance.com";
 const byte candlesLimit = 24;
-
 String pair_STRING_mem[max_pairs_arrsize];
 String pair_name_mem[max_pairs_arrsize];
 String pair_col_str_mem[max_pairs_arrsize];
 String pair_string[max_pairs_arrsize];
 int current_Currency;
 byte current_Timeframe;
+byte custom_Timezone = 8;  // if no timezone matches you can set a custom difference from utc in hours (+ or -) When this is used there is no summer / standart time change rule!
 unsigned int last_stored_Brightness_value;
 unsigned int last_stored_Brightness_level;
 unsigned int last_stored_Currency;
@@ -160,6 +173,12 @@ String password_mem;
 String password2_mem;
 int mySleeptime_mem;
 int myTimeZone_mem;
+int myTempUnit; //if 1 is read from sd-card config use for Fahrenheit, otherwise use Celsius as default temperature unit
+int myTempOffset;
+int myCyclingIntervall;
+int myTempUnit_mem;
+float myTempOffset_mem;
+int myCyclingIntervall_mem;
 int myLanguage_mem;
 int pairs_mem;
 int change_count = 0;
@@ -168,8 +187,9 @@ const uint32_t volColor = 0x22222a;
 const char* wsApiHost = "stream.binance.com";
 const int wsApiPort = 9443;
 // Layout: The space between the info and the bottom panel is for candlechart => 240px minus top+info+bottom
-const byte topPanel = 22;
-const byte infoPanel = 12;
+const byte topPanel = 20;
+const byte infoPanel = 16; //16px in height;
+byte sensorPanel; //16px or 0px in height when no sensor found
 const byte bottomPanel = 36;
 Preferences preferences; //the last read-in SD-Card settings are saved in internal memory
 WiFiClient client;
@@ -191,6 +211,10 @@ TimeChangeRule summer_mdt =    {"MDT", Second, dowSunday, Mar, 2, -360}; // 6: U
 TimeChangeRule standard_mst =  {"MST", First, dowSunday, Nov, 2, -420};
 TimeChangeRule summer_pdt =    {"PDT", Second, dowSunday, Mar, 2, -420}; // 7: US Pacific Time Zone (Las Vegas, Los Angeles);
 TimeChangeRule standard_pst =  {"PST", First, dowSunday, Nov, 2, -480};
+TimeChangeRule summer_sgt =    {"SGT", Last, Sun, Oct, 4, 480};          // 8: Singapore Time Zone (UTC + 8) - no TimeChange for Summer/Standart Time
+TimeChangeRule standard_sgt =  {"SGT", Last, Sun, Mar, 3, 480};
+
+
 Timezone myTZ0(summer_aedt, standard_aest);    // myTZ0: 0 Australia Eastern Time Zone (Sydney, Melbourne)
 Timezone myTZ1(summer_bst, standard_gmt);      // myTZ1: 1 United Kingdom (London, Belfast)
 Timezone myTZ2(summer_eest, standard_eet);     // myTZ2: 2 Eastern European Time (Bulgaria, Greece, Romania, Ukraine, Egypt)
@@ -199,6 +223,8 @@ Timezone myTZ4(summer_edt, standard_est);      // myTZ4: 4 US Eastern Time Zone 
 Timezone myTZ5(summer_cdt, standard_cst);      // myTZ5: 5 US Central Time Zone (Chicago, Houston)
 Timezone myTZ6(summer_mdt, standard_mst);      // myTZ6: 6 US Mountain Time Zone (Denver, Salt Lake City)
 Timezone myTZ7(summer_pdt, standard_pst);      // myTZ7: 7 US Pacific Time Zone (Las Vegas, Los Angeles);
+Timezone myTZ8(summer_sgt, standard_sgt);      // myTZ8: 8 Singapore Time Zone UTC +8
+
 // LED-Pixel bar(see bottom of this file for further details)
 #define PIN       15 // use the built-in LED bar in the M5-Stack/Fire Battery-Bottom-Module (10xLED on Pin15)
 #define NUMPIXELS 10 // 10 LEDs
@@ -222,6 +248,9 @@ float center;
 int lastTimeframe = -1;
 unsigned int wsFails;
 byte empty_candles;
+unsigned int currency_cycling_counter;
+bool currency_cycling = false;
+bool cycling_change_triggered = false;
 bool current_Currency_changed;
 bool current_bright_changed;
 bool current_timeframe_changed;
@@ -253,7 +282,10 @@ float ph; // Price High
 float pl; // Price Low
 float vh; // Volume High
 float vl; // Volume Low
-
+SHT3X sht30; // (optional) for the grey vertical base with built in sensor
+float tmpC = 0.0; // for temperature sensor Celsius
+float tmpF = 0.0; // for temperature sensor Fahrenheit
+float hum = 0.0;  // for humidity sensor
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void setup() {
@@ -262,6 +294,11 @@ void setup() {
   M5.lcd.setBrightness(0);
   Serial.begin(115200);
   pinMode(pinSelectSD, OUTPUT);
+
+  // an additional sensorPanel between topPanel and infoPanel is visible if room sensor is found
+  if (sht30.get() == 0) {
+    sensorPanel = 16;
+  } else (sensorPanel = 0);
 
   // Setup the SD-Card
   delay(200);
@@ -317,15 +354,14 @@ void setup() {
 
   // update settings if SD config file is found
   updateSDSettings();
-  M5.lcd.setBrightness(Brightness_value);                
+  M5.lcd.setBrightness(Brightness_value);
   yield();
 
   // Setting Power:   see for details: https://github.com/m5stack/m5-docs/blob/master/docs/en/api/power.md
   if (!M5.Power.canControl()) M5.Lcd.printf("IP5306 is not i2c version\n");
-  M5.Power.setPowerBtnEn(true);           //allow red power button
+  M5.Power.setPowerBtnEn(true);           //allow red power Button
   M5.Power.setPowerBoostSet(true);        //one press on red turns on/off device
   M5.Power.setPowerVin(false);            //no reset when usb calbe is plugged in
-
 
   // Connecting to WiFi:
   M5.Lcd.print("\n\nConnecting to ");
@@ -338,11 +374,11 @@ void setup() {
     WiFi.begin(ssid2.c_str(), password2.c_str());
   }
   while (WiFi.status() != WL_CONNECTED) {
-    M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_RED);  //busy light red
+    M5.Lcd.fillCircle(101, topPanel + ((infoPanel + sensorPanel) / 2 - 7), 4, TFT_RED);  //busy light red
     M5.Lcd.setTextWrap(true);
     M5.Lcd.print(".");
     err_count ++;
-    // Power Off Button (ButtonC long press) - needed because on usb power, depending on the type of battery bottom you maybe cant turn off with red button as usual
+    // Power Off Button (ButtonC long press) - needed because on usb power, depending on the type of battery bottom you maybe cant turn off with red Button as usual
     if (M5.BtnC.pressedFor(1333)) {
       M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
       delay(500);
@@ -410,10 +446,11 @@ void setup() {
   showWifiStrength();
   printTime();    //routine to print the time on lcd screen,  adjusted to your local timzone
 
-  // load battery meter and draw all candles
+  // load battery meter and draw all candles, and sensor values
   showBatteryLevel();
   while (!requestRestApi()) {}
   drawCandles();
+  drawSensorValues();
 
   // Connecting to WS:
   webSocket.beginSSL(wsApiHost, wsApiPort, getWsApiUrl());
@@ -426,11 +463,18 @@ void setup() {
 void loop()
 {
   currentMs = millis();
-  buttonActions();  // check for buttons
-  M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_BLACK);  //reset busy light
+  buttonActions();  // check for Buttons
+  M5.Lcd.fillCircle(101, topPanel + ((infoPanel + sensorPanel) / 2 - 7), 4, TFT_BLACK);  //reset busy light
+  if (currency_cycling) {
+    if (currentMs - currency_cycling_counter >= (4 + myCyclingIntervall)  * 1000) {   //change every x (user defined) seconds, adds +4s to intervall the long loading time
+      currency_cycling_counter = currentMs;
+      cycling_change_triggered = true;
+    }
+  }
   if (currentMs - lastPrintTime >= 35000 && second(time(nullptr)) < 25) {  // draw new date and candles regularly
     lastPrintTime = currentMs;
     printTime();
+    drawSensorValues();
     multi_level = 0;
     webSocket.disconnect();
     webSocket.beginSSL(wsApiHost, wsApiPort, getWsApiUrl());
@@ -439,17 +483,17 @@ void loop()
     showBatteryLevel();
   }
   webSocket.loop();
-  M5.update();                                                             // update button checks
+  M5.update();                                                             // update Button checks
 }
 // ****************************************END LOOP***************************************************
 
 
 
 void printTime() {
-  M5.Lcd.fillRect(0, 0, 320, topPanel, TFT_BLACK); M5.Lcd.setFreeFont(FSSB12);
+  M5.Lcd.fillRect(0, 0, 320, topPanel - 1, TFT_BLACK); M5.Lcd.setFreeFont(FSSB12);
   M5.Lcd.setCursor(1, 19); M5.Lcd.setTextSize(1); M5.Lcd.setTextColor(strname_color);
   M5.Lcd.print(strname_currency);
-  M5.Lcd.setFreeFont(FMB12); M5.Lcd.setCursor(111, 15); M5.Lcd.setTextColor(TFT_LIGHTGREY);
+  M5.Lcd.setFreeFont(FMB12); M5.Lcd.setCursor(111, 14); M5.Lcd.setTextColor(TFT_LIGHTGREY);
   TimeChangeRule *tcr;
   if (myTimeZone == 0) {
     time_t now = myTZ0.toLocal(time(nullptr), &tcr);
@@ -475,6 +519,9 @@ void printTime() {
   } else if (myTimeZone == 7) {
     time_t now = myTZ7.toLocal(time(nullptr), &tcr);
     M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
+  } else if (myTimeZone == 99) {
+    time_t now = myTZ8.toLocal(time(nullptr), &tcr);
+    M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
   } else { // default: MyTZ4 english
     time_t now = myTZ4.toLocal(time(nullptr), &tcr);
     M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
@@ -497,7 +544,7 @@ String getWsApiUrl() {
 
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
-  M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_DARKGREY);  //busy light darkgrey
+  M5.Lcd.fillCircle(101, topPanel + ((infoPanel + sensorPanel) / 2 - 7), 4, TFT_DARKGREY);  //busy light darkgrey
   showWifiStrength();
   switch (type) {
     case WStype_DISCONNECTED:
@@ -564,7 +611,7 @@ bool requestRestApi() {
                "Connection: close\r\n\r\n");
 
   while (client.connected()) {
-    M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_YELLOW);  //busy light yellow
+    M5.Lcd.fillCircle(101, topPanel + ((infoPanel + sensorPanel) / 2 - 7), 4, TFT_YELLOW);  //busy light yellow
     String line = client.readStringUntil('\r');
     line.trim();
     if (line.startsWith("[") && line.endsWith("]")) {
@@ -648,8 +695,7 @@ void formatPrice() {
 
 
 void drawCandles() {
-
-  M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_MAGENTA);  //busy light magenta
+  M5.Lcd.fillCircle(101, topPanel + ((infoPanel + sensorPanel) / 2 - 7), 4, TFT_MAGENTA);  //busy light magenta
   // Find highs and lows
   ph = candles[0 + empty_candles].h;
   pl = candles[0 + empty_candles].l;
@@ -677,7 +723,7 @@ void drawCandles() {
   for (int i = 0; i < candlesLimit - empty_candles; i++) {
     drawCandle(i);
   }
-  M5.Lcd.fillCircle(101, topPanel + (infoPanel / 2), 4, TFT_DARKGREY); // reset magenta busy light;
+  M5.Lcd.fillCircle(101, topPanel + ((infoPanel + sensorPanel) / 2 - 7), 4, TFT_DARKGREY); // reset magenta busy light;
 }
 
 
@@ -685,7 +731,7 @@ void drawCandles() {
 // Remap dollars data to pixels
 int getY(float val, float minVal, float maxVal) {
   // function copied from of 'map' math function  (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
-  return round((val - minVal) * (topPanel + infoPanel + 2 - 162 - bottomPanel) / (maxVal - minVal) + 235 - bottomPanel);
+  return round((val - minVal) * (topPanel + infoPanel + sensorPanel + 2 - 162 - bottomPanel) / (maxVal - minVal) + 235 - bottomPanel);
 }
 
 
@@ -693,7 +739,7 @@ int getY(float val, float minVal, float maxVal) {
 void drawEmptyCandle(int i) {
   center = w / 2.0;
   center += ((i) * w);
-  M5.Lcd.fillRect((center - w) + 5, topPanel + infoPanel, ceil(w), 240 - (topPanel + infoPanel + bottomPanel), TFT_BLACK);
+  M5.Lcd.fillRect((center - w) + 5, topPanel + infoPanel + sensorPanel, ceil(w), 240 - (topPanel + infoPanel + sensorPanel + bottomPanel), TFT_BLACK);
 }
 
 
@@ -714,13 +760,13 @@ void drawCandle(int i) {
   uint32_t color = cy < oy ? DARKERGREEN : MYRED;
 
   // Background:
-  M5.Lcd.fillRect((center - w) + 5, topPanel + infoPanel, ceil(w), 240 - (topPanel + infoPanel + bottomPanel), TFT_BLACK);
+  M5.Lcd.fillRect((center - w) + 5, topPanel + infoPanel + sensorPanel, ceil(w), 240 - (topPanel + infoPanel + sensorPanel + bottomPanel), TFT_BLACK);
 
   // Volume line:
   M5.Lcd.drawLine((center - w) + 5, prevVY, center - 5, vy, volColor);
   M5.Lcd.drawLine(center - 4, vy, center + 4, vy, volColor);
   if (i == candlesLimit - 1) {
-    M5.Lcd.fillRect(center + 5, topPanel + infoPanel, w / 2, 240 - (topPanel + infoPanel + bottomPanel), TFT_BLACK);
+    M5.Lcd.fillRect(center + 5, topPanel + infoPanel + sensorPanel, w / 2, 240 - (topPanel + infoPanel + bottomPanel), TFT_BLACK);
     M5.Lcd.drawLine(center + 5, vy, 320, vy, volColor);
   }
 
@@ -744,17 +790,16 @@ void drawCandle(int i) {
 // show remaining battery power (0-100) and draw the matching battery status picture
 void  showBatteryLevel() {
   uint8_t battery = M5.Power.getBatteryLevel();
-  M5.Lcd.fillRect(34, topPanel, 60, infoPanel, TFT_BLACK);
-  if (M5.Power.isCharging())M5.Lcd.drawPngFile(SPIFFS, "/batt_gre.png", 34, topPanel); // show a green battery icon
-  else M5.Lcd.drawPngFile(SPIFFS, "/batt_gry.png", 34, topPanel);                      // show a grey battery icon
-  if (battery == -1)     M5.Lcd.drawPngFile(SPIFFS, "/batt_nc.png", 34, topPanel);     // 60 x 60 px
-  else if (battery < 12) M5.Lcd.drawPngFile(SPIFFS, "/batt0.png",  34, topPanel);
-  else if (battery < 32) M5.Lcd.drawPngFile(SPIFFS, "/batt25.png", 34, topPanel);
-  else if (battery < 64) M5.Lcd.drawPngFile(SPIFFS, "/batt50.png", 34, topPanel);
-  else if (battery < 78) M5.Lcd.drawPngFile(SPIFFS, "/batt75.png", 34, topPanel);
-  else if (battery > 90) M5.Lcd.drawPngFile(SPIFFS, "/batt100.png", 34, topPanel);
+  M5.Lcd.fillRect(34, topPanel + 2, 60, infoPanel + sensorPanel, TFT_BLACK);
+  if (M5.Power.isCharging())M5.Lcd.drawPngFile(SPIFFS, "/batt_gre.png", 34, topPanel + 2); // show a green battery icon
+  else M5.Lcd.drawPngFile(SPIFFS, "/batt_gry.png", 34, topPanel + 2);                      // show a grey battery icon
+  if (battery == -1)     M5.Lcd.drawPngFile(SPIFFS, "/batt_nc.png", 34, topPanel + 2);     // 60 x 60 px
+  else if (battery < 12) M5.Lcd.drawPngFile(SPIFFS, "/batt0.png",  34, topPanel + 2);
+  else if (battery < 32) M5.Lcd.drawPngFile(SPIFFS, "/batt25.png", 34, topPanel + 2);
+  else if (battery < 64) M5.Lcd.drawPngFile(SPIFFS, "/batt50.png", 34, topPanel + 2);
+  else if (battery < 78) M5.Lcd.drawPngFile(SPIFFS, "/batt75.png", 34, topPanel + 2);
+  else if (battery > 90) M5.Lcd.drawPngFile(SPIFFS, "/batt100.png", 34, topPanel + 2);
 }
-
 
 
 void drawPrice() {
@@ -825,8 +870,8 @@ void drawPrice() {
 // price changings for info panel: changings relative to the 24th past candles close price in percent (with exceptions):
 void PriceChangings() {
   if (!timeframe_really_changed) {
-    M5.Lcd.fillRect(108, topPanel, 225, infoPanel, TFT_BLACK);
-    M5.Lcd.setFreeFont(FM9); M5.Lcd.setCursor(108, topPanel + infoPanel - 2); M5.Lcd.setTextSize(1);
+    M5.Lcd.fillRect(108, topPanel + sensorPanel , 212, infoPanel, TFT_BLACK);
+    M5.Lcd.setFreeFont(FM9); M5.Lcd.setCursor(108, topPanel + sensorPanel + infoPanel - 3); M5.Lcd.setTextSize(1);
     if (current_Timeframe == 0) { //1m
       if (candles[candlesLimit - 1].c > candles[candlesLimit - 21].c) {
         M5.Lcd.setTextColor(DARKERGREEN);
@@ -1132,19 +1177,17 @@ void PriceChangings() {
 // show Wifi-RSSI level (signal strength)
 void showWifiStrength() {
   int WifiRSSI = WiFi.RSSI();
-  //  M5.Lcd.fillRect(2, topPanel + infoPanel + 8, 69, 15, TFT_BLACK);
-  //  M5.Lcd.setCursor(2, topPanel + infoPanel + 20); M5.Lcd.setFreeFont(FM9); M5.Lcd.setTextSize(1); M5.Lcd.setTextColor(TFT_WHITE);
+  //  M5.Lcd.fillRect(2, 2 + topPanel + infoPanel + 8, 69, 15, TFT_BLACK);
+  //  M5.Lcd.setCursor(2, 2 +  topPanel + infoPanel + 20); M5.Lcd.setFreeFont(FM9); M5.Lcd.setTextSize(1); M5.Lcd.setTextColor(TFT_WHITE);
   //  M5.Lcd.print(String(WifiRSSI) + "dBm");
-  if (WifiRSSI > -50 & ! WifiRSSI == 0 ) M5.Lcd.fillRoundRect(26, topPanel, 5, 12, 1, TFT_WHITE);
-  else
-    M5.Lcd.fillRoundRect(26, topPanel, 5, 12, 1, TFT_DARKGREY);
-  if (WifiRSSI > -70 & ! WifiRSSI == 0) M5.Lcd.fillRoundRect(18, topPanel + 2, 5, 10, 1, TFT_WHITE);
-  else M5.Lcd.fillRoundRect(18, topPanel + 2, 5, 10, 1, TFT_DARKGREY);
-  if (WifiRSSI > -80 & ! WifiRSSI == 0) M5.Lcd.fillRoundRect(10, topPanel + 4, 5, 8, 1, TFT_WHITE);
-  else M5.Lcd.fillRoundRect(10, topPanel + 4, 5, 8, 1, TFT_DARKGREY);
-  if (WifiRSSI > -90 & ! WifiRSSI == 0)
-    M5.Lcd.fillRoundRect(2, topPanel + 6, 5, 6, 1, TFT_WHITE);
-  else M5.Lcd.fillRoundRect(2, topPanel + 6, 5, 6, 1, TFT_RED);
+  if (WifiRSSI > -50 & ! WifiRSSI == 0 ) M5.Lcd.fillRoundRect(26, 2 + topPanel    , 5, 12, 1, TFT_WHITE);
+  else                                   M5.Lcd.fillRoundRect(26, 2 + topPanel    , 5, 12, 1, TFT_DARKGREY);
+  if (WifiRSSI > -70 & ! WifiRSSI == 0)  M5.Lcd.fillRoundRect(18, 2 + topPanel + 2, 5, 10, 1, TFT_WHITE);
+  else                                   M5.Lcd.fillRoundRect(18, 2 + topPanel + 2, 5, 10, 1, TFT_DARKGREY);
+  if (WifiRSSI > -80 & ! WifiRSSI == 0)  M5.Lcd.fillRoundRect(10, 2 + topPanel + 4, 5,  8, 1, TFT_WHITE);
+  else                                   M5.Lcd.fillRoundRect(10, 2 + topPanel + 4, 5,  8, 1, TFT_DARKGREY);
+  if (WifiRSSI > -90 & ! WifiRSSI == 0)  M5.Lcd.fillRoundRect(2,  2 + topPanel + 6, 5,  6, 1, TFT_WHITE);
+  else                                   M5.Lcd.fillRoundRect(2,  2 + topPanel + 6, 5,  6, 1, TFT_RED);
 }
 
 
@@ -1153,16 +1196,16 @@ void showWifiStrength() {
 void error(String text) {
   drawCandles();
   M5.Lcd.setTextWrap(true); M5.Lcd.setTextColor(TFT_WHITE); M5.Lcd.setFreeFont(FSSB12); M5.Lcd.setTextSize(1);
-  M5.Lcd.setCursor(3, topPanel + infoPanel + 73);
+  M5.Lcd.setCursor(3, topPanel + infoPanel + sensorPanel + 73);
   if (ws_error) {
-    M5.Lcd.drawPngFile(SPIFFS, "/ws_error_small.png", 100, topPanel + infoPanel + 5); // show a 50x50px png
+    M5.Lcd.drawPngFile(SPIFFS, "/ws_error_small.png", 100, topPanel + infoPanel + sensorPanel + 5); // show a 50x50px png
     M5.Lcd.print(text);
     ws_error = false;
     M5.Lcd.setTextWrap(false);
   }
   if (wifi_error) {
     M5.Lcd.print(text);
-    M5.Lcd.drawPngFile(SPIFFS, "/wifi_error_small.png", 155, topPanel + infoPanel + 5); // show a 50x50px png
+    M5.Lcd.drawPngFile(SPIFFS, "/wifi_error_small.png", 155, topPanel + infoPanel + sensorPanel + 5); // show a 50x50px png
     wifi_error = false;
     M5.Lcd.print("\nconnecting to ");
     if (alt_hotspot == false) {
@@ -1214,6 +1257,7 @@ void error(String text) {
 
 // BUTTON ACTIONS
 void buttonActions() {
+
   // Power Off Button (ButtonC long press) - needed because if on usb power there is no option to turn off the unit except by powerOFF command
   if (M5.BtnC.pressedFor(1333)) {
     M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
@@ -1228,8 +1272,32 @@ void buttonActions() {
     M5.Power.powerOFF();
   }
 
-  // change current currency button A
-  if (M5.BtnA.wasPressed() && !current_timeframe_changed) {
+
+  // cycle through all currencies by pressing ButtonA + ButtonB together
+  if ((M5.BtnA.pressedFor(10) && (M5.BtnC.pressedFor(10)))) {
+    if (!currency_cycling) {
+      currency_cycling = true;
+      Serial.println("auto-cycle currencies on");
+      currency_cycling_counter = currentMs;
+      drawCandles();
+      M5.Lcd.drawPngFile(SPIFFS, "/cycling_on.png", (320 / 2) - (155 / 2), (240 / 2) - (155 / 2)); // center for 155x155px png
+      delay(1000);
+      drawCandles();
+    }
+    else {
+      currency_cycling = false;
+      Serial.println("auto-cycle currencies off");
+      drawCandles();
+      M5.Lcd.drawPngFile(SPIFFS, "/cycling_off.png", (320 / 2) - (155 / 2), (240 / 2) - (155 / 2)); // center for 155x155px png
+      delay(1000);
+      drawCandles();
+    }
+  }
+
+
+  // change current currency ButtonA
+  if (((M5.BtnA.wasPressed() && !current_timeframe_changed) && !M5.BtnC.read()) || cycling_change_triggered) {
+    cycling_change_triggered = false;
     current_Currency_changed = true;
     currency_btn_timeout_counter = currentMs + 2000;
     ++current_Currency;
@@ -1243,7 +1311,8 @@ void buttonActions() {
     M5.Lcd.drawPngFile(SPIFFS, "/currency.png", (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); // center for 100x100px png
   }
 
-  // brighness button B
+
+  // brighness ButtonB
   if (M5.BtnB.wasPressed() && !current_Currency_changed && !current_timeframe_changed) {
     current_bright_changed = true;
     bright_btn_timeout_counter = currentMs + 750;
@@ -1272,9 +1341,9 @@ void buttonActions() {
   }
 
 
-  //  timeframe change buttons: after C was pressed press A or B for - and +
+  //  timeframe change Buttons: after C was pressed press A or B for - and +
   if (M5.BtnC.wasPressed() && !current_timeframe_changed && !current_Currency_changed && !current_bright_changed) {
-    delay(105);  //attempt to debounce buttonC
+    delay(105);  //attempt to debounce ButtonC
     current_timeframe_changed = true;
     timeframe_btn_timeout_counter1 = currentMs + 2000;
     String timeframe = candlesTimeframes[current_Timeframe];
@@ -1338,7 +1407,7 @@ void buttonActions() {
       }
     }
   }
-  // do after a delay of a button press..
+  // do after a delay of a Button press..
   if (current_Currency_changed && currency_btn_timeout_counter < currentMs) {
     current_Currency_changed = false;
     currency_btn_timeout_counter = 4294966295;
@@ -1350,7 +1419,8 @@ void buttonActions() {
     webSocket.disconnect();
     webSocket.beginSSL(wsApiHost, wsApiPort, getWsApiUrl());
     while (!requestRestApi()) {}
-    preferences.putUInt("currency", current_Currency);                         // store setting to memory
+    if (!currency_cycling)
+      preferences.putUInt("currency", current_Currency);                       // store setting to memory when not in cycling mode
     showBatteryLevel();
     drawCandles();
   }
@@ -1386,7 +1456,7 @@ void buttonActions() {
 
   // Button for Sleep Timer zzz zzZ..ZZ.Z.ZZ..Zzz zzz
   if (M5.BtnB.pressedFor(1700)) {
-    if (!sleeptimer_bool) {      // enables sleeptimer if buttonB is long pressed
+    if (!sleeptimer_bool) {      // enables sleeptimer if ButtonB is long pressed
       sleeptimer_bool = true;
       sleeptimer_counter = now();
       Brightness_level--;        // because brighness and sleeptimer are on same ButtonA correct brightness one level back
@@ -1408,7 +1478,7 @@ void buttonActions() {
       M5.lcd.setBrightness(Brightness_value);
       preferences.putUInt("bright", Brightness_value);            // store setting to memory
       preferences.putUInt("briglv", Brightness_level);            // store setting to memory
-      M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2), 5, TFT_BLUE); // set blue status light when sleeptimer was activated
+      M5.Lcd.drawCircle(101, topPanel + ((infoPanel + sensorPanel) / 2 - 7), 5, TFT_BLUE); // set blue status light when sleeptimer was activated
       drawCandles();
       M5.Lcd.drawPngFile(SPIFFS, "/sleep.png", (320 / 2) - (100 / 2), (240 / 2) - ((100 / 2))); // sleep.png is 100x100px
       LEDbar.clear();
@@ -1439,7 +1509,7 @@ void buttonActions() {
       }
       M5.lcd.setBrightness(Brightness_value);
       preferences.putUInt("bright", Brightness_value);            // store setting to memory
-      M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2), 5, TFT_BLACK); // reset blue status light when sleeptimer was deactivated
+      M5.Lcd.drawCircle(101, topPanel + ((infoPanel + sensorPanel) / 2 - 7), 5, TFT_BLACK); // reset blue status light when sleeptimer was deactivated
       drawCandles();
       M5.Lcd.drawPngFile(SPIFFS, "/cancel_sleep.png", (320 / 2) - (120 / 2), (240 / 2) - ((120 / 2))); //sleep.png is 120x120px
       LEDbar.clear();
@@ -1452,7 +1522,7 @@ void buttonActions() {
   }
   if (sleeptimer_bool == true && (now() > (sleeptimer_counter + sleeptime))) {
     sleeptimer_bool = false;
-    M5.Lcd.drawCircle(101, topPanel + (infoPanel / 2), 5, TFT_BLACK); // reset status light when sleeptimer was finished
+    M5.Lcd.drawCircle(101, topPanel + ((infoPanel + sensorPanel) / 2 - 7), 5, TFT_BLACK); // reset status light when sleeptimer was finished
     M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
     delay(1000);
     for (int i = Brightness_value; i > 0 ; i--) {                  // dimm LCD slowly before shutdown
@@ -1474,8 +1544,9 @@ void updateSDSettings() {
   SDConfig cfg;
   // Open the configuration file.
   if (!cfg.begin(configFile, maxLineLength)) {
-    Serial.print("Failed to open configuration file: ");
+    Serial.println("failed to open configuration file: ");
     Serial.println(configFile);
+    Serial.println("using last good setting from memory or defaults");
   }
   // from here i did it one by one as i don't get it to work with a 'for' loop
   while (cfg.readNextSetting()) { //at the moment are up to 36 pairs possible
@@ -1645,11 +1716,16 @@ void updateSDSettings() {
       pair_col_str[23] = cfg.copyValue(); Serial.print("Read pair_color24: "); Serial.println(pair_col_str[23]);
     } else if (cfg.nameIs("pair_color25")) {
       pair_col_str[24] = cfg.copyValue(); Serial.print("Read pair_color25: "); Serial.println(pair_col_str[24]);
-    }
-    else if (cfg.nameIs("myTimeZone")) {
+    } else if (cfg.nameIs("myTimeZone")) {
       myTimeZone = cfg.getIntValue(); Serial.print("Read myTimeZone: "); Serial.println(myTimeZone);
     } else if (cfg.nameIs("myLanguage")) {
       myLanguage = cfg.getIntValue(); Serial.print("Read myLanguage: "); Serial.println(myLanguage);
+    } else if (cfg.nameIs("myTempUnit")) {
+      myTempUnit = cfg.getIntValue(); Serial.print("Read myTempUnit: "); Serial.println(myTempUnit);
+    } else if (cfg.nameIs("myTempOffset")) {
+      myTempOffset = cfg.getIntValue(); Serial.print("Read myTempOffset: "); Serial.println(myTempOffset);
+    } else if (cfg.nameIs("myCyclingIntervall")) {
+      myCyclingIntervall = cfg.getIntValue(); Serial.print("Read myCyclingIntervall: "); Serial.println(myCyclingIntervall);
     } else if (cfg.nameIs("mySleeptime")) {
       mySleeptime = cfg.getIntValue(); Serial.print("Read mySleeptime: "); Serial.println(mySleeptime);
     } else {
@@ -1678,6 +1754,9 @@ void updateSDSettings() {
   mySleeptime_mem = preferences.getInt("mySleeptime", 45);
   myTimeZone_mem = preferences.getInt("myTimeZone", 4);
   myLanguage_mem = preferences.getInt("myLanguage", 0);
+  myTempUnit_mem = preferences.getInt("myTempUnit", 0);
+  myTempOffset_mem = preferences.getInt("myTempOffset", 0);
+  myCyclingIntervall_mem = preferences.getInt("myCyclingIntervall", 15);
   pairs_mem = preferences.getInt("pairs", 4);
   pair_name_mem[0] = preferences.getString("pair_name01", "");
   pair_name_mem[1] = preferences.getString("pair_name02", "");
@@ -1791,6 +1870,24 @@ void updateSDSettings() {
       Serial.print("old myTimeZone_mem was: "); Serial.println(myTimeZone_mem);
       preferences.putInt("myTimeZone", myTimeZone);
       Serial.print("new myTimeZone save is: "); Serial.println(myTimeZone);
+      change_count++;
+    }
+    if (myTempUnit != myTempUnit_mem) {
+      Serial.print("old myTempUnit_mem was: "); Serial.println(myTempUnit_mem);
+      preferences.putInt("myTempUnit", myTempUnit);
+      Serial.print("new myTempUnit save is: "); Serial.println(myTempUnit);
+      change_count++;
+    }
+    if (myTempOffset != myTempOffset_mem) {
+      Serial.print("old myTempOffset_mem was: "); Serial.println(myTempOffset_mem);
+      preferences.putInt("myTempOffset", myTempOffset);
+      Serial.print("new myTempOffset save is: "); Serial.println(myTempOffset);
+      change_count++;
+    }
+    if (myCyclingIntervall != myCyclingIntervall_mem) {
+      Serial.print("old myCyclingIntervall_mem was: "); Serial.println(myCyclingIntervall_mem);
+      preferences.putInt("myCyclingIntervall", myCyclingIntervall);
+      Serial.print("new myCyclingIntervall save is: "); Serial.println(myCyclingIntervall);
       change_count++;
     }
     if (myLanguage != myLanguage_mem) {
@@ -2256,6 +2353,7 @@ void updateSDSettings() {
       change_count++;
     }
     if (change_count != 0) {
+      M5.Lcd.setCursor(20, 60);
       M5.Lcd.printf("\nupdated %i settings from SD", change_count);
       Serial.printf("updated %i settings from SD-Card", change_count); Serial.println();
       change_count = 0;
@@ -2270,6 +2368,9 @@ void updateSDSettings() {
     mySleeptime = mySleeptime_mem;
     myTimeZone = myTimeZone_mem;
     myLanguage = myLanguage_mem;
+    myTempUnit = myTempUnit_mem;
+    myTempOffset = myTempOffset_mem;
+    myCyclingIntervall = myCyclingIntervall_mem;
     pairs = pairs_mem;
     for (int i = 0; i < pairs; i++) {
       pair_name[i] = pair_name_mem[i];
@@ -2387,7 +2488,6 @@ void rainbow_effect(int wait) {
 }
 
 
-
 // ## LED functions - for details see: https://github.com/adafruit/Adafruit_NeoPixel
 // Fill LEDbar pixels one after another with a color. LEDbar is NOT cleared
 // first; anything there will be covered pixel by pixel. Pass in color
@@ -2396,5 +2496,25 @@ void rainbow_effect(int wait) {
 // and a delay time (in milliseconds) between pixels.
 
 
+void drawSensorValues() { //only if you have it in the grey vertical base stand with SHT30 Sensor)
+  if (sensorPanel != 0) {
+    if (sht30.get() == 0) {
+      tmpC = sht30.cTemp; //sensor value in degree celsius
+      hum = sht30.humidity;
+      M5.Lcd.fillRect(108, topPanel, 212, sensorPanel, TFT_BLACK);
+      M5.Lcd.setCursor(112, topPanel + sensorPanel - 3); M5.Lcd.setFreeFont(FM9); M5.Lcd.setTextSize(1); M5.Lcd.setTextColor(TFT_LIGHTGREY);
+      if (myTempUnit == 1) { // if sd-config reads myTempUnit=1 use Fahrenheit, otherwise use Celsius instead
+        tmpF = (tmpC * 1.8) + 32; //formula to convert C to F -->    98,6 °F = (37 °C × 9/5) + 32
+        M5.Lcd.printf("Tmp:%3.1fF  Hum:%2.0f%%", tmpF + myTempOffset, hum);     //show in Fahrenheit , 3 digits + 1 decimal
+      } else
+        M5.Lcd.printf("Temp:%2.1fC  Hum:%2.0f%%", tmpC + myTempOffset, hum);  //show in Celsius    , 2 digits + 1 decimal
+    }
+    if (sht30.get() != 0) {
+      M5.Lcd.fillRect(108, topPanel, 212, sensorPanel, TFT_BLACK);
+      M5.Lcd.setCursor(112, topPanel + sensorPanel - 3); M5.Lcd.setFreeFont(FM9); M5.Lcd.setTextSize(1); M5.Lcd.setTextColor(TFT_DARKGREY);
+      M5.Lcd.printf(" no sensor values");
+    }
+  }
+}
 
 // ##END##
