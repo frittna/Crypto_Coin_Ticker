@@ -13,24 +13,21 @@ For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Nov.19.2021 12:07 
 
 
 
-last edits:    - added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
-
-                        - added Timezone for Singapore (UTC+8)
-
-                        -minor changings: - code merged to one version, so there is no need to have different versions anymore !
-
-                                          - autodetect the optional room sensor and show a 12x high sensor panel in case
-  
-                                          - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore 
-         
-                                            (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
+last edits:     added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)                      - added Timezone for Singapore (UTC+8)
+   -minor changings: - code merged to one version, so there is no need to have different versions anymore !
+                     - autodetect the optional room sensor and show a 12x high sensor panel in case
+                     - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore 
+                      (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
              
  
 
  ----------------------------------------------------------------------------------------------------------------------------
 
+
 #Using the App:
 ###############
+
+
 This version needs a SD-Card whith the your WiFi credentials, favourite coinpairs, timezone and language(eng/ger/esp) in a textfile - see installation
 
 ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com
@@ -50,8 +47,12 @@ if you hold ButtonC at Startup: it will start with alternative SSID2/WiFi2-passw
 press ButtonA and ButtonC together to enable/disable cycling throut all currencies after a set time (default:off, when turned on default:15sec)
 
 
+
 #Further description:
+
 #####################
+
+
 The top infoPanel shows the WiFi-strength, batterylevel, colored indicators for "busy", SleepTimer, price moving and if charging from usb (can have delay up to 30s)
 
 right now: english, german, spanish Language (day and month names)
