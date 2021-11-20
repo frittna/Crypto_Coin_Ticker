@@ -9,7 +9,7 @@ only needs config file "ccticker.cfg" on root of SD-Card
 receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 
 This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Nov.19.2021 12:07 CET - Version 1.0.53 using spiffs + SDconfig
+For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Nov.20.2021 15:20 CET - Version 1.0.53fix using spiffs + SDconfig
 
 
 
