@@ -7,7 +7,7 @@
 // receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Nov.19.2021 12:07 CET - Version 1.0.53 using spiffs + SDconfig
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Nov.20.2021 15:20 CET - Version 1.0.53fix using spiffs + SDconfig
 //
 //
 //
@@ -1278,7 +1278,7 @@ void buttonActions() {
     if (!currency_cycling) {
       currency_cycling = true;
       Serial.println("auto-cycle currencies on");
-      currency_cycling_counter = currentMs;
+      currency_cycling_counter = currentMs;  //start currency_cycling_counter
       drawCandles();
       M5.Lcd.drawPngFile(SPIFFS, "/cycling_on.png", (320 / 2) - (155 / 2), (240 / 2) - (155 / 2)); // center for 155x155px png
       delay(1000);
@@ -1298,6 +1298,7 @@ void buttonActions() {
   // change current currency ButtonA
   if (((M5.BtnA.wasPressed() && !current_timeframe_changed) && !M5.BtnC.read()) || cycling_change_triggered) {
     cycling_change_triggered = false;
+    currency_cycling_counter = currentMs;     //restart cycling_timer to not change to early after a button press when in cycling mode)
     current_Currency_changed = true;
     currency_btn_timeout_counter = currentMs + 2000;
     ++current_Currency;
