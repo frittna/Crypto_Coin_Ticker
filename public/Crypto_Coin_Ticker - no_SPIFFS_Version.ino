@@ -7,7 +7,7 @@
 // receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Nov.19.2021 12:07 CET - Version 1.0.53 using spiffs + SDconfig
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Nov.20.2021 15:20 CET - Version 1.0.53fix  - THIS VERSION USES SD-CARD DATA FOLDER instead of SFIFFS + SDconfig (intended for SD-MenuLoader)
 //
 //
 //
@@ -32,7 +32,7 @@
 // Press ButtonC, then, within 2 sec press ButtonA to switch down, or ButtonB to switch up through the timeframes: 1min->15mins->1hour->..
 // available timeframes are 1minute, 3m, 5m, 15m, 1h, 4h, 1d, 1w, 1Month
 // if you hold ButtonC at Startup: it will start with alternative SSID2/WiFi2-password instead (e.g your mobile phone's hotspot)
-// press ButtonA and ButtonC together to enable/disable cycling throut all currencies after a set time (default:off, when turned on default:15sec)
+// press ButtonA and ButtonC together to enable/disable cycling through all currencies after a set time (default:off, when turned on default:15sec)
 
 // #Further description:
 // #####################
@@ -116,7 +116,7 @@ String password2 = "";  //
 #include <ArduinoJson.h>      // Library  | Arduino Librarymanager Benoit Blanchon   | 6.17.3| "ArduinoJson"                                                 |
 #include "M5StackUpdater.h"   // Library  | Arduino Librarymanager SD-Menu Loader    | 0.5.2!| "M5Stack SD"  i use 0.5.2 , not new 1.0.2 because of problems |
 #include <Adafruit_NeoPixel.h>// Library  | Arduino Librarymanager Adafruit NeoPixel | 1.7.0 | "Adafriut Neopixel"                                           |
-#include "FS.h"               // Prog-Tool| github: esp32fs for SPIFFS filesystem    |  1.0  | https://github.com/me-no-dev/arduino-esp32fs-plugin           |
+//#include "FS.h"               // Prog-Tool| github: esp32fs for SPIFFS filesystem    |  1.0  | https://github.com/me-no-dev/arduino-esp32fs-plugin           |
 #include "SHT3X.h"             // Library  | M5Stack-Examples for base with SHT30 
 // ---------------------------------------+------------------------------------------+-------+----------------------------------------------------------------
 //  **if you compile and have problems resulting a reset or no proper connection to WiFi after powering up you schould check
@@ -313,11 +313,11 @@ void setup() {
   }
   Serial.println  ("successfully..");
 
-  // spiffs filesystem for pictures or maybe sound data
-  if (!SPIFFS.begin(true)) {
-    Serial.println("SPIFFS Mount Failed");
-    return;
-  }
+//  // spiffs filesystem for pictures or maybe sound data
+//  if (!SPIFFS.begin(true)) {
+//    Serial.println("SPIFFS Mount Failed");
+//    return;
+//  }
 
   // setting alternative WiFi2-settings
   if (digitalRead(BUTTON_C_PIN) == 0) {
@@ -333,7 +333,7 @@ void setup() {
   M5.update();
 
   // startup with splashscreen on LCD Display and start up RGB LCD-pixel-bar (Neopixel)
-  M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0, 0);
+  M5.Lcd.drawPngFile(SD, "/data/m5_logo_dark.png", 0, 0);
   for (int i = 0; i < 22 ; i++) {
     Brightness_value += 1;
     M5.lcd.setBrightness(Brightness_value);
@@ -380,7 +380,7 @@ void setup() {
     err_count ++;
     // Power Off Button (ButtonC long press) - needed because on usb power, depending on the type of battery bottom you maybe cant turn off with red Button as usual
     if (M5.BtnC.pressedFor(1333)) {
-      M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
+      M5.Lcd.drawPngFile(SD, "/data/m5_logo_dark.png", 0 , 0);
       delay(500);
       for (int i = Brightness_value; i > 0 ; i--) {                  // dimm LCD slowly before shutdown
         Brightness_value -= 1;
@@ -392,7 +392,7 @@ void setup() {
       M5.Power.powerOFF();
     }
     if (err_count > 288) {                                // if 10 minutes no wifi -> power off device !
-      M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
+      M5.Lcd.drawPngFile(SD, "/data/m5_logo_dark.png", 0 , 0);
       delay(1000);
       M5.Lcd.fillScreen(TFT_BLACK);
       delay(1000);
@@ -791,14 +791,14 @@ void drawCandle(int i) {
 void  showBatteryLevel() {
   uint8_t battery = M5.Power.getBatteryLevel();
   M5.Lcd.fillRect(34, topPanel + 2, 60, infoPanel + sensorPanel, TFT_BLACK);
-  if (M5.Power.isCharging())M5.Lcd.drawPngFile(SPIFFS, "/batt_gre.png", 34, topPanel + 2); // show a green battery icon
-  else M5.Lcd.drawPngFile(SPIFFS, "/batt_gry.png", 34, topPanel + 2);                      // show a grey battery icon
-  if (battery == -1)     M5.Lcd.drawPngFile(SPIFFS, "/batt_nc.png", 34, topPanel + 2);     // 60 x 60 px
-  else if (battery < 12) M5.Lcd.drawPngFile(SPIFFS, "/batt0.png",  34, topPanel + 2);
-  else if (battery < 32) M5.Lcd.drawPngFile(SPIFFS, "/batt25.png", 34, topPanel + 2);
-  else if (battery < 64) M5.Lcd.drawPngFile(SPIFFS, "/batt50.png", 34, topPanel + 2);
-  else if (battery < 78) M5.Lcd.drawPngFile(SPIFFS, "/batt75.png", 34, topPanel + 2);
-  else if (battery > 90) M5.Lcd.drawPngFile(SPIFFS, "/batt100.png", 34, topPanel + 2);
+  if (M5.Power.isCharging())M5.Lcd.drawPngFile(SD, "/data/batt_gre.png", 34, topPanel + 2); // show a green battery icon
+  else M5.Lcd.drawPngFile(SD, "/data/batt_gry.png", 34, topPanel + 2);                      // show a grey battery icon
+  if (battery == -1)     M5.Lcd.drawPngFile(SD, "/data/batt_nc.png", 34, topPanel + 2);     // 60 x 60 px
+  else if (battery < 12) M5.Lcd.drawPngFile(SD, "/data/batt0.png",  34, topPanel + 2);
+  else if (battery < 32) M5.Lcd.drawPngFile(SD, "/data/batt25.png", 34, topPanel + 2);
+  else if (battery < 64) M5.Lcd.drawPngFile(SD, "/data/batt50.png", 34, topPanel + 2);
+  else if (battery < 78) M5.Lcd.drawPngFile(SD, "/data/batt75.png", 34, topPanel + 2);
+  else if (battery > 90) M5.Lcd.drawPngFile(SD, "/data/batt100.png", 34, topPanel + 2);
 }
 
 
@@ -1198,14 +1198,14 @@ void error(String text) {
   M5.Lcd.setTextWrap(true); M5.Lcd.setTextColor(TFT_WHITE); M5.Lcd.setFreeFont(FSSB12); M5.Lcd.setTextSize(1);
   M5.Lcd.setCursor(3, topPanel + infoPanel + sensorPanel + 73);
   if (ws_error) {
-    M5.Lcd.drawPngFile(SPIFFS, "/ws_error_small.png", 100, topPanel + infoPanel + sensorPanel + 5); // show a 50x50px png
+    M5.Lcd.drawPngFile(SD, "/data/ws_error_small.png", 100, topPanel + infoPanel + sensorPanel + 5); // show a 50x50px png
     M5.Lcd.print(text);
     ws_error = false;
     M5.Lcd.setTextWrap(false);
   }
   if (wifi_error) {
     M5.Lcd.print(text);
-    M5.Lcd.drawPngFile(SPIFFS, "/wifi_error_small.png", 155, topPanel + infoPanel + sensorPanel + 5); // show a 50x50px png
+    M5.Lcd.drawPngFile(SD, "/data/wifi_error_small.png", 155, topPanel + infoPanel + sensorPanel + 5); // show a 50x50px png
     wifi_error = false;
     M5.Lcd.print("\nconnecting to ");
     if (alt_hotspot == false) {
@@ -1221,7 +1221,7 @@ void error(String text) {
       M5.Lcd.print(".");
       err_count ++;
       if (err_count > 288) {                        // if 10 minutes no wifi -> power off device !
-        M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
+        M5.Lcd.drawPngFile(SD, "/data/m5_logo_dark.png", 0 , 0);
         delay(1000);
         M5.Lcd.fillScreen(TFT_BLACK);
         delay(1000);
@@ -1260,7 +1260,7 @@ void buttonActions() {
 
   // Power Off Button (ButtonC long press) - needed because if on usb power there is no option to turn off the unit except by powerOFF command
   if (M5.BtnC.pressedFor(1333)) {
-    M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
+    M5.Lcd.drawPngFile(SD, "/data/m5_logo_dark.png", 0 , 0);
     delay(500);
     for (int i = Brightness_value; i > 0 ; i--) {                  // dimm LCD slowly before shutdown
       Brightness_value -= 1;
@@ -1278,9 +1278,9 @@ void buttonActions() {
     if (!currency_cycling) {
       currency_cycling = true;
       Serial.println("auto-cycle currencies on");
-      currency_cycling_counter = currentMs;
+      currency_cycling_counter = currentMs;  //start currency_cycling_counter
       drawCandles();
-      M5.Lcd.drawPngFile(SPIFFS, "/cycling_on.png", (320 / 2) - (155 / 2), (240 / 2) - (155 / 2)); // center for 155x155px png
+      M5.Lcd.drawPngFile(SD, "/data/cycling_on.png", (320 / 2) - (155 / 2), (240 / 2) - (155 / 2)); // center for 155x155px png
       delay(1000);
       drawCandles();
     }
@@ -1288,7 +1288,7 @@ void buttonActions() {
       currency_cycling = false;
       Serial.println("auto-cycle currencies off");
       drawCandles();
-      M5.Lcd.drawPngFile(SPIFFS, "/cycling_off.png", (320 / 2) - (155 / 2), (240 / 2) - (155 / 2)); // center for 155x155px png
+      M5.Lcd.drawPngFile(SD, "/data/cycling_off.png", (320 / 2) - (155 / 2), (240 / 2) - (155 / 2)); // center for 155x155px png
       delay(1000);
       drawCandles();
     }
@@ -1298,6 +1298,7 @@ void buttonActions() {
   // change current currency ButtonA
   if (((M5.BtnA.wasPressed() && !current_timeframe_changed) && !M5.BtnC.read()) || cycling_change_triggered) {
     cycling_change_triggered = false;
+    currency_cycling_counter = currentMs;     //restart cycling_timer to not change to early after a button press when in cycling mode
     current_Currency_changed = true;
     currency_btn_timeout_counter = currentMs + 2000;
     ++current_Currency;
@@ -1308,7 +1309,7 @@ void buttonActions() {
     M5.Lcd.setTextColor(strname_color); M5.Lcd.setFreeFont(FSSB12);; M5.Lcd.setTextSize(1);
     M5.Lcd.print(strname_currency);
     drawCandles();
-    M5.Lcd.drawPngFile(SPIFFS, "/currency.png", (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); // center for 100x100px png
+    M5.Lcd.drawPngFile(SD, "/data/currency.png", (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); // center for 100x100px png
   }
 
 
@@ -1319,10 +1320,10 @@ void buttonActions() {
     Brightness_level++;
     if (Brightness_level > 4) Brightness_level = 1;                                       // center for 75x75px Png
     drawCandles();
-    if (Brightness_level == 1) M5.Lcd.drawPngFile(SPIFFS, "/brightness_low.png",    (320 / 2) - (75 / 2), (240 / 2) - (75 / 2));
-    if (Brightness_level == 2) M5.Lcd.drawPngFile(SPIFFS, "/brightness_medlow.png", (320 / 2) - (75 / 2), (240 / 2) - (75 / 2));
-    if (Brightness_level == 3) M5.Lcd.drawPngFile(SPIFFS, "/brightness_med.png",    (320 / 2) - (75 / 2), (240 / 2) - (75 / 2));
-    if (Brightness_level == 4) M5.Lcd.drawPngFile(SPIFFS, "/brightness_high.png",   (320 / 2) - (75 / 2), (240 / 2) - (75 / 2));
+    if (Brightness_level == 1) M5.Lcd.drawPngFile(SD, "/data/brightness_low.png",    (320 / 2) - (75 / 2), (240 / 2) - (75 / 2));
+    if (Brightness_level == 2) M5.Lcd.drawPngFile(SD, "/data/brightness_medlow.png", (320 / 2) - (75 / 2), (240 / 2) - (75 / 2));
+    if (Brightness_level == 3) M5.Lcd.drawPngFile(SD, "/data/brightness_med.png",    (320 / 2) - (75 / 2), (240 / 2) - (75 / 2));
+    if (Brightness_level == 4) M5.Lcd.drawPngFile(SD, "/data/brightness_high.png",   (320 / 2) - (75 / 2), (240 / 2) - (75 / 2));
     switch (Brightness_level) {
       case 1:
         Brightness_value = 1;                                   // low LCD brightness
@@ -1353,7 +1354,7 @@ void buttonActions() {
     M5.Lcd.setCursor(301, 255 - floor(bottomPanel / 2));
     M5.Lcd.print(timeframe[1]);
     drawCandles();
-    M5.Lcd.drawPngFile(SPIFFS, "/timeframe.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2));     // center for 100x100px Png
+    M5.Lcd.drawPngFile(SD, "/data/timeframe.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2));     // center for 100x100px Png
   }
   if (M5.BtnB.wasPressed() && current_timeframe_changed && !current_Currency_changed && !current_bright_changed) {   // set a higher timeframe
     if (current_Timeframe <= 7 && current_Timeframe >= 0) {
@@ -1369,15 +1370,15 @@ void buttonActions() {
       M5.Lcd.print(timeframe[1]);
       drawCandles();
       switch (current_Timeframe) {
-        case 0: M5.Lcd.drawPngFile(SPIFFS, "/timeframe1_m.png",  (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;    // center for 100x100px
-        case 1: M5.Lcd.drawPngFile(SPIFFS, "/timeframe3m.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 2: M5.Lcd.drawPngFile(SPIFFS, "/timeframe5m.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 3: M5.Lcd.drawPngFile(SPIFFS, "/timeframe15m.png",  (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 4: M5.Lcd.drawPngFile(SPIFFS, "/timeframe1H.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 5: M5.Lcd.drawPngFile(SPIFFS, "/timeframe4H.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 6: M5.Lcd.drawPngFile(SPIFFS, "/timeframe1D.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 7: M5.Lcd.drawPngFile(SPIFFS, "/timeframe1W.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 8: M5.Lcd.drawPngFile(SPIFFS, "/timeframe1M.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 0: M5.Lcd.drawPngFile(SD, "/data/timeframe1_m.png",  (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;    // center for 100x100px
+        case 1: M5.Lcd.drawPngFile(SD, "/data/timeframe3m.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 2: M5.Lcd.drawPngFile(SD, "/data/timeframe5m.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 3: M5.Lcd.drawPngFile(SD, "/data/timeframe15m.png",  (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 4: M5.Lcd.drawPngFile(SD, "/data/timeframe1H.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 5: M5.Lcd.drawPngFile(SD, "/data/timeframe4H.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 6: M5.Lcd.drawPngFile(SD, "/data/timeframe1D.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 7: M5.Lcd.drawPngFile(SD, "/data/timeframe1W.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 8: M5.Lcd.drawPngFile(SD, "/data/timeframe1M.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
       }
     }
   }
@@ -1395,15 +1396,15 @@ void buttonActions() {
       M5.Lcd.print(timeframe[1]);
       drawCandles();
       switch (current_Timeframe) {
-        case 0: M5.Lcd.drawPngFile(SPIFFS, "/timeframe1_m.png",  (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;    // center for 100x100px
-        case 1: M5.Lcd.drawPngFile(SPIFFS, "/timeframe3m.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 2: M5.Lcd.drawPngFile(SPIFFS, "/timeframe5m.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 3: M5.Lcd.drawPngFile(SPIFFS, "/timeframe15m.png",  (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 4: M5.Lcd.drawPngFile(SPIFFS, "/timeframe1H.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 5: M5.Lcd.drawPngFile(SPIFFS, "/timeframe4H.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 6: M5.Lcd.drawPngFile(SPIFFS, "/timeframe1D.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 7: M5.Lcd.drawPngFile(SPIFFS, "/timeframe1W.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
-        case 8: M5.Lcd.drawPngFile(SPIFFS, "/timeframe1M.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 0: M5.Lcd.drawPngFile(SD, "/data/timeframe1_m.png",  (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;    // center for 100x100px
+        case 1: M5.Lcd.drawPngFile(SD, "/data/timeframe3m.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 2: M5.Lcd.drawPngFile(SD, "/data/timeframe5m.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 3: M5.Lcd.drawPngFile(SD, "/data/timeframe15m.png",  (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 4: M5.Lcd.drawPngFile(SD, "/data/timeframe1H.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 5: M5.Lcd.drawPngFile(SD, "/data/timeframe4H.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 6: M5.Lcd.drawPngFile(SD, "/data/timeframe1D.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 7: M5.Lcd.drawPngFile(SD, "/data/timeframe1W.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
+        case 8: M5.Lcd.drawPngFile(SD, "/data/timeframe1M.png",   (320 / 2) - (100 / 2), (240 / 2) - (100 / 2)); break;
       }
     }
   }
@@ -1480,7 +1481,7 @@ void buttonActions() {
       preferences.putUInt("briglv", Brightness_level);            // store setting to memory
       M5.Lcd.drawCircle(101, topPanel + ((infoPanel + sensorPanel) / 2 - 7), 5, TFT_BLUE); // set blue status light when sleeptimer was activated
       drawCandles();
-      M5.Lcd.drawPngFile(SPIFFS, "/sleep.png", (320 / 2) - (100 / 2), (240 / 2) - ((100 / 2))); // sleep.png is 100x100px
+      M5.Lcd.drawPngFile(SD, "/data/sleep.png", (320 / 2) - (100 / 2), (240 / 2) - ((100 / 2))); // sleep.png is 100x100px
       LEDbar.clear();
       colorWipe(LEDbar.Color(0, 0, 255), 35); // Blue             // fill LEDbar in various colors...(delay in ms)
       LEDbar.clear();
@@ -1511,7 +1512,7 @@ void buttonActions() {
       preferences.putUInt("bright", Brightness_value);            // store setting to memory
       M5.Lcd.drawCircle(101, topPanel + ((infoPanel + sensorPanel) / 2 - 7), 5, TFT_BLACK); // reset blue status light when sleeptimer was deactivated
       drawCandles();
-      M5.Lcd.drawPngFile(SPIFFS, "/cancel_sleep.png", (320 / 2) - (120 / 2), (240 / 2) - ((120 / 2))); //sleep.png is 120x120px
+      M5.Lcd.drawPngFile(SD, "/data/cancel_sleep.png", (320 / 2) - (120 / 2), (240 / 2) - ((120 / 2))); //sleep.png is 120x120px
       LEDbar.clear();
       colorWipe(LEDbar.Color(255, 255, 255), 35); // White        // fill LEDbar in various colors...(delay in ms)
       LEDbar.clear();
@@ -1523,7 +1524,7 @@ void buttonActions() {
   if (sleeptimer_bool == true && (now() > (sleeptimer_counter + sleeptime))) {
     sleeptimer_bool = false;
     M5.Lcd.drawCircle(101, topPanel + ((infoPanel + sensorPanel) / 2 - 7), 5, TFT_BLACK); // reset status light when sleeptimer was finished
-    M5.Lcd.drawPngFile(SPIFFS, "/m5_logo_dark.png", 0 , 0);
+    M5.Lcd.drawPngFile(SD, "/data/m5_logo_dark.png", 0 , 0);
     delay(1000);
     for (int i = Brightness_value; i > 0 ; i--) {                  // dimm LCD slowly before shutdown
       Brightness_value -= 1;
