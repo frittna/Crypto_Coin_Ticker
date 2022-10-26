@@ -11,28 +11,6 @@ receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.c
 This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
 For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Nov.20.2021 15:20 CET - Version 1.0.53fix using spiffs + SDconfig
 
-
-
-LAST EDIT:
-added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
-
-added Timezone for Singapore (UTC+8)
-
-minor changings: code merged to one version, so there is no need to have different versions anymore
-
-autodetect the optional room sensor and show a 12x high sensor panel in case
-
-temperature unit C or F and offset is set from SD-Config and not hardcoded anymore 
-(because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
-
- do not forget to update your sdconfig.cfg on SD-card too
-                 
-             
- 
-
- ----------------------------------------------------------------------------------------------------------------------------
-
-
 #Using the App:
 
 ###############
@@ -82,22 +60,26 @@ If you want to clear all stored settings from internal memory hold ButtonB at st
 
 If M5-Stack is in his BTC stand (the original grey vertical stand) the internal SHT room sensor is found and shows temp and humidity.
 
+##################################################################
 
+LAST RECEDT EDITS:
+added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
 
-## -- THIS IS ALL FREE - you love it ? please feel free and support me with any crypto  -- ##
+added Timezone for Singapore (UTC+8)
 
-    -> bc1qvfjd0x2r7fk3p0lwwaxvjjzgdrgjnu5fhqjqcv               (Bitcoin/BTC - native segwit)
+minor changings: code merged to one version, so there is no need to have different versions anymore
 
-    -> 0x8D88c8ff9A467F0821E8d1941D206164b11F4056               (Ethereum/ETH - or any ERC20 or BSC/BEP20 tokens)
+autodetect the optional room sensor and show a 12x high sensor panel in case
 
-    -> D5QEBVqY3B9kUEMn9nRHexSbMaRgRafKiY                       (Doge/DOGE)
+temperature unit C or F and offset is set from SD-Config and not hardcoded anymore 
+(because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
 
-    -> THRo4ujdmD5eYVPD2XUodN7NowRZ88F9rN                       (Tron/TRX or any TRC10/TRC20 tokens)
+ do not forget to update your sdconfig.cfg on SD-card too
+                 
+             
+ 
 
-    -> GDY2LAUPJFWCR4XWN5EHQ72VLYRY53CNCCA4IXTBBZBKMAGT2BSY7KUT (Stellar/XLM)
-
-
-
+ ----------------------------------------------------------------------------------------------------------------------------
 ![](preview/IMG_1.jpg)
 ![](preview/IMG_0new.jpg)
 ![](preview/IMG_0.jpg)
