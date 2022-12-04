@@ -1,7 +1,7 @@
 ![](preview/IMG_M.jpg)
 
 
-CRYPTO CURRENCY PRICE TICKER with 24 candlesticks chart for M5Stack
+CRYPTO CURRENCY PRICE TICKER with 24 candlesticks chart for M5Stack (CORE1 with the 3 Buttons!)
 
 ###SD-Card Version with configuation file###
 only needs config file "ccticker.cfg" on root of SD-Card
