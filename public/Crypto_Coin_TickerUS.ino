@@ -28,7 +28,7 @@
 // #Using the App:
 // ###############
 // This version needs a SD-Card whith the your WiFi credentials, favourite coinpairs, timezone and language(eng/ger/esp) in a textfile - see installation
-// ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com
+// ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com or Binance.US
 // ButtonB: changes the LCD-Brightness in 4 levels
 // ButtonC: 9 changeable Timeframes from 1 Minute to 1 Month
 // turn OFF the device pressing the red Button once OR by holding ButtonC for over 1 second
