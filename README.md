@@ -33,7 +33,7 @@ previous edits: -> added cycling function (ButtonA+ButtonC together) which steps
 
 This version needs a SD-Card whith the your WiFi credentials, favourite coinpairs, timezone and language(eng/ger/esp) in a textfile - see installation
 
-ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com
+ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com or Binance.US
 
 ButtonB: changes the LCD-Brightness in 4 levels
 
