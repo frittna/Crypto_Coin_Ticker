@@ -1,7 +1,7 @@
 ![](preview/IMG_M.jpg)
 
 
-CRYPTO CURRENCY PRICE TICKER with 24 candlesticks chart for M5Stack (CORE1 with the 3 Buttons!)
+CRYPTO CURRENCY PRICE TICKER with 24 candlesticks chart for M5Stack
 
 ###SD-Card Version with configuation file###
 only needs config file "ccticker.cfg" on root of SD-Card
@@ -9,7 +9,23 @@ only needs config file "ccticker.cfg" on root of SD-Card
 receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 
 This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Nov.20.2021 15:20 CET - Version 1.0.53fix using spiffs + SDconfig
+For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Dec.07.2021 12:11 CET - Version 1.0.53fix using spiffs + SDconfig
+
+
+
+last edit:      -> added optional verision to use binance.us instead of .com as optional API server (for us-citizens e.g.)
+
+previous edits: -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
+                -> added Timezone for Singapore (UTC+8)
+                -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
+                                    - autodetect the optional room sensor and show a 12x high sensor panel in case
+                                    - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore
+                                     (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
+             
+ 
+
+ ----------------------------------------------------------------------------------------------------------------------------
+
 
 #Using the App:
 
@@ -60,28 +76,6 @@ If you want to clear all stored settings from internal memory hold ButtonB at st
 
 If M5-Stack is in his BTC stand (the original grey vertical stand) the internal SHT room sensor is found and shows temp and humidity.
 
-##################################################################
-
-LAST RECEDT EDITS:
-added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
-
-added Timezone for Singapore (UTC+8)
-
-minor changings: code merged to one version, so there is no need to have different versions anymore
-
-autodetect the optional room sensor and show a 12x high sensor panel in case
-
-temperature unit C or F and offset is set from SD-Config and not hardcoded anymore 
-(because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
-
- do not forget to update your sdconfig.cfg on SD-card too
-                 
-             
- 
-
- ----------------------------------------------------------------------------------------------------------------------------
-![](preview/IMG_1.jpg)
-![](preview/IMG_0new.jpg)
 ![](preview/IMG_0.jpg)
 ![](preview/IMG_2.jpg)
 ![](preview/IMG_3.jpg)
