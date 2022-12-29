@@ -7,28 +7,25 @@
 // receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Dec.07.2021 12:11 CET - Version 1.0.53fix using spiffs + SDconfig
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Dec.07.2021 12:12 CET - Version 1.0.53 fix using spiffs + SDconfig
 //
 //
-//
-// last edit:      -> added optional verision to use binance.us instead of .com as optional API server (for us-citizens e.g.)
-//
-// previous edits: -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
-//                 -> added Timezone for Singapore (UTC+8)
-//                 -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
-//                                     - autodetect the optional room sensor and show a 12x high sensor panel in case
-//                                     - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore
-//                                      (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
-//
-//
+// single change:    -> made a seperate version that uses binance.us instead of .com server if you are blocked from the .com server                 
+// previous edits:   -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
+//                                   -> added Timezone for Singapore (UTC+8)
+//                                   -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
+//                                                       - autodetect the optional room sensor and show a 12x high sensor panel in case
+//                                                       - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore 
+//                                                       (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
+//                
+// 
 //
 // ----------------------------------------------------------------------------------------------------------------------------
-
 
 // #Using the App:
 // ###############
 // This version needs a SD-Card whith the your WiFi credentials, favourite coinpairs, timezone and language(eng/ger/esp) in a textfile - see installation
-// ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com or Binance.US
+// ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com
 // ButtonB: changes the LCD-Brightness in 4 levels
 // ButtonC: 9 changeable Timeframes from 1 Minute to 1 Month
 // turn OFF the device pressing the red Button once OR by holding ButtonC for over 1 second
