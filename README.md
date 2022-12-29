@@ -13,6 +13,7 @@ For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Dec.29.2022 12:25 
 
 
 single change:    -> changed "stream.binance" to "data-stream.binance" and "api.binance" to "data.binance"
+
 previous edits:   -> made a seperate version that uses binance.us instead of .com server if you are blocked from the .com server
                   -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
                   -> added Timezone for Singapore (UTC+8)
