@@ -4,19 +4,19 @@
 // ###SD-Card Version with configuation file###
 // only needs config file "ccticker.cfg" on root of SD-Card
 //
-// receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
+// receiving WiFi data from Binance.com API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Nov.20.2021 15:20 CET - Version 1.0.53fix using spiffs + SDconfig
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Dec.29.2022 12:25 CET - Version 1.0.53fix using spiffs + SDconfig
 //
 //
-//
-// last edits:    -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
-//                -> added Timezone for Singapore (UTC+8)
-//                -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
-//                                    - autodetect the optional room sensor and show a 12x high sensor panel in case
-//                                    - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore 
-//                                      (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
+// single change:    -> "stream.binance.com" to "data-stream.binance.com" and "api.binance.com" to "data.binance.com"
+// previous edits:   -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
+//                   -> added Timezone for Singapore (UTC+8)
+//                   -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
+//                                       - autodetect the optional room sensor and show a 12x high sensor panel in case
+//                                       - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore 
+//                                         (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
 //                
 // 
 //
@@ -154,7 +154,7 @@ int pinSelectSD = 4; // SD shield Chip Select pin. (4 for M5Stack)
 boolean readConfiguration();
 int maxLineLength = 127; //Length of the longest line expected in the config file
 // REST API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
-const char* restApiHost = "api.binance.com";
+const char* restApiHost = "data.binance.com"; //was api.binance.com before
 const byte candlesLimit = 24;
 String pair_STRING_mem[max_pairs_arrsize];
 String pair_name_mem[max_pairs_arrsize];
@@ -184,7 +184,7 @@ int pairs_mem;
 int change_count = 0;
 const uint32_t volColor = 0x22222a;
 // WS API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/web-socket-streams.md
-const char* wsApiHost = "stream.binance.com";
+const char* wsApiHost = "data-stream.binance.com"; //was stream.binance.com before
 const int wsApiPort = 9443;
 // Layout: The space between the info and the bottom panel is for candlechart => 240px minus top+info+bottom
 const byte topPanel = 20;
