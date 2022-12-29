@@ -154,7 +154,7 @@ int pinSelectSD = 4; // SD shield Chip Select pin. (4 for M5Stack)
 boolean readConfiguration();
 int maxLineLength = 127; //Length of the longest line expected in the config file
 // REST API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
-const char* restApiHost = "api.binance.com";
+const char* restApiHost = "data.binance.com";
 const byte candlesLimit = 24;
 String pair_STRING_mem[max_pairs_arrsize];
 String pair_name_mem[max_pairs_arrsize];
@@ -184,7 +184,7 @@ int pairs_mem;
 int change_count = 0;
 const uint32_t volColor = 0x22222a;
 // WS API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/web-socket-streams.md
-const char* wsApiHost = "stream.binance.com";
+const char* wsApiHost = "data-stream.binance.com";
 const int wsApiPort = 9443;
 // Layout: The space between the info and the bottom panel is for candlechart => 240px minus top+info+bottom
 const byte topPanel = 20;
