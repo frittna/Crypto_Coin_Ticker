@@ -4,7 +4,7 @@
 // ###SD-Card Version with configuation file###
 // only needs config file "ccticker.cfg" on root of SD-Card
 //
-// receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
+// receiving WiFi data from Binance.US (!) API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
 // For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Dec.07.2021 12:12 CET - Version 1.0.53 fix using spiffs + SDconfig
@@ -25,7 +25,7 @@
 // #Using the App:
 // ###############
 // This version needs a SD-Card whith the your WiFi credentials, favourite coinpairs, timezone and language(eng/ger/esp) in a textfile - see installation
-// ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.com
+// ButtonA: switches through your favourite Coinpair (as many you want) e.g: BTC/USDT etc. which are available on Binance.us (!)
 // ButtonB: changes the LCD-Brightness in 4 levels
 // ButtonC: 9 changeable Timeframes from 1 Minute to 1 Month
 // turn OFF the device pressing the red Button once OR by holding ButtonC for over 1 second
