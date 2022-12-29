@@ -14,9 +14,9 @@ For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Dec.29.2022 12:25 
 
 single change:    -> changed "stream.binance" to "data-stream.binance" and "api.binance" to "data.binance"
 previous edits:   -> made a seperate version that uses binance.us instead of .com server if you are blocked from the .com server
-                                 -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
-                                 -> added Timezone for Singapore (UTC+8)
-                                 -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
+                  -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
+                  -> added Timezone for Singapore (UTC+8)
+                  -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
                                       - autodetect the optional room sensor and show a 12x high sensor panel in case
                                       - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore 
                                         (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
