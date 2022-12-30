@@ -128,7 +128,7 @@ String password2 = "";  //
 
 char configFile[] = "/ccticker.cfg"; // filename for configuration file on root of your SD-Card - if no file/card is found last settings will be loaded
 char* welcome = "Hey You! ;)";
-int myTimeZone = 4;   //use 4 if nothing else instructed = US Eastern Time Zone EST (New York, Detroit)
+int myTimeZone = 5;   //use 5 if nothing else instructed = US Eastern Time Zone EST (New York, Detroit)
 int myLanguage = 0;   //use 0 if nothing else instructed = english
 int pairs = 4;        //total numbers of coin pairs to load, default: 4, max. 25
 const int max_pairs_arrsize = 25; // number of max.possible coinpairs recognized by configuration file (do not adjust this without extendig the routine for SD-Card reading)
@@ -197,33 +197,42 @@ WebSocketsClient webSocket;
 StaticJsonDocument<8750> jsonDoc;
 TimeChangeRule summer_aedt =   {"AEDT", First, Sun, Oct, 2, 660};        // 0: Australia Eastern Time Zone (Sydney, Melbourne)
 TimeChangeRule standard_aest = {"AEST", First, Sun, Apr, 3, 600};
-TimeChangeRule summer_bst =    {"BST", Last, Sun, Mar, 1, 60};           // 1: United Kingdom (London, Belfast)
+TimeChangeRule summer_awdt =   {"AWDT", First, Sun, Oct, 2, 480};        // 1: Australia Western Time Zone (Sydney, Melbourne)
+TimeChangeRule standard_awst = {"AWST", First, Sun, Apr, 3, 480};
+TimeChangeRule summer_bst =    {"BST", Last, Sun, Mar, 1, 60};           // 2: United Kingdom (London, Belfast)
 TimeChangeRule standard_gmt =  {"GMT", Last, Sun, Oct, 2, 0};
-TimeChangeRule summer_eest =   {"EEST", Last, Sun, Mar, 3, 180};         // 2: Eastern European Time (Bulgaria, Greece, Romania, Ukraine, Egypt)
+TimeChangeRule summer_eest =   {"EEST", Last, Sun, Mar, 3, 180};         // 3: Eastern European Time (Bulgaria, Greece, Romania, Ukraine, Egypt)
 TimeChangeRule standard_eet =  {"EET ", Last, Sun, Oct, 4, 120};
-TimeChangeRule summer_cest =   {"CEST", Last, Sun, Mar, 2, 120};         // 3: Central European Time Zone (Frankfurt, Paris)
+TimeChangeRule summer_cest =   {"CEST", Last, Sun, Mar, 2, 120};         // 4: Central European Time Zone (Frankfurt, Paris)
 TimeChangeRule standard_cet =  {"CET ", Last, Sun, Oct, 3, 60};
-TimeChangeRule summer_edt =    {"EDT", Second, Sun, Mar, 2, -240};       // 4: US Eastern Time Zone (New York, Detroit)
+TimeChangeRule summer_edt =    {"EDT", Second, Sun, Mar, 2, -240};       // 5: US Eastern Time Zone (New York, Detroit)
 TimeChangeRule standard_est =  {"EST", First, Sun, Nov, 2, -300};
-TimeChangeRule summer_cdt =    {"CDT", Second, dowSunday, Mar, 2, -300}; // 5: US Central Time Zone (Chicago, Houston)
+TimeChangeRule summer_cdt =    {"CDT", Second, dowSunday, Mar, 2, -300}; // 6: US Central Time Zone (Chicago, Houston)
 TimeChangeRule standard_cst =  {"CST", First, dowSunday, Nov, 2, -360};
-TimeChangeRule summer_mdt =    {"MDT", Second, dowSunday, Mar, 2, -360}; // 6: US Mountain Time Zone (Denver, Salt Lake City)
+TimeChangeRule summer_mdt =    {"MDT", Second, dowSunday, Mar, 2, -360}; // 7: US Mountain Time Zone (Denver, Salt Lake City)
 TimeChangeRule standard_mst =  {"MST", First, dowSunday, Nov, 2, -420};
-TimeChangeRule summer_pdt =    {"PDT", Second, dowSunday, Mar, 2, -420}; // 7: US Pacific Time Zone (Las Vegas, Los Angeles);
+TimeChangeRule summer_adt =    {"ADT", First, Sun, Nov, 2, -420};        // 8. US Arizona Time Zone (Arizona)
+TimeChangeRule standard_ast =  {"AST", First, Sun, Nov, 2, -420};
+TimeChangeRule summer_pdt =    {"PDT", Second, dowSunday, Mar, 2, -420}; // 9: US Pacific Time Zone (Las Vegas, Los Angeles);
 TimeChangeRule standard_pst =  {"PST", First, dowSunday, Nov, 2, -480};
-TimeChangeRule summer_sgt =    {"SGT", Last, Sun, Oct, 4, 480};          // 8: Singapore Time Zone (UTC + 8) - no TimeChange for Summer/Standart Time
+TimeChangeRule summer_sgt =    {"SGT", Last, Sun, Oct, 4, 480};          // 10: Singapore Time Zone (UTC + 8) - no TimeChange for Summer/Standart Time
 TimeChangeRule standard_sgt =  {"SGT", Last, Sun, Mar, 3, 480};
+TimeChangeRule summer = {"UTC", Last, Sun, Mar, 2, 0};                   // 11: UTC
+TimeChangeRule standard = {"UTC", Last, Sun, Oct, 3, 0};
 
 
-Timezone myTZ0(summer_aedt, standard_aest);    // myTZ0: 0 Australia Eastern Time Zone (Sydney, Melbourne)
-Timezone myTZ1(summer_bst, standard_gmt);      // myTZ1: 1 United Kingdom (London, Belfast)
-Timezone myTZ2(summer_eest, standard_eet);     // myTZ2: 2 Eastern European Time (Bulgaria, Greece, Romania, Ukraine, Egypt)
-Timezone myTZ3(summer_cest, standard_cet);     // myTZ3: 3 Central European Time Zone (Frankfurt, Paris)
-Timezone myTZ4(summer_edt, standard_est);      // myTZ4: 4 US Eastern Time Zone (New York, Detroit)
-Timezone myTZ5(summer_cdt, standard_cst);      // myTZ5: 5 US Central Time Zone (Chicago, Houston)
-Timezone myTZ6(summer_mdt, standard_mst);      // myTZ6: 6 US Mountain Time Zone (Denver, Salt Lake City)
-Timezone myTZ7(summer_pdt, standard_pst);      // myTZ7: 7 US Pacific Time Zone (Las Vegas, Los Angeles);
-Timezone myTZ8(summer_sgt, standard_sgt);      // myTZ8: 8 Singapore Time Zone UTC +8
+Timezone myTZ0(summer_aedt, standard_aest); // myTZ0:   0 Australia Eastern Time Zone (Sydney, Melbourne)
+Timezone myTZ1(summer_awdt, standard_awst); // myTZ1:   1 Australia Wastern Time Zone (Sydney, Melbourne)
+Timezone myTZ2(summer_bst, standard_gmt);   // myTZ2:   2 United Kingdom (London, Belfast)
+Timezone myTZ3(summer_eest, standard_eet);  // myTZ3:   3 Eastern European Time (Bulgaria, Greece, Romania, Ukraine, Egypt)
+Timezone myTZ4(summer_cest, standard_cet);  // myTZ4:   4 Central European Time Zone (Frankfurt, Paris)
+Timezone myTZ5(summer_edt, standard_est);   // myTZ5:   5 US Eastern Time Zone (New York, Detroit)
+Timezone myTZ6(summer_cdt, standard_cst);   // myTZ6:   6 US Central Time Zone (Chicago, Houston)
+Timezone myTZ7(summer_mdt, standard_mst);   // myTZ7:   7 US Mountain Time Zone (Denver, Salt Lake City)
+Timezone myTZ8(summer_adt, standard_ast);   // myTZ8:   8 US Arizona
+Timezone myTZ9(summer_pdt, standard_pst);   // myTZ9:   9 US Pacific Time Zone (Las Vegas, Los Angeles);
+Timezone myTZ10(summer_sgt, standard_sgt);  // myTZ10: 10 Singapore Time Zone UTC +8
+Timezone myTZ11(summer, standard);          // myTZ11: 11 UTC
 
 // LED-Pixel bar(see bottom of this file for further details)
 #define PIN       15 // use the built-in LED bar in the M5-Stack/Fire Battery-Bottom-Module (10xLED on Pin15)
@@ -519,11 +528,23 @@ void printTime() {
   } else if (myTimeZone == 7) {
     time_t now = myTZ7.toLocal(time(nullptr), &tcr);
     M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
-  } else if (myTimeZone == 99) {
+  } else if (myTimeZone == 8) {
     time_t now = myTZ8.toLocal(time(nullptr), &tcr);
     M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
-  } else { // default: MyTZ4 english
-    time_t now = myTZ4.toLocal(time(nullptr), &tcr);
+  } else if (myTimeZone == 9) {
+    time_t now = myTZ9.toLocal(time(nullptr), &tcr);
+    M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
+  } else if (myTimeZone == 10) {
+    time_t now = myTZ10.toLocal(time(nullptr), &tcr);
+    M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
+  } else if (myTimeZone == 11) {
+    time_t now = myTZ11.toLocal(time(nullptr), &tcr);
+    M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
+  } else if (myTimeZone == 99) {
+    time_t now = myTZ5.toLocal(time(nullptr), &tcr);
+    M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
+  } else { // default: MyTZ5 english
+    time_t now = myTZ5.toLocal(time(nullptr), &tcr);
     M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
   }
 }
