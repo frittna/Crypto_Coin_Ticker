@@ -7,18 +7,18 @@
 // receiving WiFi data from Binance.com API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Dec.29.2022 12:25 CET - Version 1.0.53fix using spiffs + SDconfig
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Mar.19.2023 22:44 CET - Version 1.0.54 using spiffs + SDconfig
 //
-//
-// single change:    -> "stream.binance.com" to "data-stream.binance.com" and "api.binance.com" to "data.binance.com"
-// previous edits:   -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
+// last change:      -> added Timezone for: UTC, Arizona, Moscow
+// previous edits:   -> "stream.binance.com" to "data-stream.binance.com" and "api.binance.com" to "data.binance.com"
+//                   -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
 //                   -> added Timezone for Singapore (UTC+8)
 //                   -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
 //                                       - autodetect the optional room sensor and show a 12x high sensor panel in case
-//                                       - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore 
+//                                       - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore
 //                                         (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
-//                
-// 
+//
+//
 //
 // ----------------------------------------------------------------------------------------------------------------------------
 
@@ -213,7 +213,8 @@ TimeChangeRule summer_pdt =    {"PDT", Second, dowSunday, Mar, 2, -420}; // 7: U
 TimeChangeRule standard_pst =  {"PST", First, dowSunday, Nov, 2, -480};
 TimeChangeRule summer_sgt =    {"SGT", Last, Sun, Oct, 4, 480};          // 8: Singapore Time Zone (UTC + 8) - no TimeChange for Summer/Standart Time
 TimeChangeRule standard_sgt =  {"SGT", Last, Sun, Mar, 3, 480};
-
+TimeChangeRule utcRule =       {"UTC", Last, Sun, Mar, 1, 0};            // UTC
+TimeChangeRule msk =           {"MSK", Last, Sun, Mar, 1, 180};          // Moscow Standard Time (MSK, no DST)
 
 Timezone myTZ0(summer_aedt, standard_aest);    // myTZ0: 0 Australia Eastern Time Zone (Sydney, Melbourne)
 Timezone myTZ1(summer_bst, standard_gmt);      // myTZ1: 1 United Kingdom (London, Belfast)
@@ -224,6 +225,9 @@ Timezone myTZ5(summer_cdt, standard_cst);      // myTZ5: 5 US Central Time Zone 
 Timezone myTZ6(summer_mdt, standard_mst);      // myTZ6: 6 US Mountain Time Zone (Denver, Salt Lake City)
 Timezone myTZ7(summer_pdt, standard_pst);      // myTZ7: 7 US Pacific Time Zone (Las Vegas, Los Angeles);
 Timezone myTZ8(summer_sgt, standard_sgt);      // myTZ8: 8 Singapore Time Zone UTC +8
+Timezone myTZ9(utcRule);                       // myTZ9: 9 UTC Time, no DST
+Timezone myTZ10(summer_mdt);                   // myTZ10: 10 Arizona is US Mountain Time Zone, no DST
+Timezone myTZ11(msk);                          // myTZ11: 11 Moscow Standard Time, no DST
 
 // LED-Pixel bar(see bottom of this file for further details)
 #define PIN       15 // use the built-in LED bar in the M5-Stack/Fire Battery-Bottom-Module (10xLED on Pin15)
@@ -519,8 +523,17 @@ void printTime() {
   } else if (myTimeZone == 7) {
     time_t now = myTZ7.toLocal(time(nullptr), &tcr);
     M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
-  } else if (myTimeZone == 99) {
+  } else if (myTimeZone == 8) {
     time_t now = myTZ8.toLocal(time(nullptr), &tcr);
+    M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
+  } else if (myTimeZone == 9) {
+    time_t now = myTZ9.toLocal(time(nullptr), &tcr);
+    M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
+  } else if (myTimeZone == 10) {
+    time_t now = myTZ10.toLocal(time(nullptr), &tcr);
+    M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
+  } else if (myTimeZone == 11) {
+    time_t now = myTZ11.toLocal(time(nullptr), &tcr);
     M5.Lcd.printf("%s %2d.%s %02d:%02d", weekDay_MyLang[weekday(now)], day(now), monthName_MyLang[month(now)], hour(now), minute(now));
   } else { // default: MyTZ4 english
     time_t now = myTZ4.toLocal(time(nullptr), &tcr);
