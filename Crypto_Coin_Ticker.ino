@@ -78,7 +78,7 @@
 // - if esp32fs is loaded correctly you can see after a restart of Arduino a tool called "ESP32 Sketch Data Uploader" in you tools menu
 // - you have to download all my png picture files from my "data" folder on github and put it into your sketch subfolder "data". (open your sketch folder quickly with CTRL+K)
 // - click verify, afterwards you can click "ESP32 Sketch Data Uploader" from the tools menu to flash the data into the M5Stack embedded memory
-// - when you followed everything click compile, it compiling very long, dont bother, two compiler warnings (about timezone architecture and SHXT3 are ok
+// - when you followed everything click compile, it will compile very long, dont bother and two compiler warnings (about timezone architecture and SHXT3 are ok)
 // - when finished upload it into the device
 // - last step is to see the instructions for adjusting the personal configuration file "ccticker.cfg"
 // --------------------------------------------------------------------------------------------------------------------------------------------------------
