@@ -9,30 +9,19 @@ only needs config file "ccticker.cfg" on root of SD-Card
 receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 
 This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Mar.19.2023 22:44 CET - Version 1.0.54 using spiffs + SDconfig
+For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Oct.6 2023 - 17:30  CET - Version 1.0.54 using spiffs + SDconfig
 
-
-
-
-____________________________________________________________
-last change:       added Timezone for: UTC, Arizona, Moscow
-
-previous edits:   "stream.binance.com" to "data-stream.binance.com" and "api.binance.com" to "data.binance.com"
-
-added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
-
-added Timezone for Singapore (UTC+8)
-
-minor changings: - code merged to one version, so there is no need to have different versions anymore !
-
-autodetect the optional room sensor and show a 12x high sensor panel in case
-
-temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore
-
-(because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
-_____________________________________________________________
-
-
+----------------------------------------------------------------------------------------------------------------------------
+last change:          -> changed back to "api.binance.com" instead of "data.binance.com"
+previous edits:   -> added Timezone for: UTC, Arizona, Moscow
+	             -> "stream.binance.com" to "data-stream.binance.com" and "api.binance.com" to "data.binance.com"
+	             -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
+	             -> added Timezone for Singapore (UTC+8)
+	             -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
+		- autodetect the optional room sensor and show a 12x high sensor panel in case
+		- temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore
+		  (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
+----------------------------------------------------------------------------------------------------------------------------
 
 
 #Using the App:
