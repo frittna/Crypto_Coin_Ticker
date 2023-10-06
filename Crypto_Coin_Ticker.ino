@@ -7,13 +7,14 @@
 // receiving WiFi data from Binance.com API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Mar.19.2023 22:44 CET - Version 1.0.54 using spiffs + SDconfig
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Oct.06.2023 17:30 CET - Version 1.0.54 using spiffs + SDconfig
 //
-// last change:      -> added Timezone for: UTC, Arizona, Moscow
-// previous edits:   -> "stream.binance.com" to "data-stream.binance.com" and "api.binance.com" to "data.binance.com"
-//                   -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
-//                   -> added Timezone for Singapore (UTC+8)
-//                   -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
+// last change:  -> changed back to "api.binance.com" instead of "data.binance.com"
+// previous edits:  -> added Timezone for: UTC, Arizona, Moscow
+//    -> "stream.binance.com" to "data-stream.binance.com" and "api.binance.com" to "data.binance.com"
+//    -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
+//    -> added Timezone for Singapore (UTC+8)
+//    -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
 //                                       - autodetect the optional room sensor and show a 12x high sensor panel in case
 //                                       - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore
 //                                         (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
@@ -78,8 +79,7 @@
 // - if esp32fs is loaded correctly you can see after a restart of Arduino a tool called "ESP32 Sketch Data Uploader" in you tools menu
 // - you have to download all my png picture files from my "data" folder on github and put it into your sketch subfolder "data". (open your sketch folder quickly with CTRL+K)
 // - click verify, afterwards you can click "ESP32 Sketch Data Uploader" from the tools menu to flash the data into the M5Stack embedded memory
-// - when you followed everything click compile, it will compile very long, dont bother and two compiler warnings (about timezone architecture and SHXT3 are ok)
-// - when finished upload it into the device
+// - when you followed everything click compile, when finished upload
 // - last step is to see the instructions for adjusting the personal configuration file "ccticker.cfg"
 // --------------------------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -155,7 +155,8 @@ int pinSelectSD = 4; // SD shield Chip Select pin. (4 for M5Stack)
 boolean readConfiguration();
 int maxLineLength = 127; //Length of the longest line expected in the config file
 // REST API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
-const char* restApiHost = "data.binance.com"; //was api.binance.com before
+//const char* restApiHost = "data.binance.com"; //was api.binance.com before
+const char* restApiHost = "api.binance.com"; //changed back to API!!
 const byte candlesLimit = 24;
 String pair_STRING_mem[max_pairs_arrsize];
 String pair_name_mem[max_pairs_arrsize];
