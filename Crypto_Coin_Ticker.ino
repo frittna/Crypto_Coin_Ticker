@@ -3,21 +3,23 @@
 //
 // ###SD-Card Version with configuation file###
 // only needs config file "ccticker.cfg" on root of SD-Card
-//
-// receiving WiFi data from Binance.com API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
+// 
+// receiving WiFi data from Binance API/Websocket_v3 - by frittna (https://github.com/frittna/Crypto_Coin_Ticker)
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
-// For M5-Stack MCU , coded in ArduinoIDE 1.8.13 - last modified Oct.06.2023 17:30 CET - Version 1.0.54 using spiffs + SDconfig
+// For M5-Stack MCU , coded in ArduinoIDE 1.8.14 - last modified Nov.21.2024 12:00 CET - Version 1.0.54 using spiffs + SDconfig
 //
-// last change:  -> changed back to "api.binance.com" instead of "data.binance.com"
-// previous edits:  -> added Timezone for: UTC, Arizona, Moscow
-//    -> "stream.binance.com" to "data-stream.binance.com" and "api.binance.com" to "data.binance.com"
-//    -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
-//    -> added Timezone for Singapore (UTC+8)
-//    -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
-//                                       - autodetect the optional room sensor and show a 12x high sensor panel in case
-//                                       - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore
-//                                         (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
+// last change: *added* fixed format for prices over 100K$ because BTC might pass it soon ;)
+
+// previous edits: -> changed back to "api.binance.com" instead of "data.binance.com" (not in US-Version)
+//                 -> added Timezone for: UTC, Arizona, Moscow
+//                 -> "stream.binance.com" to "data-stream.binance.com" and "api.binance.com" to "data.binance.com" (not in US-Version)
+//                 -> added cycling function (ButtonA+ButtonC together) which steps through your currencies after a certain time (default: 15sec for each)
+//                 -> added Timezone for Singapore (UTC+8)
+//                 -> minor changings: - code merged to one version, so there is no need to have different versions anymore !
+//                                     - autodetect the optional room sensor and show a 12px high sensor panel in case
+//                                     - temperature unit C or F and an temperature offset is set from SD-Config file and not hardcoded anymore
+//                                       (because the M5-Stack is heating up itself it will never be accurate and has only limited expressiveness)
 //
 //
 //
@@ -85,11 +87,9 @@
 //------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------
 // The core for the candlestick view and binance api was from: https://github.com/olbed/bitcoin-ticker on SPI TFT display ILI9341 and NodeMCU Board, from 2019
-// Known bugs to fix: ButtonC debouncing, battery symbol could be more precise, untested format if price will pass the 100k ;)
-//                    maybe some inefficient code since this is my first public release
+// Known bugs to fix: ButtonC debouncing, battery symbol could be more precise, maybe extreme inefficient code because bloody rookie and first public release
 //------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------
-
 
 
 
@@ -154,9 +154,9 @@ const char* monthName_MyLang[13];
 int pinSelectSD = 4; // SD shield Chip Select pin. (4 for M5Stack)
 boolean readConfiguration();
 int maxLineLength = 127; //Length of the longest line expected in the config file
-// REST API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
-//const char* restApiHost = "data.binance.com"; //was api.binance.com before
-const char* restApiHost = "api.binance.com"; //changed back to API!!
+// REST API DOCS: https://github.com/binance/binance-spot-api-docs/blob/master/rest-api.md // for Binance.US: https://docs.binance.us/#rest-api
+const char* restApiHost = "api.binance.com"; 
+//const char* restApiHost = "api.binance.us"; 
 const byte candlesLimit = 24;
 String pair_STRING_mem[max_pairs_arrsize];
 String pair_name_mem[max_pairs_arrsize];
@@ -185,8 +185,9 @@ int myLanguage_mem;
 int pairs_mem;
 int change_count = 0;
 const uint32_t volColor = 0x22222a;
-// WS API DOCS: https://github.com/binance-exchange/binance-official-api-docs/blob/master/web-socket-streams.md
-const char* wsApiHost = "data-stream.binance.com"; //was stream.binance.com before
+// WS API DOCS: https://github.com/binance/binance-spot-api-docs/blob/master/web-socket-streams.md // for Binance.US: https://docs.binance.us/#websocket-streams
+const char* wsApiHost = "stream.binance.com";
+//const char* wsApiHost = "stream.binance.us";
 const int wsApiPort = 9443;
 // Layout: The space between the info and the bottom panel is for candlechart => 240px minus top+info+bottom
 const byte topPanel = 20;
@@ -834,39 +835,60 @@ void drawPrice() {
     else if (multi_level == 3) {
       M5.Lcd.printf("%.2e", price);
     } else {
-      M5.Lcd.printf("%.2f", price);
+      if (price >= 1000000) {
+        M5.Lcd.printf("%.0f", price);
+      }
+      if (price >= 100000) {
+        M5.Lcd.printf("%.1f", price);
+      } else {
+        M5.Lcd.printf("%.2f", price);
+      }
     }
   }
   if (ph != lastHigh) {
     M5.Lcd.fillRect(202, 240 - bottomPanel, 99, bottomPanel / 2, TFT_BLACK); M5.Lcd.setTextColor(DARKERGREEN);
     M5.Lcd.setFreeFont(FSSB9); M5.Lcd.setCursor(202, 254 - bottomPanel); M5.Lcd.setTextSize(1);
     lastHigh = ph;
-    if (multi == 100) {
+    if (multi_level == 1) {
       M5.Lcd.printf("H %.4f", ph);
     }
-    else if (multi == 100000) {
+    else if (multi_level == 2) {
       M5.Lcd.printf("H %.6f", ph);
     }
-    else if (multi == 100000000) {
+    else if (multi_level == 3) {
       M5.Lcd.printf("H %.2e", ph);
     } else {
-      M5.Lcd.printf("H %.2f", ph);
+      if (ph >= 1000000) {
+        M5.Lcd.printf("H %.0f", ph);
+      }
+      if (ph >= 100000) {
+        M5.Lcd.printf("H %.1f", ph);
+      } else {
+        M5.Lcd.printf("H %.2f", ph);
+      }
     }
   }
   if (pl != lastLow) {
     M5.Lcd.fillRect(202, 240 - bottomPanel / 2, 99, bottomPanel / 2, TFT_BLACK); M5.Lcd.setTextColor(MYRED);
     M5.Lcd.setFreeFont(FSSB9); M5.Lcd.setCursor(202, 256 - floor(bottomPanel / 2)); M5.Lcd.setTextSize(1);
     lastLow = pl;
-    if (multi == 100) {
+    if (multi_level == 1) {
       M5.Lcd.printf("L %.4f", pl);
     }
-    else if (multi == 100000) {
+    else if (multi_level == 2) {
       M5.Lcd.printf("L %.6f", pl);
     }
-    else if (multi == 100000000) {
+    else if (multi_level == 3) {
       M5.Lcd.printf("L %.2e", pl);
     } else {
-      M5.Lcd.printf("L %.2f", pl);
+      if (pl >= 1000000) {
+        M5.Lcd.printf("L %.0f", pl);
+      }
+      if (pl >= 100000) {
+        M5.Lcd.printf("L %.1f", pl);
+      } else {
+        M5.Lcd.printf("L %.2f", pl);
+      }
     }
   }
   if (lastTimeframe != current_Timeframe) {
