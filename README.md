@@ -75,7 +75,7 @@ All settings will remain stored in internal memory after a reset so you can ejec
 If you want to clear all stored settings from internal memory hold ButtonB at start-up.
 
 If M5-Stack is in his BTC stand (the original grey vertical stand) the internal SHT room sensor is found and shows temp and humidity.
-
+![](preview/IMG_Nov24.jpg)
 ![](preview/IMG_0.jpg)
 ![](preview/IMG_2.jpg)
 ![](preview/IMG_3.jpg)
