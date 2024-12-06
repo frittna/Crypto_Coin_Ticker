@@ -1,4 +1,4 @@
-![](preview/IMG_M.jpg)
+![](preview/IMG_M.jpg) ![](preview/IMG_100K.jpg)  
 
 ----------------------------------------------------------------------------------------------------------------------------
 CRYPTO CURRENCY PRICE TICKER with 24 candlesticks chart for M5Stack
