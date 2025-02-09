@@ -8,7 +8,7 @@
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
 // For M5-Stack MCU , coded in ArduinoIDE 1.8.14 - last modified Nov.21.2024 12:00 CET - Version 1.0.54 using spiffs + SDconfig
-//
+// ########CHINESE TEST API for chin forum USER ###############
 // last change: *added* fixed format for prices over 100K$ because BTC might pass it soon ;)
 
 // previous edits: -> changed back to "api.binance.com" instead of "data.binance.com" (not in US-Version)
@@ -155,7 +155,7 @@ int pinSelectSD = 4; // SD shield Chip Select pin. (4 for M5Stack)
 boolean readConfiguration();
 int maxLineLength = 127; //Length of the longest line expected in the config file
 // REST API DOCS: https://github.com/binance/binance-spot-api-docs/blob/master/rest-api.md // for Binance.US: https://docs.binance.us/#rest-api
-const char* restApiHost = "api.binance.com"; 
+const char* restApiHost = "data-api.binance.vision"; 
 //const char* restApiHost = "api.binance.us"; 
 const byte candlesLimit = 24;
 String pair_STRING_mem[max_pairs_arrsize];
@@ -186,9 +186,9 @@ int pairs_mem;
 int change_count = 0;
 const uint32_t volColor = 0x22222a;
 // WS API DOCS: https://github.com/binance/binance-spot-api-docs/blob/master/web-socket-streams.md // for Binance.US: https://docs.binance.us/#websocket-streams
-const char* wsApiHost = "stream.binance.com";
+const char* wsApiHost = "testnet.binance.vision";
 //const char* wsApiHost = "stream.binance.us";
-const int wsApiPort = 9443;
+const int wsApiPort = 443;
 // Layout: The space between the info and the bottom panel is for candlechart => 240px minus top+info+bottom
 const byte topPanel = 20;
 const byte infoPanel = 16; //16px in height;
