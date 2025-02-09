@@ -8,7 +8,7 @@
 //
 // This will show 24 candles, the min/max price and the volume as line, date and time are from time.nist.gov timeserver.
 // For M5-Stack MCU , coded in ArduinoIDE 1.8.14 - last modified Nov.21.2024 12:00 CET - Version 1.0.54 using spiffs + SDconfig
-// ########CHINESE TEST API for chin forum USER ###############
+// ########CHINESE TEST API for chin github USER ###############
 // last change: *added* fixed format for prices over 100K$ because BTC might pass it soon ;)
 
 // previous edits: -> changed back to "api.binance.com" instead of "data.binance.com" (not in US-Version)
